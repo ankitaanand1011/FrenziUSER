@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.frenzi" >
+
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the "MyLocation" functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<!--    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+
+    <application
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher_new_round"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_new_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Frenzi"
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning" >
+
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+<!--        <activity-->
+<!--            android:name=".MapsActivity"-->
+<!--            android:exported="true"-->
+<!--            android:label="@string/title_activity_maps" />-->
+        <activity
+            android:name="com.user.frenzi.SearchAddressActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.DriverChoiceActivity"
+            android:theme="@style/Theme.Frenzi.NoActionBar2"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.ProfileDetailActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.TermsandConditionsActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.AboutUsActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.ContactUsActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.PaymentFullActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.DriverNearbyActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Frenzi.NoActionBar2" />
+        <activity
+            android:name="com.user.frenzi.EmergencyTwoActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Frenzi.NoActionBar2" />
+        <activity
+            android:name="com.user.frenzi.InviteCodeActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.InviteFriendsActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.RatingEndActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.ThankYouActivity"
+            android:theme="@style/Theme.Frenzi.NoActionBar2"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.ResetPasswordActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.user.frenzi.PaymenyMethodActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.RideHistoryActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.StripeAccountActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.MonicaWhereToGoActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Frenzi.NoActionBar2" />
+        <activity
+            android:name="com.user.frenzi.CancelRideActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.DriverDetailsAfterBookingActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Frenzi.NoActionBar2" >
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+
+        <uses-library android:name="com.google.android.maps" />
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <activity
+            android:name="com.user.frenzi.OntheWayActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.RatingActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.ConfirmPickupActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.DropOffActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.reachedDestinationActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.ChooseRideActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Frenzi.NoActionBar2" />
+        <activity
+            android:name="com.user.frenzi.SplashActivity"
+            android:exported="true"
+            android:label="@string/title_activity_splash"
+            android:theme="@style/Theme.Transparent"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.user.frenzi.Paymentstart"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.Wheretogo"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.Pikup"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.Jobdetails"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.MapScreen"
+            android:exported="true"
+            android:theme="@style/Theme.Frenzi.NoActionBar2" />
+        <activity
+            android:name="com.user.frenzi.JobRequest"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.VerifyOtpActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.OnlineActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.RegisterActivity"
+            android:exported="true" />
+        <activity
+            android:name="com.user.frenzi.LoginActivity"
+            android:exported="true" >
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+    </application>
+
+</manifest>

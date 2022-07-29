@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "66073652980",
+    "project_id": "frenzi-app",
+    "storage_bucket": "frenzi-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:66073652980:android:6e6c01fef4e3897436b8a1",
+        "android_client_info": {
+          "package_name": "com.user.frenzi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "66073652980-4i7006vo21vjfnnfj1k87g1kqa275e9b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.user.frenzi",
+            "certificate_hash": "539cba34d2fb57e8b651bff824a6e13fa1333319"
+          }
+        },
+        {
+          "client_id": "66073652980-vfjl5hr6tb8i3j4n3852deb91ucomij2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuoKgsVd5sWLbmZhCZHOVbflLl2ussW5o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "66073652980-vfjl5hr6tb8i3j4n3852deb91ucomij2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

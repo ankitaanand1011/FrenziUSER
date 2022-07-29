@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_background"
+    tools:context="com.user.frenzi.TermsandConditionsActivity">
+
+
+    <ImageView
+        android:id="@+id/img_close"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="35dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/close" />
+
+    <TextView
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="35dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Terms and Conditions"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        android:textSize="21sp" />
+
+    <RelativeLayout
+        android:id="@+id/all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/login"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/rectangle_white_curved">
+
+        <TextView
+            android:id="@+id/txt_about"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Terms and Conditions"
+            android:textColor="@color/MidnightBlue"
+            android:textSize="18sp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_about"
+            android:layout_marginBottom="10dp"
+            android:scrollbars="none">
+
+
+            <RelativeLayout
+
+                android:id="@+id/txt_phone_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20sp"
+                android:layout_marginBottom="10dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc feugiat porta nunc, nec eleifend enim. Curabitur ultricies velit ac arcu feugiat, laoreet consectetur magna vestibulum. Nulla vitae ex non urna feugiat ultricies a quis quam. Phasellus hendrerit justo vel imperdiet commodo. Sed in malesuada orci. Nunc id scelerisque felis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla vel orci at dui tristique mattis non at neque. Nam augue risus, vulputate at malesuada vel, porttitor quis arcu. Proin feugiat feugiat lacus.
+
+Phasellus at neque lacus. Nunc augue ex, efficitur nec venenatis ac, faucibus a felis. Fusce elementum suscipit orci, at pellentesque orci dictum nec. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris tristique metus vel mauris imperdiet, eu pretium arcu mollis. Praesent id mauris a quam sollicitudin scelerisque tristique sed nisl. Nulla ut neque a lacus maximus convallis. Ut ut convallis purus. Vivamus neque augue, sollicitudin auctor arcu in, bibendum fermentum justo. Proin eu sagittis enim. Fusce tincidunt velit vitae sagittis dignissim. Praesent sagittis, libero eu fermentum bibendum, purus metus finibus ex, id vestibulum elit nisi non urna.
+
+Sed a purus tincidunt, malesuada felis non, scelerisque orci. Ut sit amet nulla sit amet mauris tempor fringilla. Etiam sollicitudin massa ac diam malesuada, sed aliquam ante maximus. Sed dapibus, libero sed congue mollis, felis ante condimentum purus, eu molestie quam sapien sodales purus. Ut sed odio arcu. Sed vehicula ullamcorper libero ut tempor. Aenean nisl leo, eleifend non lacus non, volutpat pellentesque arcu. Aliquam eu ligula nunc. Fusce laoreet libero et diam finibus, vitae pellentesque elit ultricies.
+
+Phasellus vel magna enim. Sed commodo nibh nec augue ornare imperdiet. In hac habitasse platea dictumst. Vestibulum vitae tellus nisi. Suspendisse felis tellus, luctus vel ornare eleifend, tempus id purus. Morbi sem nisl, porta imperdiet convallis et, ultrices vel neque. Quisque accumsan a libero quis viverra. Nullam non diam est. Aliquam ullamcorper non libero sed gravida. Morbi eget elit est. Aliquam vel gravida neque. Morbi dapibus nisl id tempor aliquet. Nunc sodales pulvinar pretium. Praesent fringilla, turpis eget luctus vestibulum, tortor ipsum tristique sem, in consectetur risus ipsum ac dui. Donec scelerisque, felis id rhoncus mollis, eros tellus aliquam nulla, semper dignissim ipsum mi eu orci. Vivamus eget pharetra elit, ac rhoncus mauris."
+                    android:textColor="@color/MidnightBlue"
+                    android:textSize="15sp" />
+
+
+            </RelativeLayout>
+
+
+        </ScrollView>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
+

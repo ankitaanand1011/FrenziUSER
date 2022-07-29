@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:id="@+id/place_item_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/padding_20"
+    android:foreground="@drawable/btn_rect_graytransparent_ripple_effect"
+    android:paddingRight="@dimen/padding_20"
+    android:layout_marginTop="@dimen/margin_15">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/height_16"
+            android:layout_height="@dimen/height_16"
+            android:src="@drawable/placeb_img"/>
+
+    <TextView
+        android:id="@+id/place_area"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/txt_14"
+        android:text="asdas"
+        android:layout_marginLeft="@dimen/margin_5"
+        android:textColor="@color/black" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/place_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/txt_11"
+        android:layout_marginLeft="@dimen/margin_25"
+        android:textColor="@color/Gray"
+        android:text="dsadasd"
+        android:layout_marginTop="@dimen/margin_2"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_0.8"
+        android:background="#CCCACA"
+        android:layout_marginTop="@dimen/margin_15"/>
+
+</LinearLayout>

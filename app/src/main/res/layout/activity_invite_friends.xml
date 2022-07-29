@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.user.frenzi.InviteFriendsActivity">
+
+    <View
+        android:id="@+id/view_friends"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/main_background" />
+
+
+    <RelativeLayout
+        android:id="@+id/txt_back_layouts_new"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+
+        >
+
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="20dp"
+            android:layout_height="22dp"
+            android:background="@drawable/left_ar"
+            android:backgroundTint="@color/white"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:foreground="?android:selectableItemBackground" />
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Invite friends"
+               android:textSize="20sp"
+               android:fontFamily="@font/poppins_bold"
+               android:textColor="@color/white"
+               android:layout_centerInParent="true"
+               />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_below="@id/txt_back_layouts_new"
+        android:id="@+id/btn_destination"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/rectangle_white_transparent_curve"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        >
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="15dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="0.1"
+            android:background="@drawable/search_new"
+            android:backgroundTint="@color/white"
+            android:gravity="center_vertical"
+            android:padding="5dp" />
+
+
+        <TextView
+            android:id="@+id/txt_change_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_toRightOf="@+id/img"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:text="search"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/view_friends"
+        android:orientation="vertical"
+        android:background="@color/white"
+
+        >
+
+        <RelativeLayout
+            android:id="@+id/txt_profile_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="15dp">
+
+
+            <ImageView
+                android:id="@+id/txt_one_frnd"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/profile"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/txt_one_frnd"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="sue D"
+                android:textColor="@color/MidnightBlue"
+                android:textSize="15sp" />
+
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/rectangle_curve_gray">
+
+                <ImageView
+
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/right_t"
+
+                    />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/LightGrey" />
+
+        <RelativeLayout
+            android:id="@+id/txt_profile_two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="15dp">
+
+
+            <ImageView
+                android:id="@+id/txt_two_frnd"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/profile"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/txt_two_frnd"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Jonathan Wheeler"
+                android:textColor="@color/MidnightBlue"
+                android:textSize="15sp" />
+
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/rectangle_curve_pink">
+
+                <ImageView
+
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/add"
+
+                    />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/LightGrey" />
+
+        <RelativeLayout
+            android:id="@+id/txt_profile_three"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="15dp">
+
+
+            <ImageView
+                android:id="@+id/txt_three_frnd"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/profile"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/txt_three_frnd"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="William Wheeler"
+                android:textColor="@color/MidnightBlue"
+                android:textSize="15sp" />
+
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/rectangle_curve_gray">
+
+                <ImageView
+
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/right_t"
+
+                    />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/LightGrey" />
+
+        <RelativeLayout
+            android:id="@+id/txt_profile_four"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="15dp">
+
+
+            <ImageView
+                android:id="@+id/txt_four_frnd"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/profile"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/txt_four_frnd"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Harriet Goodwin"
+                android:textColor="@color/MidnightBlue"
+                android:textSize="15sp" />
+
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/rectangle_curve_gray">
+
+                <ImageView
+
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/right_t"
+
+                    />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/LightGrey" />
+
+        <RelativeLayout
+            android:id="@+id/txt_profile_five"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="15dp">
+
+
+            <ImageView
+                android:id="@+id/txt_five_frnd"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/profile"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/txt_five_frnd"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Brandon Farrell"
+                android:textColor="@color/MidnightBlue"
+                android:textSize="15sp" />
+
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/rectangle_curve_pink">
+
+                <ImageView
+
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/add"
+
+                    />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/LightGrey" />
+
+        <RelativeLayout
+            android:id="@+id/txt_profile_six"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="15dp">
+
+
+            <ImageView
+                android:id="@+id/txt_six_frnd"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/profile"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/txt_six_frnd"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Hayden McKenzie"
+                android:textColor="@color/MidnightBlue"
+                android:textSize="15sp" />
+
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/rectangle_curve_pink">
+
+                <ImageView
+
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/add"
+
+                    />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/LightGrey" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

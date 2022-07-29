@@ -1,0 +1,665 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.user.frenzi.DropOffActivity">
+
+    <RelativeLayout
+        android:id="@+id/pickup"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:layout_width="25dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="20dp">
+
+
+            <ImageView
+                android:id="@+id/btn_back"
+                android:foreground="?android:selectableItemBackground"
+                android:layout_width="20dp"
+                android:layout_height="22dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/left_ar" />
+        </RelativeLayout>
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Pickup"
+            android:textColor="@color/MidnightBlue"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/pickup"
+        android:background="@drawable/map_new">
+
+
+        <RelativeLayout
+            android:id="@+id/distance_one"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rectangle_curve_midnight_blue">
+
+            <ImageView
+                android:id="@+id/maplocal"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/map_loca2" />
+
+            <TextView
+                android:id="@+id/km"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_toRightOf="@id/maplocal"
+                android:fontFamily="@font/poppins_medium"
+                android:text="0 km"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/km"
+                android:layout_toRightOf="@id/maplocal"
+                android:text="Turn right at 96 Abingdon Road,NR9 1DB"
+                android:textColor="@color/LightGrey"
+                android:textSize="12sp"
+
+                />
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="620dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/buttompannelcurvedbg"
+        android:elevation="20dp"
+        android:orientation="vertical"
+        app:behavior_hideable="true"
+        app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+
+        <LinearLayout
+            android:id="@+id/monicaone"
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/curve_page_one"
+            android:backgroundTint="@color/white"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="11dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/profile" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="7dp"
+                android:layout_weight="2"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Pickup at"
+                    android:textColor="@color/MidnightBlue"
+                    android:textSize="15sp" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Wallsend"
+                    android:textColor="@color/Gray"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Newcastle upon Tyne, NE28 8EL"
+                    android:textColor="@color/Gray"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <View
+            android:id="@+id/view_pick"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/monicaone"
+            android:background="@color/LightGrey" />
+
+        <RelativeLayout
+            android:id="@+id/edf"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@id/view_pick"
+            android:layout_centerInParent="true"
+            android:gravity="center">
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="50dp">
+
+                <TextView
+                    android:id="@+id/est"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:text="EST"
+                    android:textColor="@color/Gray"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/est"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="25min"
+                    android:textColor="@color/MidnightBlue"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/distan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:text="Distance"
+                    android:textColor="@color/Gray"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/distan"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="11.9km"
+                    android:textColor="@color/MidnightBlue"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center"
+                android:layout_marginRight="50dp">
+
+                <TextView
+                    android:id="@+id/fare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:text="Fare"
+                    android:textColor="@color/Gray"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/fare"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="£ 25.00"
+                    android:textColor="@color/MidnightBlue"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/pay_card"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_below="@id/edf"
+            android:gravity="center"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Payment by Credit card"
+                android:textColor="@color/Gray"
+                android:textSize="13sp" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/card" />
+
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/view_card"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/pay_card"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/LightGrey" />
+
+        <Button
+            android:id="@+id/drop_button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/view_card"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/MidnightBlue"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Drop off"
+            android:textColor="@color/white"
+            android:textSize="13sp" />
+
+        <View
+            android:id="@+id/view_off"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/drop_button"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/LightGrey" />
+        <ScrollView
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:layout_below="@id/view_off"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:id="@+id/straight_up"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center">
+
+
+                    <ImageView
+                        android:id="@+id/up_arrow"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/map_loca2"
+                        android:backgroundTint="@color/MidnightBlue" />
+
+                    <TextView
+                        android:id="@+id/head"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/up_arrow"
+                        android:text="Head 129 Bishopthorpe Road"
+                        android:textSize="13sp"
+                        android:textColor="@color/Gray"
+                        android:layout_marginLeft="20dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/miles_one"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/head"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/up_arrow"
+                        android:text="24 miles"
+                        android:textColor="@color/LightGrey"
+                        android:textSize="11sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/head"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_toRightOf="@id/miles_one"
+                        android:background="@color/LightGrey" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/straight_left"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/straight_up"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp">
+
+
+                    <ImageView
+                        android:id="@+id/left_arrow"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/map_loc_left"
+                        android:backgroundTint="@color/MidnightBlue" />
+
+                    <TextView
+                        android:id="@+id/turn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/left_arrow"
+                        android:text="Turn left 129 Bishopthorpe Road"
+                        android:textColor="@color/Gray"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/miles_two"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/turn"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/left_arrow"
+                        android:text="18 miles"
+                        android:textColor="@color/LightGrey"
+                        android:textSize="11sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/turn"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_toRightOf="@id/miles_two"
+                        android:background="@color/LightGrey" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/straight_right"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/straight_left"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp">
+
+
+                    <ImageView
+                        android:id="@+id/right_arrow"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/map_loc"
+                        android:backgroundTint="@color/MidnightBlue" />
+
+                    <TextView
+                        android:id="@+id/rturn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/right_arrow"
+                        android:text="Turn right at 129 Bishopthorpe Road"
+                        android:textColor="@color/Gray"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/miles_three"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rturn"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/right_arrow"
+                        android:text="9 miles"
+                        android:textColor="@color/LightGrey"
+                        android:textSize="11sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/rturn"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_toRightOf="@id/miles_three"
+                        android:background="@color/LightGrey" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/straight_rights"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/straight_right"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp">
+
+
+                    <ImageView
+                        android:id="@+id/r_arrow"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/map_loc"
+                        android:backgroundTint="@color/MidnightBlue" />
+
+                    <TextView
+                        android:id="@+id/conti"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/r_arrow"
+                        android:text="Continue right at 129 Bishopthorpe Road"
+                        android:textColor="@color/dark_pink"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/miles_four"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/conti"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/r_arrow"
+                        android:text="30 miles"
+                        android:textColor="@color/LightGrey"
+                        android:textSize="11sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/conti"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_toRightOf="@id/miles_four"
+                        android:background="@color/LightGrey" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/straight_lefts"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/straight_rights"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp">
+
+
+                    <ImageView
+                        android:id="@+id/lef_arrow"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/map_loc_left"
+                        android:backgroundTint="@color/MidnightBlue" />
+
+                    <TextView
+                        android:id="@+id/lef_turn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/lef_arrow"
+                        android:text="Turn left onto 129 Bishopthorpe Road"
+                        android:textColor="@color/Gray"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/miles_five"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/lef_turn"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/lef_arrow"
+                        android:text="15 miles"
+                        android:textColor="@color/LightGrey"
+                        android:textSize="11sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/lef_turn"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginLeft="2dp"
+                        android:layout_toRightOf="@id/miles_five"
+                        android:background="@color/LightGrey" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/straight_ups"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/straight_lefts"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp">
+
+
+                    <ImageView
+                        android:id="@+id/ups_arrow"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/map_loc_left"
+                        android:backgroundTint="@color/MidnightBlue" />
+
+                    <TextView
+                        android:id="@+id/up_conti"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/ups_arrow"
+                        android:text="Continue straight to stay on  129 Bishopthorpe Road"
+                        android:textColor="@color/Gray"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/miles_six"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/up_conti"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/ups_arrow"
+                        android:text="5 miles"
+                        android:textColor="@color/LightGrey"
+                        android:textSize="11sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/ups_arrow"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_toRightOf="@id/miles_six"
+                        android:background="@color/LightGrey" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+
+
+
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#701E1C1C">
+
+    </LinearLayout>
+
+</RelativeLayout>

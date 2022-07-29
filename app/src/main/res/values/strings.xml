@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Frenzi</string>
+    <string name="title_activity_splash">Frenzi</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="pay_now">Pay Now</string>
+    <string name="pay_later">Pay Later</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="google_maps_key">AIzaSyAuoKgsVd5sWLbmZhCZHOVbflLl2ussW5o</string>
+    <string name="economy"><u>Economy</u></string>
+
+</resources>

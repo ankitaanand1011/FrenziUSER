@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.user.frenzi.SearchAddressActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/White">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@color/DeepPink"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+
+                <LinearLayout
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/back_iv"
+                        android:layout_width="@dimen/height_30"
+                        android:layout_height="@dimen/height_30"
+                        android:padding="@dimen/padding_6"
+                        android:src="@drawable/backwhiteimg" />
+
+                </LinearLayout>
+
+
+                <EditText
+                    android:id="@+id/address_edt"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/margin_10"
+                    android:layout_marginRight="@dimen/margin_5"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:cursorVisible="true"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center_vertical"
+                    android:hint="Enter Address....."
+                    android:imeOptions="actionDone"
+                    android:paddingLeft="30dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/White"
+                    android:textCursorDrawable="@drawable/custom_cursor_drawable"
+                    android:textSize="@dimen/txt_15" />
+
+
+                <LinearLayout
+                    android:id="@+id/right_Ll"
+                    android:layout_width="@dimen/height_30"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="@dimen/height_30"
+                        android:layout_height="@dimen/height_30"
+                        android:padding="@dimen/padding_5"
+                        android:src="@drawable/rightwhite"
+                        app:tint="@color/White" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="sans-serif"
+                android:paddingBottom="15dp"
+                android:text="Start searching your address"
+                android:textColor="#A5A4A4"
+                android:textSize="@dimen/_13sdp" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/places_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#EAE7E7"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

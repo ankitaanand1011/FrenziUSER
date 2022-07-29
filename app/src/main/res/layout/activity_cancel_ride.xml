@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/map_b_w"
+    tools:context="com.user.frenzi.CancelRideActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginLeft="12dp"
+            android:paddingStart="8dp"
+            android:paddingLeft="8dp">
+
+            <ImageButton
+                android:id="@+id/img_cross"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_gravity="bottom"
+                android:elevation="4dp"
+                android:background="@drawable/circle_close"
+                android:tint="@color/black"
+                android:src="@drawable/close" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Your ride has arrived"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:layout_marginLeft="6dp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_margin="15sp"
+            android:layout_height="98dp"
+            android:background="@drawable/rectangle_boder">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_centerVertical="true"
+                android:background="#A3A3A3" />
+
+            <LinearLayout
+                android:id="@+id/line"
+                android:weightSum="1.2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15sp"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="25dp"
+                android:orientation="vertical"
+                android:layout_marginLeft="15sp">
+
+                <ImageView
+                    android:layout_weight=".2"
+                    android:layout_width="10dp"
+                    android:layout_height="0dp"
+                    android:src="@drawable/circle_shape"/>
+
+                <View
+                    android:layout_weight=".8"
+                    android:layout_width="1dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:background="#CFCCCC" />
+
+                <ImageView
+                    android:layout_weight=".2"
+                    android:layout_width="10dp"
+                    android:layout_height="0dp"
+                    android:background="@color/black" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_toRightOf="@id/line"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="17dp"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginRight="10dp"
+                    android:text="Your Location"/>
+
+
+                <TextView
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="19dp"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="4947 Cottrill Lane, Maryland"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="15dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/alarm_back"
+                android:drawableTop="@drawable/alarm"
+                android:paddingLeft="8dp"
+                android:textColor="@color/black"
+                android:paddingTop="6dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="6dp"
+                android:text="Now"
+                android:layout_alignParentRight="true" />
+
+
+
+
+
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/full_screen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circle_close"
+        android:padding="6dp"
+        android:layout_above="@id/bottom_view"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/fullscreen" />
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:id="@+id/bottom_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="20dp"
+        app:behavior_hideable="true"
+        app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+        android:background="@drawable/buttompannelcurvedbg"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:paddingTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/curve_page_one"
+
+            android:padding="8dp"
+            >
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_gravity="center_vertical"
+                android:layout_height="match_parent"
+                android:src="@drawable/profile" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gregory Smith"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="50dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/rectangle_whole_curve_pink"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginRight="2dp"
+                        android:background="@drawable/star_w" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="4.8"
+                        android:layout_marginTop="2dp"
+                        android:textColor="@color/white"
+                        android:textSize="11sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="4dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="4dp"
+                android:background="@drawable/circle_phone"
+                android:src="@drawable/phone"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/otp_back"
+                android:paddingLeft="8dp"
+                android:paddingTop="6dp"
+                android:textSize="12sp"
+                android:paddingRight="8dp"
+                android:paddingBottom="6dp"
+                android:text="OTP 9797"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="6dp"
+            >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginEnd="10dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="7dp"
+                    android:paddingLeft="7dp"
+                    android:src="@drawable/car_cropped" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Maruti DZire RJTD19"
+                    android:textAlignment="center"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Distance"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textAllCaps="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10.5 km"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Time"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textAllCaps="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="32 mins"
+                    android:textStyle="bold"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Price"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textAllCaps="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$25.00"
+                    android:textStyle="bold"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:layout_marginTop="16dp">
+
+            <Button
+                android:id="@+id/btn_cancel_ride"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="55dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/poppins_bold"
+                android:backgroundTint="@color/MidnightBlue"
+                android:text="Cancel Request"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/rectangle_yellow"
+                android:padding="10dp"
+                android:layout_marginBottom="27dp"
+                android:src="@drawable/baseline_share_24"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="4dp"
+                app:tint="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
