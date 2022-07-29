@@ -77,7 +77,6 @@ public class AboutUsActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<ResponseAboutUs> call, Response<ResponseAboutUs> response) {
                     Log.e(TAG, "onResponse: Code :" + response.body());
-                    Log.e(TAG, "onResponse: " + response.code());
                     Log.e(TAG, "onResponse: " + response.message());
                     Log.e(TAG, "onResponse: " + response.errorBody());
 
