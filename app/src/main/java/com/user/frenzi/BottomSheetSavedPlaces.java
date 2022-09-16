@@ -1,5 +1,6 @@
 package com.user.frenzi;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -50,6 +51,7 @@ public class BottomSheetSavedPlaces extends BottomSheetDialogFragment {
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void setupDialog(Dialog dialog, int style) {
         View view = View.inflate(getContext(), R.layout.bottom_sheet_saved_placews, null);

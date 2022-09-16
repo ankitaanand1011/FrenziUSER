@@ -43,7 +43,8 @@
             android:textColor="@color/white"
             android:textSize="25sp" />
 
-        <ImageView
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/civ_driver"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_gravity="center"
@@ -51,6 +52,7 @@
             android:background="@drawable/profile" />
 
         <TextView
+            android:id="@+id/tv_driver_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -62,6 +64,7 @@
             />
 
         <RatingBar
+            android:id="@+id/rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -77,15 +80,32 @@
             android:textSize="13sp" />
 
         <TextView
+            android:id="@+id/tv_comments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Any comments?"
+            android:textStyle="bold"
             android:textColor="@color/white"
-            android:textSize="13sp" />
+            android:textSize="@dimen/_14sdp" />
 
-
-
+        <EditText
+            android:id="@+id/edt_reviews"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_gravity="center"
+            android:hint="Any comments?"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:textColorHint="@color/hint_color"
+            android:background="@drawable/et_bg_white"
+            android:gravity="center"
+            android:padding="@dimen/_5sdp"
+            android:textColor="@color/MidnightBlue"
+            android:textSize="@dimen/_14sdp" />
 
     </LinearLayout>
 
@@ -131,6 +151,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tv_tip_1"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center"
@@ -138,24 +159,25 @@
                     android:background="@drawable/circle_white"
                     android:fontFamily="@font/poppins_semibold"
                     android:gravity="center"
-                    android:text="£7"
+                    android:text="£5"
                     android:textColor="@color/Gray"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:id="@+id/tv_tip_2"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:background="@drawable/circle_white"
-                    android:backgroundTint="@color/gradient"
                     android:fontFamily="@font/poppins_semibold"
                     android:gravity="center"
-                    android:text="£7"
-                    android:textColor="@color/white"
+                    android:text="£10"
+                    android:textColor="@color/Gray"
                     android:textSize="18sp"
 
                     />
 
                 <TextView
+                    android:id="@+id/tv_tip_3"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center"
@@ -163,7 +185,7 @@
                     android:background="@drawable/circle_white"
                     android:fontFamily="@font/poppins_semibold"
                     android:gravity="center"
-                    android:text="£7"
+                    android:text="£15"
                     android:textColor="@color/Gray"
                     android:textSize="18sp"
 
@@ -179,12 +201,14 @@
                 android:layout_marginTop="20dp"
                 android:orientation="vertical">
 
-                <TextView
+                <EditText
+                    android:id="@+id/edt_custom_amt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Enter a custom amount"
+                    android:hint="Enter a custom amount"
                     android:textColor="@color/MidnightBlue"
                     android:textSize="15sp"
+                    android:background="@drawable/rect_gray_edt_box"
 
 
                     />
@@ -192,7 +216,8 @@
                 <View
                     android:layout_width="135dp"
                     android:layout_height="1dp"
-                    android:background="@color/MidnightBlue" />
+                    android:background="@color/MidnightBlue"
+                    android:visibility="gone" />
             </LinearLayout>
 
 
@@ -212,6 +237,7 @@
             android:textSize="13sp" />
 
         <TextView
+            android:id="@+id/tv_skip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

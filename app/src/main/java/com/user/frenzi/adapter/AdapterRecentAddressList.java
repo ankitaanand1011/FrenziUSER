@@ -1,9 +1,12 @@
 package com.user.frenzi.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -62,12 +65,32 @@ public class AdapterRecentAddressList extends RecyclerView.Adapter<AdapterRecent
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final AdapterRecentAddressList.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final AdapterRecentAddressList.MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
 
         holder.txt_address.setText(AssignmentList.get(position).getAddress());
 //        holder.txt_date.setText(AssignmentList.get(position).getD());
 
+        holder.full_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onItemClick(AssignmentList.get(position));
+            }
+        });
 
+        switch (AssignmentList.get(position).getAddressStatus()) {
+            case "Home":
+                holder.iv_address.setImageResource(R.drawable.home_address);
+                break;
+            case "Work":
+                holder.iv_address.setImageResource(R.drawable.work_address);
+                break;
+            case "Other":
+                holder.iv_address.setImageResource(R.drawable.other_address);
+                break;
+            default:
+                holder.iv_address.setImageResource(R.drawable.history_gray);
+                break;
+        }
 
 
     }
@@ -92,6 +115,8 @@ public class AdapterRecentAddressList extends RecyclerView.Adapter<AdapterRecent
 
 
         TextView txt_address,txt_address_2;
+        RelativeLayout full_layout;
+        ImageView iv_address;
 
 
         public MyViewHolder(View view) {
@@ -99,6 +124,8 @@ public class AdapterRecentAddressList extends RecyclerView.Adapter<AdapterRecent
 
             txt_address = view.findViewById(R.id.txt_address);
             txt_address_2=view.findViewById(R.id.txt_address_2);
+            full_layout=view.findViewById(R.id.full_layout);
+            iv_address=view.findViewById(R.id.iv_address);
 
 
 

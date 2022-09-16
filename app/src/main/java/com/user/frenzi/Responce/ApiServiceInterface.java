@@ -46,10 +46,30 @@ public interface ApiServiceInterface {
 
 
     );
+
+    @Multipart
+    @POST("address_status_change")
+    Call<ServerGeneralResponse> AddHome(
+            @Part("address_id") RequestBody address_id,
+            @Part("status") RequestBody status
+    );
     @Multipart
     @POST("driver_list")
     Call<ResponceFetchPreferedDriverList> fetchDriverList(
             @Part("vehicle_type") RequestBody vehicle_type
+
+
+    );
+
+    @Multipart
+    @POST("user_give_reviews")
+    Call<ServerGeneralResponse> UserReviews(
+            @Part("ride_id") RequestBody ride_id,
+            @Part("user_id") RequestBody user_id,
+            @Part("driver_id") RequestBody driver_id,
+            @Part("ratings") RequestBody ratings,
+            @Part("review_comment") RequestBody review_comment,
+            @Part("tip_amount") RequestBody tip_amount
 
 
     );
@@ -88,6 +108,15 @@ public interface ApiServiceInterface {
 
 
     );
+
+    @Multipart
+    @POST("cancel_ride")
+    Call<ResponseCancelRide> cancelRide(
+            @Part("ride_id") RequestBody ride_id
+
+
+    );
+
     @Multipart
     @POST("ride_history")
     Call<ResponceFetchRideHistory> FetchRideHistory(
@@ -106,6 +135,19 @@ public interface ApiServiceInterface {
     );
 
     @Multipart
+    @POST("add_address")
+    Call<ServerGeneralResponse> AddAddress(
+            @Part("user_id") RequestBody user_id,
+            @Part("title") RequestBody title,
+            @Part("address") RequestBody address,
+            @Part("latitude") RequestBody latitude,
+            @Part("longitude") RequestBody longitude,
+            @Part("address_status") RequestBody address_status
+
+
+    );
+
+    @Multipart
     @POST("contact_submit")
     Call<ServerGeneralResponse> ContactUs(
             @Part("fullname") RequestBody fullname,
@@ -119,8 +161,7 @@ public interface ApiServiceInterface {
 
     @Multipart
     @POST("post_ride")
-    Call<ServerGeneralResponse> SubmitRide(
-
+    Call<ResponseNewRideDetails> SubmitRide(
             @Part("user_id") RequestBody          user_id,
             @Part("driver_id") RequestBody        driver_id,
             @Part("pickup_address") RequestBody   pickup_address,
@@ -129,13 +170,9 @@ public interface ApiServiceInterface {
             @Part("pickup_long") RequestBody      pickup_long,
             @Part("drop_lat") RequestBody         drop_lat,
             @Part("drop_long") RequestBody        drop_long,
-            @Part("distance") RequestBody         distance,
-            @Part("total_time") RequestBody       total_time,
-            @Part("amount") RequestBody           amount,
             @Part("start_date") RequestBody       start_date,
-            @Part("start_time") RequestBody       start_time,
-            @Part("end_date") RequestBody         end_date,
-            @Part("end_time") RequestBody         end_time
+            @Part("start_time") RequestBody       start_time
+
 
 
 

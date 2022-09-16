@@ -12,7 +12,8 @@
     <string name="pay_now">Pay Now</string>
     <string name="pay_later">Pay Later</string>
     <string name="title_activity_maps">MapsActivity</string>
-    <string name="google_maps_key">AIzaSyAuoKgsVd5sWLbmZhCZHOVbflLl2ussW5o</string>
+    <string name="google_maps_key">AIzaSyAArqoAoVs9i0M_g2p6i87apwECkHdtI-M</string>
     <string name="economy"><u>Economy</u></string>
+    <string name="any_comment"><![CDATA[<u>Any Comments?</u>]]></string>
 
 </resources>

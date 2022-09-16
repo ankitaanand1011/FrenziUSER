@@ -132,9 +132,8 @@
                                android:fontFamily="@font/poppins_semibold"
                                android:text="Cancel Ride"
                                android:textColor="@color/black"
-                               android:textSize="15sp"
 
-                               />
+                               android:textSize="15sp" />
 
                        </RelativeLayout>
                    </androidx.cardview.widget.CardView>
@@ -169,15 +168,13 @@
 
 
                            <TextView
-
+                               android:id="@+id/tv_pickup_address"
                                android:layout_width="wrap_content"
                                android:layout_height="wrap_content"
                                android:layout_centerInParent="true"
                                android:layout_marginLeft="10dp"
                                android:fontFamily="@font/poppins_medium"
-                               android:text="34A, High st, Bedford, MK40 1SP"
                                android:textColor="@color/Gray"
-
                                android:textSize="13sp" />
 
                        </RelativeLayout>

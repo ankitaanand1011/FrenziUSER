@@ -7,15 +7,19 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -23,12 +27,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.frenzi.R;
+
+import com.google.firebase.firestore.GeoPoint;
+import com.google.type.LatLng;
 import com.user.frenzi.Responce.ResponceFetchRecentAddressList;
 import com.user.frenzi.adapter.AdapterRecentAddressList;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -47,27 +56,35 @@ public class Wheretogo extends AppCompatActivity {
     String User_ID;
     //    RelativeLayout homeadd;
     ImageView btn_back;
-    EditText edt_wheretoGo, edt_current_location;
+    EditText edt_pickup, edt_drop;
     private AdapterRecentAddressList adapterRecentAddressList;
     private List<ResponceFetchRecentAddressList.Response> RecentAddresses = new ArrayList<>();
     private static final String TAG = "WhereToGo";
     RecyclerView recent_address_recycler;
-    RelativeLayout btn_add_home, btn_add_work, btn_saved_address;
+    RelativeLayout btn_add_home, btn_add_work, btn_saved_address, rl_add_address;
+    SaveRideData saveRideData;
+    String pickup_lat, pickup_long, drop_lat, drop_long;
+     double current_longitude;
+     double current_latitude;
+     int size;
+
 
     public void onStart() {
         if (SearchAddressActivity.mGetAddress != null && !SearchAddressActivity.mGetAddress.equals("")) {
             System.out.println("data ------>" + SearchAddressActivity.mGetAddress);
-            edt_wheretoGo.setText(SearchAddressActivity.mGetAddress);
+            edt_pickup.setText(SearchAddressActivity.mGetAddress);
         } else {
-            edt_wheretoGo.setText("");
-            edt_wheretoGo.setHint("Enter Pickup Location");
+            edt_pickup.setText("Stratton St, London W1J, UK");
+            //  edt_pickup.setText("");
+            edt_pickup.setHint("Enter Pickup Location");
         }
         if (SearchAddressActivity.mGetAddress2 != null && !SearchAddressActivity.mGetAddress2.equals("")) {
             System.out.println("data ------>" + SearchAddressActivity.mGetAddress2);
-            edt_current_location.setText(SearchAddressActivity.mGetAddress2);
+            edt_drop.setText(SearchAddressActivity.mGetAddress2);
         } else {
-            edt_current_location.setText("");
-            edt_current_location.setHint("Enter Drop Location");
+           edt_drop.setText("Soho Square, London, UK");
+            //    edt_drop.setText("");
+           edt_drop.setHint("Enter Drop Location");
 
 
         }
@@ -86,32 +103,130 @@ public class Wheretogo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wheretogo);
 
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(getResources().getColor(R.color.gradient));
+        }
+
+        initControls();
+
+    }
+
+    private void initControls() {
+
         btn_back = findViewById(R.id.btn_back);
-        edt_wheretoGo = findViewById(R.id.edt_wheretoGo);
-        edt_current_location = findViewById(R.id.edt_current_location);
+        edt_pickup = findViewById(R.id.edt_pickup);
+        edt_drop = findViewById(R.id.edt_drop);
         btn_next = findViewById(R.id.btn_next);
         btn_add_home = findViewById(R.id.btn_add_home);
         btn_add_work = findViewById(R.id.btn_add_work);
         btn_saved_address = findViewById(R.id.btn_saved_address);
+        rl_add_address = findViewById(R.id.rl_add_address);
+        recent_address_recycler = findViewById(R.id.recent_address_recycler);
+
+        functions();
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void functions() {
+        SharedPreferences spp = Objects.requireNonNull(getSharedPreferences(Constant.USER_PREF, Context.MODE_PRIVATE));
+        User_ID = spp.getString(Constant.USER_ID, "");
+
+        current_latitude =getIntent().getDoubleExtra("current_latitude",0);
+        current_longitude =getIntent().getDoubleExtra("current_longitude",0);
+
+
+
+        edt_pickup.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                Log.e(TAG, "onClick:edt_pickup " );
+                Intent intent = new Intent(Wheretogo.this, SearchAddressActivity.class);
+                intent.putExtra("data", "address_1");
+                startActivity(intent);
+                return false;
+            }
+        });
+        edt_drop.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                Log.e(TAG, "onClick:edt_drop " );
+                Intent intent = new Intent(Wheretogo.this, SearchAddressActivity.class);
+                intent.putExtra("data", "address_2");
+                startActivity(intent);
+                return false;
+            }
+        });
+
+        btn_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(edt_pickup.getText().toString().trim())
+                        || edt_drop.getText().toString().trim().equals("Enter Pickup Location")) {
+                    edt_pickup.setError("Please select Pickup location !");
+                    return;
+                } else if (TextUtils.isEmpty(edt_drop.getText().toString().trim())
+                        || edt_pickup.getText().toString().trim().equals("Enter Drop Location")) {
+                    edt_drop.setError("Please select Drop location !");
+                    return;
+                } else {
+
+                    getLocationFromAddress1(edt_pickup.getText().toString().trim());
+                    getLocationFromAddress2(edt_drop.getText().toString().trim());
+
+
+                    Intent hoadd = new Intent(Wheretogo.this, ChooseRideActivity.class);
+                    hoadd.putExtra("drop_add",edt_drop.getText().toString());
+                    hoadd.putExtra("pickup_add",edt_pickup.getText().toString());
+                    hoadd.putExtra("pickup_lat",pickup_lat);
+                    hoadd.putExtra("pickup_long",pickup_long);
+                    hoadd.putExtra("drop_lat",drop_lat);
+                    hoadd.putExtra("drop_long",drop_long);
+                    hoadd.putExtra("current_latitude",current_latitude);
+                    hoadd.putExtra("current_longitude",current_longitude);
+
+
+                    startActivity(hoadd);
+                }
+
+
+            }
+        });
+
         btn_add_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e(TAG, "onClick: clicked ");
-                AddHomeBottomSheetDialog bottomSheetDialog = AddHomeBottomSheetDialog.newInstance();
-                bottomSheetDialog.show(getSupportFragmentManager(), "Bottom Sheet Dialog Fragment");
+
+                if (size>0) {
+                    AddHomeBottomSheetDialog bottomSheetDialog = AddHomeBottomSheetDialog.newInstance();
+                    bottomSheetDialog.show(getSupportFragmentManager(), "Bottom Sheet Dialog Fragment");
+                }else{
+                    Toast.makeText(Wheretogo.this,"Please Add Address",Toast.LENGTH_LONG).show();
+
+
+                }
             }
         });
         btn_add_work.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Toast.makeText(Wheretogo.this,"Work in Progress",Toast.LENGTH_LONG).show();
             }
         });
         btn_saved_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+             //   if (RecentAddresses.size()>=0) {
                 BottomSheetSavedPlaces bottomSheetDialog = BottomSheetSavedPlaces.newInstance();
                 bottomSheetDialog.show(getSupportFragmentManager(), "Bottom Sheet Dialog Fragment");
+
+             /*   }else{
+                    Toast.makeText(Wheretogo.this,"Please Add Address",Toast.LENGTH_LONG).show();
+
+                }*/
             }
         });
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -120,85 +235,22 @@ public class Wheretogo extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
-        edt_wheretoGo.setText("Test");
-        edt_current_location.setText("Test");
-
-        edt_wheretoGo.requestFocus();
-        edt_wheretoGo.setOnClickListener(new View.OnClickListener() {
+        rl_add_address.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-//                Intent intent=new Intent(Wheretogo.this,MonicaWhereToGoActivity.class);
-//                startActivity(intent);
-                Intent intent = new Intent(Wheretogo.this, SearchAddressActivity.class);
-                intent.putExtra("data", "address_1");
-                startActivity(intent);
-            }
-        });
-        edt_current_location.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Wheretogo.this, SearchAddressActivity.class);
-                intent.putExtra("data", "address_2");
-                startActivity(intent);
-            }
-        });
-
-        if (Build.VERSION.SDK_INT >= 21) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(getResources().getColor(R.color.gradient));
-        }
-
-//        homeadd=findViewById(R.id.homeadd);
-        recent_address_recycler = findViewById(R.id.recent_address_recycler);
-
-        SharedPreferences spp = Objects.requireNonNull(getSharedPreferences(Constant.USER_PREF, Context.MODE_PRIVATE));
-        User_ID = spp.getString(Constant.USER_ID, "");
-
-
-        btn_next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (TextUtils.isEmpty(edt_current_location.getText().toString().trim()) || edt_current_location.getText().toString().trim().equals("Enter Pickup Location")) {
-                    edt_current_location.setError("Please select Pickup location !");
-                    return;
-                } else if (TextUtils.isEmpty(edt_wheretoGo.getText().toString().trim()) || edt_current_location.getText().toString().trim().equals("Enter Drop Location")) {
-                    edt_wheretoGo.setError("Please select drop location !");
-                    return;
-                } else {
-                    Intent hoadd = new Intent(Wheretogo.this, ChooseRideActivity.class);
-                    startActivity(hoadd);
-                }
+            public void onClick(View view) {
+                Intent hoadd=new Intent(Wheretogo.this,AddAddressActivity.class);
+                startActivity(hoadd);
 
 
             }
         });
-
-//        homeadd.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent hoadd=new Intent(Wheretogo.this,ChooseRideActivity.class);
-//                startActivity(hoadd);
-//
-//
-//            }
-//        });
-//        edt_wheretoGo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent hoadd=new Intent(Wheretogo.this,MonicaWhereToGoActivity.class);
-//                startActivity(hoadd);
-//
-//
-//            }
-//        });
 
         adapterRecentAddressList = new AdapterRecentAddressList(getApplicationContext(), RecentAddresses, new AdapterRecentAddressList.OnItemClickListener() {
             @Override
             public void onItemClick(ResponceFetchRecentAddressList.Response item) {
 
+                Log.e(TAG, "onItemClick: "+item.address );
+                edt_drop.setText(item.address);
             }
         });
         RecyclerView.LayoutManager mmLayoutManager = new LinearLayoutManager(this);
@@ -207,8 +259,20 @@ public class Wheretogo extends AppCompatActivity {
         recent_address_recycler.setAdapter(adapterRecentAddressList);
 
         FetchRecentAddress();
+
+        /*RecyclerView.LayoutManager mmLayoutManager = new LinearLayoutManager(requireActivity());
+        recycler_saved_address_list.setLayoutManager(mmLayoutManager);
+        recycler_saved_address_list.setItemAnimator(new DefaultItemAnimator());
+        recycler_saved_address_list.setAdapter(adapterSavedAddreslist);
+        FetchRecentAddress();*/
+
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FetchRecentAddress();
+    }
 
     private void FetchRecentAddress() {
 
@@ -251,6 +315,7 @@ public class Wheretogo extends AppCompatActivity {
 
                     adapterRecentAddressList.notifyDataSetChanged();
                     Log.e(TAG, "onResponse: Size Of Array ::" + RecentAddresses.size());
+                    size = RecentAddresses.size();
 
                 } else {
 
@@ -266,4 +331,61 @@ public class Wheretogo extends AppCompatActivity {
         });
     }
 
+    public GeoPoint getLocationFromAddress1(String strAddress) {
+
+        Geocoder coder = new Geocoder(this);
+        List<Address> address;
+        GeoPoint p1 = null;
+
+        try {
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
+                return null;
+            }
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+             pickup_lat =  String.valueOf(location.getLatitude());
+             pickup_long =  String.valueOf(location.getLongitude());
+
+            Log.e(TAG, "onClick:pickup_lat>   "+pickup_lat );
+            Log.e(TAG, "onClick:pickup_long>   "+pickup_long );
+
+           // p1 = new GeoPoint((double) (location.getLatitude() * 1E6),
+                //    (double) (location.getLongitude() * 1E6));
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public GeoPoint getLocationFromAddress2(String strAddress) {
+
+        Geocoder coder = new Geocoder(this);
+        List<Address> address;
+        GeoPoint p1 = null;
+
+        try {
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
+                return null;
+            }
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+            drop_lat =  String.valueOf(location.getLatitude());
+            drop_long =  String.valueOf(location.getLongitude());
+            Log.e(TAG, "onClick:drop_lat>   "+drop_lat );
+            Log.e(TAG, "onClick:drop_long>   "+drop_long );
+
+           // p1 = new GeoPoint((double) (location.getLatitude() * 1E6),
+                //    (double) (location.getLongitude() * 1E6));
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

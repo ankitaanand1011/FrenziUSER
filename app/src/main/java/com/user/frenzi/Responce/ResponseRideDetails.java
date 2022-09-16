@@ -3,7 +3,7 @@ package com.user.frenzi.Responce;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ResponceFetchRidedetails {
+public class ResponseRideDetails {
     @SerializedName("status")
     @Expose
     public Integer status;
@@ -14,7 +14,7 @@ public class ResponceFetchRidedetails {
     @Expose
     public Response response;
 
-    public ResponceFetchRidedetails(Integer status, String message, Response response) {
+    public ResponseRideDetails(Integer status, String message, Response response) {
         this.status = status;
         this.message = message;
         this.response = response;
@@ -44,11 +44,13 @@ public class ResponceFetchRidedetails {
         this.response = response;
     }
 
-    public class Response {
+    public static class Response {
+
 
         @SerializedName("user_id")
         @Expose
         public Integer userId;
+
         @SerializedName("driver_id")
         @Expose
         public Integer driverId;
@@ -84,21 +86,38 @@ public class ResponceFetchRidedetails {
         public String startTime;
         @SerializedName("end_date")
         @Expose
-        public String endDate;
+        public Object endDate;
         @SerializedName("end_time")
         @Expose
-        public String endTime;
+        public Object endTime;
         @SerializedName("ride_otp")
         @Expose
-        public Object rideOtp;
+        public String rideOtp;
+
+        @SerializedName("fare_cost")
+        @Expose
+        public String fare_cost;
+
+        @SerializedName("discount")
+        @Expose
+        public String discount;
+
         @SerializedName("user_details")
         @Expose
         public UserDetails userDetails;
+
         @SerializedName("driver_details")
         @Expose
         public DriverDetails driverDetails;
 
-        public Response(Integer userId, Integer driverId, String pickupAddress, String dropAddress, String pickupLocation, String dropLocation, String distance, String totalTime, String status, String amount, String startDate, String startTime, String endDate, String endTime, Object rideOtp, UserDetails userDetails, DriverDetails driverDetails) {
+        public Response(Integer userId, Integer driverId,
+                        String pickupAddress, String dropAddress, String pickupLocation,
+                        String dropLocation, String distance, String totalTime,
+                        String status, String amount, String startDate, String startTime,
+                        String endDate, String endTime, String rideOtp, String fare_cost,
+                        String discount,
+                        UserDetails userDetails, DriverDetails driverDetails) {
+
             this.userId = userId;
             this.driverId = driverId;
             this.pickupAddress = pickupAddress;
@@ -114,9 +133,13 @@ public class ResponceFetchRidedetails {
             this.endDate = endDate;
             this.endTime = endTime;
             this.rideOtp = rideOtp;
+            this.fare_cost = fare_cost;
+            this.discount = discount;
             this.userDetails = userDetails;
             this.driverDetails = driverDetails;
         }
+
+
 
         public Integer getUserId() {
             return userId;
@@ -214,28 +237,44 @@ public class ResponceFetchRidedetails {
             this.startTime = startTime;
         }
 
-        public String getEndDate() {
+        public Object getEndDate() {
             return endDate;
         }
 
-        public void setEndDate(String endDate) {
+        public void setEndDate(Object endDate) {
             this.endDate = endDate;
         }
 
-        public String getEndTime() {
+        public Object getEndTime() {
             return endTime;
         }
 
-        public void setEndTime(String endTime) {
+        public void setEndTime(Object endTime) {
             this.endTime = endTime;
         }
 
-        public Object getRideOtp() {
+        public String getRideOtp() {
             return rideOtp;
         }
 
-        public void setRideOtp(Object rideOtp) {
+        public void setRideOtp(String rideOtp) {
             this.rideOtp = rideOtp;
+        }
+
+        public String getFare_cost() {
+            return fare_cost;
+        }
+
+        public void setFare_cost(String fare_cost) {
+            this.fare_cost = fare_cost;
+        }
+
+        public String getDiscount() {
+            return discount;
+        }
+
+        public void setDiscount(String discount) {
+            this.discount = discount;
         }
 
         public UserDetails getUserDetails() {
@@ -335,32 +374,30 @@ public class ResponceFetchRidedetails {
 
             @SerializedName("name")
             @Expose
-            public Object name;
+            public String name;
             @SerializedName("driver_id")
             @Expose
-            public Object driverId;
+            public Integer driverId;
             @SerializedName("email")
             @Expose
-            public Object email;
+            public String email;
             @SerializedName("phone")
             @Expose
-            public Object phone;
+            public String phone;
             @SerializedName("reviews")
             @Expose
-            public Object reviews;
+            public String reviews;
             @SerializedName("vehicle_no")
             @Expose
-            public Object vehicleNo;
+            public String vehicleNo;
             @SerializedName("vehicle_type")
             @Expose
-            public Object vehicleType;
+            public String vehicleType;
             @SerializedName("image")
             @Expose
-            public Object image;
+            public String image;
 
-            public DriverDetails(Object name, Object driverId, Object email, Object phone,
-                                 Object reviews, Object vehicleNo, Object vehicleType,
-                                 Object image) {
+            public DriverDetails(String name, Integer driverId, String email, String phone, String reviews, String vehicleNo, String vehicleType, String image) {
                 this.name = name;
                 this.driverId = driverId;
                 this.email = email;
@@ -371,67 +408,67 @@ public class ResponceFetchRidedetails {
                 this.image = image;
             }
 
-            public Object getName() {
+            public String getName() {
                 return name;
             }
 
-            public void setName(Object name) {
+            public void setName(String name) {
                 this.name = name;
             }
 
-            public Object getDriverId() {
+            public Integer getDriverId() {
                 return driverId;
             }
 
-            public void setDriverId(Object driverId) {
+            public void setDriverId(Integer driverId) {
                 this.driverId = driverId;
             }
 
-            public Object getEmail() {
+            public String getEmail() {
                 return email;
             }
 
-            public void setEmail(Object email) {
+            public void setEmail(String email) {
                 this.email = email;
             }
 
-            public Object getPhone() {
+            public String getPhone() {
                 return phone;
             }
 
-            public void setPhone(Object phone) {
+            public void setPhone(String phone) {
                 this.phone = phone;
             }
 
-            public Object getReviews() {
+            public String getReviews() {
                 return reviews;
             }
 
-            public void setReviews(Object reviews) {
+            public void setReviews(String reviews) {
                 this.reviews = reviews;
             }
 
-            public Object getVehicleNo() {
+            public String getVehicleNo() {
                 return vehicleNo;
             }
 
-            public void setVehicleNo(Object vehicleNo) {
+            public void setVehicleNo(String vehicleNo) {
                 this.vehicleNo = vehicleNo;
             }
 
-            public Object getVehicleType() {
+            public String getVehicleType() {
                 return vehicleType;
             }
 
-            public void setVehicleType(Object vehicleType) {
+            public void setVehicleType(String vehicleType) {
                 this.vehicleType = vehicleType;
             }
 
-            public Object getImage() {
+            public String getImage() {
                 return image;
             }
 
-            public void setImage(Object image) {
+            public void setImage(String image) {
                 this.image = image;
             }
         }

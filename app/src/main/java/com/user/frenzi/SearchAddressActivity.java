@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.location.Address;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -51,6 +53,21 @@ public class SearchAddressActivity extends AppCompatActivity implements PlacesAu
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_address);
 
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(getResources().getColor(R.color.DeepPink));
+        }
+
+        Places.initialize(SearchAddressActivity.this, "AIzaSyAArqoAoVs9i0M_g2p6i87apwECkHdtI-M");
+
+
+        initControls();
+    }
+    private void initControls() {
+
+
         placesRecyclerView=findViewById(R.id.places_recycler_view);
         back_iv=findViewById(R.id.back_iv);
         right_Ll=findViewById(R.id.right_Ll);
@@ -62,28 +79,21 @@ public class SearchAddressActivity extends AppCompatActivity implements PlacesAu
             ComingFrom= intent.getStringExtra("data");
         }
 
-        Places.initialize(SearchAddressActivity.this, "AIzaSyAuoKgsVd5sWLbmZhCZHOVbflLl2ussW5o");
+        functions();
 
 
-
-        if (Build.VERSION.SDK_INT >= 21) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(getResources().getColor(R.color.DeepPink));
-        }
-
-        initControls();
     }
-    private void initControls() {
-        back_iv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                hideSoftKeyboard(this);
-                finish();
-            }
-        });
 
+    @SuppressLint("ClickableViewAccessibility")
+    private void functions() {
+
+       back_iv.setOnTouchListener(new View.OnTouchListener() {
+           @Override
+           public boolean onTouch(View view, MotionEvent motionEvent) {
+               finish();
+               return false;
+           }
+       });
         right_Ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,16 +159,16 @@ public class SearchAddressActivity extends AppCompatActivity implements PlacesAu
         Log.e(TAG, "click: placeee :"+address_edt.getText().toString().length());
         mLat = String.valueOf(Objects.requireNonNull(place.getLatLng()).latitude);
         mLng = String.valueOf(place.getLatLng().longitude);
-
+        address_edt.setText( place.getAddress());
         hideSoftKeyboard(SearchAddressActivity.this);
     }
 
-    public static void hideSoftKeyboard(Activity activity) {
+    public void hideSoftKeyboard(Activity activity) {
         InputMethodManager inputMethodManager =
                 (InputMethodManager) activity.getSystemService(
                         Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(
-                activity.getCurrentFocus().getWindowToken(), 0);
+      //  inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+        inputMethodManager.hideSoftInputFromWindow(getWindow().getDecorView().getRootView().getWindowToken(), 0);
     }
 //    @Override
 //    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

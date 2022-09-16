@@ -82,6 +82,7 @@ public class PlacesAutoCompleteAdapter extends RecyclerView.Adapter<PlacesAutoCo
                         // The API successfully returned results.
                         results.values = mResultList;
                         results.count = mResultList.size();
+                        Log.e(TAG, "performFiltering: size>> "+mResultList.size() );
                     }
                 }
                 return results;
@@ -91,10 +92,12 @@ public class PlacesAutoCompleteAdapter extends RecyclerView.Adapter<PlacesAutoCo
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 if (results != null && results.count > 0) {
                     // The API returned at least one result, update the data.
+                    Log.e(TAG, "publishResults:results >>  "+results );
                     notifyDataSetChanged();
                 } else {
                     // The API did not return any results, invalidate the data set.
                     //notifyDataSetInvalidated();
+                    Log.e(TAG, "publishResults: no val" );
                 }
             }
         };
@@ -113,7 +116,7 @@ public class PlacesAutoCompleteAdapter extends RecyclerView.Adapter<PlacesAutoCo
         FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
                 // Call either setLocationBias() OR setLocationRestriction().
                 //.setLocationBias(bounds)
-                .setCountry("INDIA")
+                .setCountry("UK")
                 .setTypeFilter(TypeFilter.ADDRESS)
                 .setSessionToken(token)
                 .setQuery(constraint.toString())
@@ -131,9 +134,11 @@ public class PlacesAutoCompleteAdapter extends RecyclerView.Adapter<PlacesAutoCo
 
         if (autocompletePredictions.isSuccessful()) {
             FindAutocompletePredictionsResponse findAutocompletePredictionsResponse = autocompletePredictions.getResult();
+
+            Log.e(TAG, "getPredictions: findAutocompletePredictionsResponse >> "+findAutocompletePredictionsResponse );
             if (findAutocompletePredictionsResponse != null)
                 for (AutocompletePrediction prediction : findAutocompletePredictionsResponse.getAutocompletePredictions()) {
-                    Log.i(TAG, prediction.getPlaceId());
+                    Log.e(TAG, prediction.getPlaceId());
                     resultList.add(new PlaceAutocomplete(prediction.getPlaceId(), prediction.getPrimaryText(STYLE_NORMAL).toString(), prediction.getFullText(STYLE_BOLD).toString()));
                 }
 

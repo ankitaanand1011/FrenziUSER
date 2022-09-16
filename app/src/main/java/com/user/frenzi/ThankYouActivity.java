@@ -18,6 +18,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.frenzi.R;
 import com.google.android.gms.common.ConnectionResult;
@@ -46,6 +47,8 @@ public class ThankYouActivity extends FragmentActivity implements
 
     Button btn_submit;
     ImageView btn_back;
+    String ride_id,amount,user_id,driver_id;
+    TextView tv_amount;
 
 
     @Override
@@ -58,8 +61,15 @@ public class ThankYouActivity extends FragmentActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thank_you);
+        ride_id = getIntent().getStringExtra("ride_id");
+        amount = getIntent().getStringExtra("amount");
+        user_id = getIntent().getStringExtra("user_id");
+        driver_id = getIntent().getStringExtra("driver_id");
 
         btn_back=findViewById(R.id.btn_back);
+        tv_amount=findViewById(R.id.tv_amount);
+
+        tv_amount.setText("£ "+amount);
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,6 +103,9 @@ public class ThankYouActivity extends FragmentActivity implements
             @Override
             public void onClick(View view) {
                 Intent ride=new Intent(ThankYouActivity.this, RatingEndActivity.class);
+                ride.putExtra("user_id", user_id);
+                ride.putExtra("driver_id", driver_id);
+                ride.putExtra("ride_id", ride_id);
                 startActivity(ride);
             }
         });

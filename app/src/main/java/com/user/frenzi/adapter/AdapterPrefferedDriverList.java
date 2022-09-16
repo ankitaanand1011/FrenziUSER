@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.frenzi.R;
 import com.user.frenzi.DriverDetailsAfterBookingActivity;
 import com.user.frenzi.Responce.ResponceFetchPreferedDriverList;
+import com.user.frenzi.SaveRideData;
 import com.user.frenzi.StripeAccountActivity;
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class AdapterPrefferedDriverList extends RecyclerView.Adapter<AdapterPref
     AlertDialog alertDialog;
     String Status;
 
-
+    SaveRideData saveRideData;
     private Fragment callingFragment;
     int index = -1;
 
@@ -79,9 +80,11 @@ public class AdapterPrefferedDriverList extends RecyclerView.Adapter<AdapterPref
         holder.full_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                listener.onItemClick(AssignmentList.get(position));
                 index = position;
+               // saveRideData.setDriver_id(String.valueOf(AssignmentList.get(position).getId()));
                 notifyDataSetChanged();
-                popUppayment();
+               // popUppayment();
 
             }
         });
@@ -138,57 +141,6 @@ public class AdapterPrefferedDriverList extends RecyclerView.Adapter<AdapterPref
 
     }
 
-    private void popUppayment() {
 
-        // get prompts.xml view
-        LayoutInflater li = LayoutInflater.from(activity);
-        View promptsView = li.inflate(R.layout.popup_payment_choose, null);
-
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity
-        );
-
-        Button btn_pay_now = promptsView.findViewById(R.id.btn_pay_now);
-        Button btn_pay_later = promptsView.findViewById(R.id.btn_pay_later);
-
-        // set prompts.xml to alertdialog builder
-        alertDialogBuilder.setView(promptsView);
-
-        btn_pay_now.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent in = new Intent(mContext.getApplicationContext(), StripeAccountActivity.class);
-                in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.getApplicationContext().startActivity(in);
-
-            }
-        });
-
-
-        btn_pay_later.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent selectbtn = new Intent(mContext.getApplicationContext(), DriverDetailsAfterBookingActivity.class);
-                selectbtn.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.getApplicationContext().startActivity(selectbtn);
-//                if (Status.equalsIgnoreCase("1")) {
-//                    Intent in = new Intent(mContext.getApplicationContext(), DriverChoiceActivity.class);
-//                    mContext.getApplicationContext().startActivity(in);
-//
-//                } else if (Status.equalsIgnoreCase("0")) {
-//                    Intent in = new Intent(mContext.getApplicationContext(), DriverNearbyActivity.class);
-//                    mContext.getApplicationContext().startActivity(in);
-//                }
-
-
-            }
-        });
-
-
-        // create alert dialog
-        alertDialog = alertDialogBuilder.create();
-        alertDialog.setCancelable(false);
-        // show it
-        alertDialog.show();
-    }
 
 }

@@ -47,7 +47,7 @@ public class reachedDestinationActivity extends AppCompatActivity {
         btn_finish_trip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent navi=new Intent(reachedDestinationActivity.this,RatingActivity.class);
+                Intent navi=new Intent(reachedDestinationActivity.this,RatingEndActivity.class);
                 startActivity(navi);
             }
         });

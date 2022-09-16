@@ -34,6 +34,7 @@ public class EmergencyTwoActivity extends AppCompatActivity implements OnMapRead
     private GoogleMap mMap;
     private final static int LOCATION_REQUEST_CODE = 23;
     boolean locationPermission = false;
+    String ride_id,amount,driver_id,user_id;
 
     @Override
     protected void onPause() {
@@ -46,7 +47,10 @@ public class EmergencyTwoActivity extends AppCompatActivity implements OnMapRead
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emergency_two);
-
+        ride_id = getIntent().getStringExtra("ride_id");
+        amount = getIntent().getStringExtra("amount");
+        user_id = getIntent().getStringExtra("user_id");
+        driver_id = getIntent().getStringExtra("driver_id");
 
         btn_back=findViewById(R.id.btn_back);
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +73,10 @@ public class EmergencyTwoActivity extends AppCompatActivity implements OnMapRead
 
                 Intent intent2 = new Intent(EmergencyTwoActivity.this, ThankYouActivity.class);
 //                    Log.d(TAG, "Launching Chat Fragment: " + prefs.getBoolean(USER_PREF_PHONE_USER_IS_LOGGED_IN, false));
+                intent2.putExtra("ride_id",ride_id);
+                intent2.putExtra("amount",amount);
+                intent2.putExtra("user_id", user_id);
+                intent2.putExtra("driver_id", driver_id);
                 startActivity(intent2);
                 finish();
 //

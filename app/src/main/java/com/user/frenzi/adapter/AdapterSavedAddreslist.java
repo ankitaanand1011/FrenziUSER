@@ -79,11 +79,28 @@ public class AdapterSavedAddreslist extends RecyclerView.Adapter<AdapterSavedAdd
         holder.full_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                listener.onItemClick(AssignmentList.get(position));
 //                index = position;
 //                notifyDataSetChanged();
             }
         });
-        if(AssignmentList.get(position).getHomeStatus().equals(1)){
+
+        switch (AssignmentList.get(position).getAddressStatus()) {
+            case "Home":
+                holder.iv_address.setImageResource(R.drawable.home_address);
+                break;
+            case "Work":
+                holder.iv_address.setImageResource(R.drawable.work_address);
+                break;
+            case "Other":
+                holder.iv_address.setImageResource(R.drawable.other_address);
+                break;
+            default:
+                holder.iv_address.setImageResource(R.drawable.star);
+                break;
+        }
+
+     /*   if(AssignmentList.get(position).getHomeStatus().equals(1)){
             holder.selected_img.setVisibility(View.VISIBLE);
             holder.selected_img.setImageResource(R.drawable.home);
         }else{
@@ -94,7 +111,7 @@ public class AdapterSavedAddreslist extends RecyclerView.Adapter<AdapterSavedAdd
             holder.selected_img.setImageResource(R.drawable.bage);
         }else{
             holder.selected_img.setVisibility(View.INVISIBLE);
-        }
+        }*/
 //        if(AssignmentList.get(position).getHomeStatus().equals(1)){
 //            holder.selected_img.setImageResource(R.drawable.home);
 //        }
@@ -154,6 +171,7 @@ public class AdapterSavedAddreslist extends RecyclerView.Adapter<AdapterSavedAdd
         RelativeLayout full_layout;
         ImageView selected_img;
         ImageView shine;
+        ImageView iv_address;
 
         public MyViewHolder(View view) {
             super(view);
@@ -161,8 +179,9 @@ public class AdapterSavedAddreslist extends RecyclerView.Adapter<AdapterSavedAdd
             txt_address = view.findViewById(R.id.txt_address);
             txt_address_2=view.findViewById(R.id.txt_address_2);
             full_layout=view.findViewById(R.id.full_layout);
-            selected_img=view.findViewById(R.id.selected_img);
-            shine=view.findViewById(R.id.shine);
+            iv_address=view.findViewById(R.id.iv_address);
+          //  selected_img=view.findViewById(R.id.selected_img);
+         //   shine=view.findViewById(R.id.shine);
 
 
         }

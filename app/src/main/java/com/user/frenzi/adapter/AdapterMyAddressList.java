@@ -85,6 +85,7 @@ public class AdapterMyAddressList extends RecyclerView.Adapter<AdapterMyAddressL
         holder.full_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                listener.onItemClick(MyAddressList.get(position));
                 index = position;
                 notifyDataSetChanged();
             }
@@ -118,12 +119,28 @@ public class AdapterMyAddressList extends RecyclerView.Adapter<AdapterMyAddressL
             holder.full_layout.setBackgroundColor(Color.parseColor("#ffffff"));
 //            holder.txt_property_name.setTextColor(Color.RED);
         }
-        if(MyAddressList.get(position).getHomeStatus().equals(1)){
+
+        switch (MyAddressList.get(position).getAddressStatus()) {
+            case "Home":
+                holder.iv_address.setImageResource(R.drawable.home_address);
+                break;
+            case "Work":
+                holder.iv_address.setImageResource(R.drawable.work_address);
+                break;
+            case "Other":
+                holder.iv_address.setImageResource(R.drawable.other_address);
+                break;
+            default:
+                holder.iv_address.setImageResource(R.drawable.star);
+                break;
+        }
+
+      /*  if(MyAddressList.get(position).getHomeStatus().equals(1)){
             holder.selected_img.setVisibility(View.VISIBLE);
             holder.selected_img.setImageResource(R.drawable.home);
         }else{
             holder.selected_img.setVisibility(View.INVISIBLE);
-        }
+        }*/
 
     }
 
@@ -148,7 +165,7 @@ public class AdapterMyAddressList extends RecyclerView.Adapter<AdapterMyAddressL
 
         TextView txt_address,txt_address_2;
         RelativeLayout full_layout;
-        ImageView selected_img;
+        ImageView selected_img,iv_address;
         ImageView shine;
 
         public MyViewHolder(View view) {
@@ -159,6 +176,7 @@ public class AdapterMyAddressList extends RecyclerView.Adapter<AdapterMyAddressL
             full_layout=view.findViewById(R.id.full_layout);
             selected_img=view.findViewById(R.id.selected_img);
             shine=view.findViewById(R.id.shine);
+            iv_address=view.findViewById(R.id.iv_address);
 
 
         }

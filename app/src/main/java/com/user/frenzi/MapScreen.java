@@ -49,6 +49,7 @@ import com.example.frenzi.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -93,11 +94,13 @@ public class MapScreen extends FragmentActivity implements
     GoogleApiClient googleApiClient;
     String user_Name, user_Image;
 
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
-//    }
+/*
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
+    }
+*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,23 +113,40 @@ public class MapScreen extends FragmentActivity implements
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                     WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+
+
+        initControls();
+
+    }
+
+    private void initControls() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        SharedPreferences spp = Objects.requireNonNull(getSharedPreferences(Constant.USER_PREF, Context.MODE_PRIVATE));
-        user_Name = spp.getString(Constant.USER_NAME, "");
-        user_Image = spp.getString(Constant.USER_IMAGE, "");
-
-        //Initializing googleapi client
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
 //        addCustomMarker();
+
         btn_current_location = findViewById(R.id.btn_current_location);
+        drawerLayout=findViewById(R.id.drawer_layout);
+        menu_bar = findViewById(R.id.menu_bar);
+        btn_destination = findViewById(R.id.btn_destination);
+        functions();
+
+    }
+
+    private void functions() {
+
+        SharedPreferences spp = Objects.requireNonNull(getSharedPreferences(Constant.USER_PREF, Context.MODE_PRIVATE));
+        user_Name = spp.getString(Constant.USER_NAME, "");
+        user_Image = spp.getString(Constant.USER_IMAGE, "");
+
+
+        drawerLayout.setVisibility(View.INVISIBLE);
+
         btn_current_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,8 +154,7 @@ public class MapScreen extends FragmentActivity implements
                 moveMap();
             }
         });
-        drawerLayout=findViewById(R.id.drawer_layout);
-        drawerLayout.setVisibility(View.INVISIBLE);
+
 
         final ViewTreeObserver viewTreeObserver = drawerLayout.getViewTreeObserver();
 
@@ -152,19 +171,14 @@ public class MapScreen extends FragmentActivity implements
                 }
             });
         }
-//        if (Build.VERSION.SDK_INT >= 21) {
-//            Window window = getWindow();
-//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//            window.setStatusBarColor(getResources().getColor(R.color.Black));
-//        }
-        menu_bar = findViewById(R.id.menu_bar);
-        btn_destination = findViewById(R.id.btn_destination);
+
         btn_destination.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent search = new Intent(MapScreen.this, Wheretogo.class);
+                search.putExtra("current_latitude",latitude);
+                search.putExtra("current_latitude",longitude);
                 startActivity(search);
             }
         });
@@ -176,10 +190,6 @@ public class MapScreen extends FragmentActivity implements
             }
         });
 
-
-        // GetLocation
-//        getCurrentLocation();
-//        moveMap();
     }
 
 //    @Override
@@ -401,12 +411,7 @@ public class MapScreen extends FragmentActivity implements
         LinearLayout btn_contact_us = findViewById(R.id.btn_contact_us);
         LinearLayout btn_about = findViewById(R.id.btn_about);
         TextView txt = findViewById(R.id.txt);
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.setDisplayHomeAsUpEnabled(true);
-//        actionBar.setDisplayShowHomeEnabled(true);
-//        actionBar.setDisplayShowTitleEnabled(false);
-//        actionBar.setDisplayUseLogoEnabled(true);
-//        actionBar.setHomeAsUpIndicator(R.drawable.menu);
+
 
         txt.setText(user_Name);
         RequestOptions options = new RequestOptions()
@@ -482,76 +487,47 @@ public class MapScreen extends FragmentActivity implements
                 startActivity(intent1);
             }
         });
-//        if (drawerToggle == null) {
-//            drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
-//                public void onDrawerClosed(View view) {
-//
-//                }
-//
-//                public void onDrawerOpened(View drawerView) {
-//
-//                }
-//
-//                public void onDrawerSlide (View drawerView, float slideOffset) {
-////                    CategoryListVertical();
-//                }
-//
-//                public void onDrawerStateChanged(int newState) {
-//
-//                }
-//
-//            };
-//            drawerLayout.setDrawerListener(drawerToggle);
-//        }
-//
-//        drawerToggle.syncState();
-
-//        CategoryListVertical();
-//        String [] numbers = {"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"};
-//         itemArrayAdapter = new ItemArrayAdapter(this, R.layout.list_item, numbers);
-//        recyclerview_vertical.setAdapter(adapterVerticalCatagoryList);
     }
 
 
     void showDialog() {
-        //if(activity != null) {
-            final Dialog dialog = new Dialog(MapScreen.this);
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setContentView(R.layout.dialog_logout);
-            dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-            dialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
-            //  dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-            final TextView mTxt_Cancel = dialog.findViewById(R.id.txt_cancel);
-            final TextView mTxt_Delete = dialog.findViewById(R.id.txt_logout);
+        final Dialog dialog = new Dialog(MapScreen.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_logout);
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
+        //  dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        final TextView mTxt_Cancel = dialog.findViewById(R.id.txt_cancel);
+        final TextView mTxt_Delete = dialog.findViewById(R.id.txt_logout);
 
-            mTxt_Cancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
-            mTxt_Delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        mTxt_Cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        mTxt_Delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 //                mAppManager.logoutUser();
-                    SharedPreferences sp = getSharedPreferences(Constant.USER_PREF, Context.MODE_PRIVATE);
-                    sp.edit().remove(Constant.USER_ID)
-                            .remove(Constant.USER_NAME)
-                            .remove(Constant.USER_ADDRESS)
-                            .remove(Constant.USER_MAIL)
-                            .remove(Constant.USER_IMAGE)
-                            .apply();
-                    dialog.dismiss();
+                SharedPreferences sp = getSharedPreferences(Constant.USER_PREF, Context.MODE_PRIVATE);
+                sp.edit().remove(Constant.USER_ID)
+                        .remove(Constant.USER_NAME)
+                        .remove(Constant.USER_ADDRESS)
+                        .remove(Constant.USER_MAIL)
+                        .remove(Constant.USER_IMAGE)
+                        .apply();
+                dialog.dismiss();
 
-                    Intent intent=new Intent(MapScreen.this,LoginActivity.class);
-                    startActivity(intent);
-                    finish();
+                Intent intent=new Intent(MapScreen.this,LoginActivity.class);
+                startActivity(intent);
+                finish();
 
-                }
-            });
-            dialog.show();
-        //}
+            }
+        });
+        dialog.show();
+
     }
 
     @Override
@@ -564,6 +540,51 @@ public class MapScreen extends FragmentActivity implements
     protected void onStop() {
         googleApiClient.disconnect();
         super.onStop();
+    }
+
+    private void getMyLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mMap.setMyLocationEnabled(false);
+        mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+            @Override
+            public void onMyLocationChange(Location location) {
+//                Findroutes(a,b,c);
+////                myLocation=location;
+//                LatLng ltlng=new LatLng(location.getLatitude(),location.getLongitude());
+                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
+                        a, 16f);
+                mMap.animateCamera(cameraUpdate);
+            }
+        });
+
+        //get destination location when user click on map
+//        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+//            @Override
+//            public void onMapClick(LatLng latLng) {
+////                mMap.clear();
+////                end=latLng;
+////
+//                mMap.clear();
+////
+////                start=new LatLng(myLocation.getLatitude(),myLocation.getLongitude());
+////                //start route finding
+////                Findroutes(start,end);
+//
+//
+//
+//
+//            }
+//        });
+
     }
 
     //Getting current location
@@ -603,7 +624,7 @@ public class MapScreen extends FragmentActivity implements
         Log.e(TAG, "moveMap: Location Point ::"+msg );
 
         //Creating a LatLng Object to store Coordinates
-         latLng = new LatLng(latitude, longitude);
+        latLng = new LatLng(latitude, longitude);
 
 //        //Adding marker to map
 //        mMap.addMarker(new MarkerOptions()
@@ -626,8 +647,6 @@ public class MapScreen extends FragmentActivity implements
         //Animating the camera
         mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
 
-        //Displaying current coordinates in toast
-//        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -639,11 +658,7 @@ public class MapScreen extends FragmentActivity implements
         //Creating a LatLng Object to store Coordinates
         latLng = new LatLng(latitude, longitude);
 
-//        //Adding marker to map
-//        mMap.addMarker(new MarkerOptions()
-//                .position(latLng) //setting position
-//                .draggable(true) //Making the marker draggable
-//                .title("Me")); //Adding a title
+
         if (mMap == null) {
             return;
         }
@@ -660,10 +675,6 @@ public class MapScreen extends FragmentActivity implements
 
         //Animating the camera
         mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
-
-        //Displaying current coordinates in toast
-//        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-//        mMap.addMarker(new MarkerOptions().position(latLng).draggable(true));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.setOnMarkerDragListener(this);
         mMap.setOnMapLongClickListener(this);
@@ -688,13 +699,7 @@ public class MapScreen extends FragmentActivity implements
 
     @Override
     public void onMapLongClick(LatLng latLng) {
-        //Clearing all the markers
-//        mMap.clear();
-//
-//        //Adding a new marker to the current pressed position
-//        mMap.addMarker(new MarkerOptions()
-//                .position(latLng)
-//                .draggable(true));
+
     }
 
     @Override
@@ -743,48 +748,12 @@ public class MapScreen extends FragmentActivity implements
 
     @Override
     public void onBackPressed() {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            int cx = drawerLayout.getWidth() - getDips(44);
-//            int cy = drawerLayout.getBottom() - getDips(44);
-//
-//            float finalRadius = Math.max(drawerLayout.getWidth(), drawerLayout.getHeight());
-//            Animator circularReveal = ViewAnimationUtils.createCircularReveal(drawerLayout, cx, cy, finalRadius, 0);
-//
-//            circularReveal.addListener(new Animator.AnimatorListener() {
-//                @Override
-//                public void onAnimationStart(Animator animator) {
-//
-//                }
-//
-//                @Override
-//                public void onAnimationEnd(Animator animator) {
-//                    drawerLayout.setVisibility(View.INVISIBLE);
-//
-//                    finish();
-//                }
-//
-//                @Override
-//                public void onAnimationCancel(Animator animator) {
-//
-//                }
-//
-//                @Override
-//                public void onAnimationRepeat(Animator animator) {
-//
-//                }
-//            });
-//            circularReveal.setDuration(3000);
-//            circularReveal.start();
-//        }
-//        else {
-//            super.onBackPressed();
-//        }
+
         int orientation = this.getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-//            getSupportActionBar().show();
+
             View windowDecorView = getWindow().getDecorView();
-//            windowDecorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
             windowDecorView.setSystemUiVisibility(View.STATUS_BAR_VISIBLE);
 
 
@@ -793,10 +762,6 @@ public class MapScreen extends FragmentActivity implements
             if (getFragmentManager().getBackStackEntryCount() > 0) {
                 getFragmentManager().popBackStack();
             }
-//        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-//            drawerLayout.closeDrawer(GravityCompat.START);
-//        }
-
 
             else {
                 super.onBackPressed();
@@ -805,11 +770,4 @@ public class MapScreen extends FragmentActivity implements
 
     }
 
-//    @Override
-//    public void onClick(View v) {
-//        if(v == buttonCurrent){
-//            getCurrentLocation();
-//            moveMap();
-//        }
-//    }
 }

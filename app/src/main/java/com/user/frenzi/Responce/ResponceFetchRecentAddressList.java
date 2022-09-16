@@ -66,26 +66,21 @@ public class ResponceFetchRecentAddressList {
         @SerializedName("add_long")
         @Expose
         public String addLong;
-        @SerializedName("home_status")
+        @SerializedName("address_status")
         @Expose
-        public Integer homeStatus;
-        @SerializedName("work_status")
-        @Expose
-        public Integer workStatus;
-        @SerializedName("favorite_status")
-        @Expose
-        public Integer favoriteStatus;
+        public String addressStatus;
 
-        public Response(Integer id, Integer userId, String title, String address, String addLat, String addLong, Integer homeStatus, Integer workStatus, Integer favoriteStatus) {
+        public Response(Integer id, Integer userId, String title, String address,
+                        String addLat, String addLong, String addressStatus
+                        ) {
             this.id = id;
             this.userId = userId;
             this.title = title;
             this.address = address;
             this.addLat = addLat;
             this.addLong = addLong;
-            this.homeStatus = homeStatus;
-            this.workStatus = workStatus;
-            this.favoriteStatus = favoriteStatus;
+            this.addressStatus = addressStatus;
+
         }
 
         public Integer getId() {
@@ -136,28 +131,12 @@ public class ResponceFetchRecentAddressList {
             this.addLong = addLong;
         }
 
-        public Integer getHomeStatus() {
-            return homeStatus;
+        public String getAddressStatus() {
+            return addressStatus;
         }
 
-        public void setHomeStatus(Integer homeStatus) {
-            this.homeStatus = homeStatus;
-        }
-
-        public Integer getWorkStatus() {
-            return workStatus;
-        }
-
-        public void setWorkStatus(Integer workStatus) {
-            this.workStatus = workStatus;
-        }
-
-        public Integer getFavoriteStatus() {
-            return favoriteStatus;
-        }
-
-        public void setFavoriteStatus(Integer favoriteStatus) {
-            this.favoriteStatus = favoriteStatus;
+        public void setAddressStatus(String addressStatus) {
+            this.addressStatus = addressStatus;
         }
     }
 }
