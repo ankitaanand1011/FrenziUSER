@@ -15,6 +15,7 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="0dp"
         map:uiCompass="true"
+        android:layout_above="@+id/bottom_layout"
         map:uiRotateGestures="true"
         map:uiScrollGestures="false"
         map:uiTiltGestures="true"
@@ -76,6 +77,34 @@
                    android:layout_marginTop="10dp"
                    >
 
+                   <com.mckrpk.animatedprogressbar.AnimatedProgressBar
+                       android:id="@+id/animatedProgressBar"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="8dp"
+                       app:animationDurationInMs="1600"
+                       app:animationStyle="line"
+                       app:lineWidth="6dp"
+                       app:max="1000"
+                       app:progress="1000"
+                       app:progressColor="@color/dark_pink"
+                       app:progressTipColor="@color/dark_pink"
+                       app:progressTipEnabled="true"
+                       app:trackColor="@color/Gray" />
+                   <com.mckrpk.animatedprogressbar.AnimatedProgressBar
+                       android:id="@+id/animatedProgressBar1"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="8dp"
+                       app:animationDurationInMs="1600"
+                       app:animationStyle="line"
+                       app:lineWidth="6dp"
+                       app:max="1000"
+                       app:progress="1000"
+                       app:progressColor="@color/dark_pink"
+                       app:progressTipColor="@color/dark_pink"
+                       app:progressTipEnabled="true"
+                       app:trackColor="@color/Gray" />
 
 
                    <ProgressBar

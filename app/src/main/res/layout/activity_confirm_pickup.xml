@@ -5,11 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.user.frenzi.ConfirmPickupActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginBottom="160dp"
-        android:background="@drawable/map_new"
-        android:layout_height="match_parent"/>
+        android:background="@drawable/map_new" />
     <RelativeLayout
         android:layout_width="25dp"
         android:layout_height="60dp"

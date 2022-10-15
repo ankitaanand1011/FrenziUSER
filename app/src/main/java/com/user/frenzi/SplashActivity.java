@@ -131,12 +131,20 @@ public class SplashActivity extends AppCompatActivity {
                             // do you work now
                             SharedPreferences spp = getSharedPreferences(Constant.USER_PREF, Context.MODE_PRIVATE);
                             String User_Id = spp.getString(Constant.USER_ID, "");
+//                            String booking = spp.getString(Constant.BOOKING, "");
 
 
                             if (!User_Id.equalsIgnoreCase("")) {
-                                Intent intent1 = new Intent(SplashActivity.this, MapScreen.class);
-                                startActivity(intent1);
-                                finish();
+
+                               /* if(booking.equals("yes")){
+                                    Intent intent1 = new Intent(SplashActivity.this, DriverNearbyActivity.class);
+                                    startActivity(intent1);
+
+                                }else{*/
+                                    Intent intent1 = new Intent(SplashActivity.this, MapScreen.class);
+                                    startActivity(intent1);
+                                    finish();
+                                // }
 
                             } else {
                                 Intent intent2 = new Intent(SplashActivity.this, LoginActivity.class);

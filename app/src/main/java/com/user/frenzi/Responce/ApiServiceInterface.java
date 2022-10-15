@@ -36,6 +36,15 @@ public interface ApiServiceInterface {
 
 
     );
+
+    @Multipart
+    @POST("delete_address")
+    Call<ServerGeneralResponse> deleteAddresses(
+            @Part("user_id") RequestBody user_id,
+            @Part("address_id") RequestBody address_id
+
+
+    );
     @Multipart
     @POST("vehicle_type")
     Call<ResponceFetchCarList> fetchCarlist(
@@ -56,7 +65,21 @@ public interface ApiServiceInterface {
     @Multipart
     @POST("driver_list")
     Call<ResponceFetchPreferedDriverList> fetchDriverList(
-            @Part("vehicle_type") RequestBody vehicle_type
+            @Part("vehicle_type") RequestBody vehicle_type,
+            @Part("user_id") RequestBody user_id,
+            @Part("driver_preference") RequestBody driver_preference,
+            @Part("pickup_lat") RequestBody pickup_lat,
+            @Part("pickup_long") RequestBody pickup_long,
+            @Part("drop_lat") RequestBody drop_lat,
+            @Part("drop_long") RequestBody drop_long
+
+
+    );
+
+    @Multipart
+    @POST("check_ride_status")
+    Call<ResponseRideStatus> checkRideStatus(
+            @Part("ride_id") RequestBody ride_id
 
 
     );
@@ -91,12 +114,24 @@ public interface ApiServiceInterface {
 
 
     );
-  @Multipart
+    @Multipart
+    @POST("generate_user_refer_key")
+    Call<ResponseReferCode> GenerateCode(
+            @Part("user_id") RequestBody user_id
+
+    );
+
+    @Multipart
+    @POST("ride_accepted")
+    Call<ResponseRideAccepted> RideAccepted(
+            @Part("ride_id") RequestBody ride_id
+
+    );
+
+    @Multipart
     @POST("send_otp_mail")
     Call<ServerGeneralResponse> SendOtpToEmail(
             @Part("email") RequestBody email
-
-
 
     );
 
@@ -121,7 +156,8 @@ public interface ApiServiceInterface {
     @POST("ride_history")
     Call<ResponceFetchRideHistory> FetchRideHistory(
             @Part("user_id") RequestBody ride_id,
-            @Part("date") RequestBody rideDate
+            @Part("from_date") RequestBody fromDate,
+            @Part("to_date") RequestBody toDate
 
 
     );
@@ -138,6 +174,20 @@ public interface ApiServiceInterface {
     @POST("add_address")
     Call<ServerGeneralResponse> AddAddress(
             @Part("user_id") RequestBody user_id,
+            @Part("title") RequestBody title,
+            @Part("address") RequestBody address,
+            @Part("latitude") RequestBody latitude,
+            @Part("longitude") RequestBody longitude,
+            @Part("address_status") RequestBody address_status
+
+
+    );
+
+    @Multipart
+    @POST("update_address")
+    Call<ResponseUpdateAddress> UpdateAddress(
+            @Part("user_id") RequestBody user_id,
+            @Part("address_id") RequestBody address_id,
             @Part("title") RequestBody title,
             @Part("address") RequestBody address,
             @Part("latitude") RequestBody latitude,
@@ -179,13 +229,37 @@ public interface ApiServiceInterface {
     );
 
     @Multipart
+    @POST("send_another_driver")
+    Call<ServerGeneralResponse> SendAnother(
+            @Part("user_id") RequestBody          user_id,
+            @Part("ride_id") RequestBody        ride_id,
+            @Part("driver_preference") RequestBody   driver_preference
+
+    );
+
+
+    @Multipart
+    @POST("make_payment")
+    Call<ResponseNewRideDetails> MakePayment(
+            @Part("ride_id") RequestBody          ride_id,
+            @Part("amount") RequestBody        amount,
+            @Part("tran_id") RequestBody   tran_id
+
+    );
+
+    @Multipart
     @POST("user_profile_update")
     Call<ProfileResponse> UpdateUserProfile(
             @Part("user_id") RequestBody user_id,
             @Part("name") RequestBody name,
             @Part("phone") RequestBody phone,
             @Part("email") RequestBody email,
-            @Part("address") RequestBody address,
+            @Part("address_line_1") RequestBody address_line_1,
+            @Part("address_line_2") RequestBody address_line_2,
+            @Part("city") RequestBody city,
+            @Part("postcode") RequestBody postcode,
+            @Part("gender") RequestBody gender,
+            @Part("driver_preference") RequestBody driver_preference,
             @Part MultipartBody.Part image_icon
 
 
@@ -198,7 +272,12 @@ public interface ApiServiceInterface {
             @Part("name") RequestBody name,
             @Part("phone") RequestBody phone,
             @Part("email") RequestBody email,
-            @Part("address") RequestBody address
+            @Part("address_line_1") RequestBody address_line_1,
+            @Part("address_line_2") RequestBody address_line_2,
+            @Part("city") RequestBody city,
+            @Part("postcode") RequestBody postcode,
+            @Part("gender") RequestBody gender,
+            @Part("driver_preference") RequestBody driver_preference
 
     );
 
@@ -210,7 +289,9 @@ public interface ApiServiceInterface {
             @Part("phone") RequestBody phone,
             @Part("password") RequestBody password,
             @Part("address") RequestBody address,
-            @Part("reg_type") RequestBody reg_tpe
+            @Part("reg_type") RequestBody reg_tpe,
+            @Part("gender") RequestBody gender,
+            @Part("driver_preference") RequestBody driver_preference
 
 
 

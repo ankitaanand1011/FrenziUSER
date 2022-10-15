@@ -65,23 +65,38 @@ public class ProfileResponse {
         public String user_email;
 
 
-        @SerializedName("address")
+        @SerializedName("address_line_1")
         @Expose
-        public String address;
+        public String address1;
+
+        @SerializedName("address_line_2")
+        @Expose
+        public String address2;
+
+        @SerializedName("city")
+        @Expose
+        public String city;
+
+        @SerializedName("postcode")
+        @Expose
+        public String postcode;
 
         @SerializedName("image")
         @Expose
         public String image;
 
 
-        public Response(Integer user_id, String user_name,
-                        String user_phone,String user_email,
+        public Response(Integer user_id, String user_name, String user_phone,String user_email
+                ,String address1,String address2,String city,String postcode,
                         String image) {
             this.user_id = user_id;
             this.user_name = user_name;
             this.user_phone = user_phone;
             this.user_email = user_email;
-            this.address = address;
+            this.address1 = address1;
+            this.address2 = address2;
+            this.city = city;
+            this.postcode = postcode;
             this.image = image;
 
         }
@@ -118,12 +133,36 @@ public class ProfileResponse {
             this.user_email = user_email;
         }
 
-        public String getAddress() {
-            return address;
+        public String getAddress1() {
+            return address1;
         }
 
-        public void setAddress(String address) {
-            this.address = address;
+        public void setAddress1(String address1) {
+            this.address1 = address1;
+        }
+
+        public String getAddress2() {
+            return address2;
+        }
+
+        public void setAddress2(String address2) {
+            this.address2 = address2;
+        }
+
+        public String getCity() {
+            return city;
+        }
+
+        public void setCity(String city) {
+            this.city = city;
+        }
+
+        public String getPostcode() {
+            return postcode;
+        }
+
+        public void setPostcode(String postcode) {
+            this.postcode = postcode;
         }
 
         public String getImage() {

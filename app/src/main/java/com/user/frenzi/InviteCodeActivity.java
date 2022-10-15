@@ -3,10 +3,15 @@ package com.user.frenzi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,12 +21,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.frenzi.R;
+import com.user.frenzi.Responce.ResponseReferCode;
+import com.user.frenzi.Responce.ServerGeneralResponse;
+
+import java.util.Objects;
+
+import cc.cloudist.acplibrary.ACProgressConstant;
+import cc.cloudist.acplibrary.ACProgressFlower;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class InviteCodeActivity extends AppCompatActivity {
-
+    String TAG = "InviteCode";
     Button btn_invite;
     ImageView btn_back;
     TextView tv_refer_code;
+    String user_id;
 
 
     @Override
@@ -36,6 +54,11 @@ public class InviteCodeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invite_code);
+
+        SharedPreferences spp = Objects.requireNonNull(getSharedPreferences(Constant.USER_PREF, Context.MODE_PRIVATE));
+
+        user_id = spp.getString(Constant.USER_ID, "");
+        Log.e(TAG, "onCreate:userId "+user_id );
 
         btn_back=findViewById(R.id.btn_back);
         tv_refer_code=findViewById(R.id.tv_refer_code);
@@ -67,6 +90,7 @@ public class InviteCodeActivity extends AppCompatActivity {
             }
         });
 
+        generateCode();
     }
 
     void shareImageWithText(){
@@ -92,4 +116,51 @@ public class InviteCodeActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "No App Available", Toast.LENGTH_SHORT).show();
             }
         }
-}
+
+    private void generateCode( ) {
+
+            ACProgressFlower dialog = new ACProgressFlower.Builder(InviteCodeActivity.this)
+                    .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                    .themeColor(Color.WHITE)
+                    .fadeColor(Color.BLACK).build();
+            dialog.show();
+
+
+            RequestBody userId = RequestBody.create(MediaType.parse("txt/plain"), user_id);
+
+            RestClient.getClient().GenerateCode(userId).enqueue(new Callback<ResponseReferCode>() {
+                @Override
+                public void onResponse(Call<ResponseReferCode> call, Response<ResponseReferCode> response) {
+                    Log.e(TAG, "onResponse: Code :" + response.body());
+                    Log.e(TAG, "onResponse: " + response.code());
+                    Log.e(TAG, "onResponse: " + response.errorBody());
+                    if (!String.valueOf(response.code()).equals("500")) {
+                        if (response.body().getStatus().equals(200)) {
+                            dialog.dismiss();
+
+
+                            tv_refer_code.setText(response.body().getResponse());
+
+
+
+
+                        } else {
+                            dialog.dismiss();
+//
+
+                        }
+                    }else{
+                        dialog.dismiss();
+                        Toast.makeText(InviteCodeActivity.this,"Something went wrong !!", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseReferCode> call, Throwable t) {
+
+                    dialog.dismiss();
+                }
+            });
+        }
+
+    }

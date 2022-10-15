@@ -95,7 +95,6 @@
             android:layout_height="@dimen/_80sdp"
             android:layout_gravity="center"
             android:hint="Any comments?"
-            android:visibility="gone"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginEnd="@dimen/_20sdp"

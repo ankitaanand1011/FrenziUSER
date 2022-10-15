@@ -128,6 +128,7 @@
                         android:layout_marginTop="@dimen/_20sdp"
                         android:gravity="start"
                         android:text="Username"
+                        android:fontFamily="@font/poppins_medium"
                         android:textAllCaps="true"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_9sdp" />
@@ -140,6 +141,7 @@
                         android:background="@drawable/et_bg_white"
                         android:gravity="start"
                         android:padding="@dimen/_10sdp"
+                        android:fontFamily="@font/poppins_regular"
                         android:textColorHint="@color/hint_color"
                         android:hint="username"
                         android:textColor="@color/black"
@@ -151,6 +153,7 @@
                         android:layout_marginTop="@dimen/_10sdp"
                         android:gravity="start"
                         android:text="mobile no"
+                        android:fontFamily="@font/poppins_medium"
                         android:textAllCaps="true"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_9sdp" />
@@ -163,6 +166,7 @@
                         android:background="@drawable/et_bg_white"
                         android:gravity="start"
                         android:inputType="phone"
+                        android:fontFamily="@font/poppins_regular"
                         android:padding="@dimen/_10sdp"
                         android:hint="eg. 9574872433"
                         android:textColorHint="@color/hint_color"
@@ -176,6 +180,7 @@
                         android:layout_marginTop="@dimen/_10sdp"
                         android:gravity="start"
                         android:text="Email"
+                        android:fontFamily="@font/poppins_medium"
                         android:textAllCaps="true"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_9sdp" />
@@ -185,6 +190,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_2sdp"
+                        android:fontFamily="@font/poppins_regular"
                         android:background="@drawable/et_bg_white"
                         android:gravity="start"
                         android:inputType="textEmailAddress"
@@ -200,23 +206,193 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:gravity="start"
-                        android:text="address"
+                        android:text="address Line 1"
                         android:textAllCaps="true"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_9sdp" />
 
                     <EditText
-                        android:id="@+id/et_address"
+                        android:id="@+id/et_address1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_2sdp"
                         android:background="@drawable/et_bg_white"
                         android:gravity="start"
                         android:padding="@dimen/_10sdp"
-                        android:hint="Address"
+                        android:fontFamily="@font/poppins_regular"
+                        android:hint="Enter Address Line 1"
                         android:textColorHint="@color/hint_color"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14sdp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:gravity="start"
+                        android:text="address line 2"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_9sdp" />
+
+                    <EditText
+                        android:id="@+id/et_address2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:background="@drawable/et_bg_white"
+                        android:gravity="start"
+                        android:padding="@dimen/_10sdp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:hint="Enter Address Line 2"
+                        android:textColorHint="@color/hint_color"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14sdp" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:gravity="start"
+                        android:text="Address line 2"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_9sdp" />
+
+                    <EditText
+                        android:id="@+id/et_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:background="@drawable/et_bg_white"
+                        android:gravity="start"
+                        android:padding="@dimen/_10sdp"
+                        android:hint="City"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColorHint="@color/hint_color"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14sdp" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:gravity="start"
+                        android:text="Postcode"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_9sdp" />
+
+                    <EditText
+                        android:id="@+id/et_post_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:background="@drawable/et_bg_white"
+                        android:gravity="start"
+                        android:padding="@dimen/_10sdp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:hint="Postcode"
+                        android:textColorHint="@color/hint_color"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Gender"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <RadioButton
+                            android:id="@+id/rb_male"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/black"
+                            android:checked="true"
+                            android:buttonTint="@color/dark_pink"
+                            android:gravity="center_vertical"
+                            android:textSize="@dimen/_14sdp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="Male"/>
+                        <RadioButton
+                            android:id="@+id/rb_female"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:buttonTint="@color/dark_pink"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_14sdp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="Female"/>
+                    </RadioGroup>
+
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Driver Preference"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:weightSum="3">
+
+                        <RadioButton
+                            android:id="@+id/rb_male_female"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/black"
+                            android:checked="true"
+                            android:textSize="@dimen/_14sdp"
+                            android:buttonTint="@color/dark_pink"
+                            android:gravity="center_vertical"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="Male &amp; Female"/>
+                        <RadioButton
+                            android:id="@+id/rb_female_only"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textSize="@dimen/_14sdp"
+                            android:buttonTint="@color/dark_pink"
+                            android:gravity="center_vertical"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textColor="@color/black"
+                            android:text="Female Only"/>
+                        <RadioButton
+                            android:id="@+id/rb_male_only"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:visibility="gone"
+                            android:gravity="center_vertical"
+                            android:textSize="@dimen/_14sdp"
+                            android:buttonTint="@color/dark_pink"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textColor="@color/black"
+                            android:text="Male Only"/>
+                    </RadioGroup>
+
 
 
                     <TextView

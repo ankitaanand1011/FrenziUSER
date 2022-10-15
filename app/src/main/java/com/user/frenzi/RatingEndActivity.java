@@ -4,7 +4,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -99,6 +101,8 @@ public class RatingEndActivity extends AppCompatActivity {
         driver_id = getIntent().getStringExtra("driver_id");
 
         Log.e(TAG, "functions: ride_id>"+ride_id );
+        Log.e(TAG, "functions: user_id>"+user_id );
+        Log.e(TAG, "functions: driver_id>"+driver_id );
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,16 +127,21 @@ public class RatingEndActivity extends AppCompatActivity {
         });
 
 
-        tv_comments.setOnClickListener(new View.OnClickListener() {
+      /*  tv_comments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 edt_reviews.setVisibility(View.VISIBLE);
             }
-        });
+        });*/
 
         tv_skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+             /*   SharedPreferences sp = getSharedPreferences(Constant.USER_PREF, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                // editor.putString(Constant.DRIVER_PREF, "1");
+                editor.putString(Constant.BOOKING, "no");
+                editor.apply();*/
                 Intent navi = new Intent(RatingEndActivity.this, MapScreen.class);
                 startActivity(navi);
                 finish();
@@ -214,7 +223,11 @@ public class RatingEndActivity extends AppCompatActivity {
 
                         //  Log.e(TAG, "onResponse code: "+response.body().getResponse() );
 
-
+                    /*    SharedPreferences sp = getSharedPreferences(Constant.USER_PREF, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        // editor.putString(Constant.DRIVER_PREF, "1");
+                        editor.putString(Constant.BOOKING, "no");
+                        editor.apply();*/
                         Toast.makeText(RatingEndActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                         Intent navi = new Intent(RatingEndActivity.this, MapScreen.class);
                         startActivity(navi);

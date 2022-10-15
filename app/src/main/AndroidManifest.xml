@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.frenzi" >
 
+
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -28,7 +29,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Frenzi"
         android:usesCleartextTraffic="true"
-        tools:ignore="GoogleAppIndexingWarning" >
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:targetApi="m">
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -42,10 +44,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-<!--        <activity-->
-<!--            android:name=".MapsActivity"-->
-<!--            android:exported="true"-->
-<!--            android:label="@string/title_activity_maps" />-->
+
         <activity
             android:name="com.user.frenzi.SearchAddressActivity"
             android:launchMode='singleTask'
@@ -96,7 +95,7 @@
             android:exported="false" />
 
         <activity
-            android:name="com.user.frenzi.PaymenyMethodActivity"
+            android:name="com.user.frenzi.PaymentMethodActivity"
             android:exported="true" />
         <activity
             android:name="com.user.frenzi.RideHistoryActivity"
@@ -118,8 +117,6 @@
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
@@ -197,6 +194,10 @@
             <!-- </intent-filter> -->
 
         </activity>
+        <activity
+            android:name="com.user.frenzi.EditAddressActivity"
+            android:exported="true" />
+
 
         <meta-data
             android:name="com.google.android.gms.version"

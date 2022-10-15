@@ -78,20 +78,16 @@
                     android:id="@+id/edt_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    
                     android:hint="Your Full Name"
+                    android:padding="@dimen/_8sdp"
+                    android:background="@drawable/et_bg_white_grey_stroke"
                     android:textColorHint="@color/hint_color"
                     android:textColor="@color/Gray"
-                    android:backgroundTint="@color/white"
                     android:fontFamily="@font/poppins_regular"
                     android:textSize="@dimen/_14sdp"
                     tools:ignore="SpUsage" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/LightGrey" />
-
+               
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -110,16 +106,13 @@
                     android:textColorHint="@color/hint_color"
                     android:hint="Address"
                     android:textColor="@color/Gray"
-                    android:backgroundTint="@color/white"
+                    android:padding="@dimen/_8sdp"
+                    android:background="@drawable/et_bg_white_grey_stroke"
                     android:fontFamily="@font/poppins_regular"
                     android:textSize="@dimen/_14sdp"
                     tools:ignore="SpUsage" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/LightGrey" />
-
+               
                 <TextView
                     android:id="@+id/mail"
                     android:layout_width="wrap_content"
@@ -139,16 +132,12 @@
                     android:hint="Email"
                     android:textColorHint="@color/hint_color"
                     android:textColor="@color/Gray"
-                    android:backgroundTint="@color/white"
+                    android:padding="@dimen/_8sdp"
+                    android:background="@drawable/et_bg_white_grey_stroke"
                     android:fontFamily="@font/poppins_regular"
                     android:textSize="@dimen/_14sdp"
                     tools:ignore="SpUsage" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    
-                    android:background="@color/LightGrey" />
 
 
                 <TextView
@@ -168,17 +157,11 @@
                     android:hint="Phone Number"
                     android:textColorHint="@color/hint_color"
                     android:textColor="@color/Gray"
-                    android:backgroundTint="@color/white"
+                    android:padding="@dimen/_8sdp"
+                    android:background="@drawable/et_bg_white_grey_stroke"
                     android:fontFamily="@font/poppins_regular"
                     android:textSize="@dimen/_14sdp"
                     tools:ignore="SpUsage" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    
-                    android:background="@color/LightGrey" />
-
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -197,16 +180,110 @@
                     android:hint="Password"
                     android:textColorHint="@color/hint_color"
                     android:textColor="@color/Gray"
-                    android:backgroundTint="@color/white"
+                    android:padding="@dimen/_8sdp"
+                    android:background="@drawable/et_bg_white_grey_stroke"
                     android:fontFamily="@font/poppins_regular"
                     android:textSize="@dimen/_14sdp"
                     tools:ignore="SpUsage" />
 
-                <View
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Gender"
+                    android:textColor="@color/MidnightBlue"
+                    android:textSize="15sp" />
+
+                <RadioGroup
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    
-                    android:background="@color/LightGrey" />
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <RadioButton
+                        android:id="@+id/rb_male"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/MidnightBlue"
+                        android:checked="true"
+                        android:buttonTint="@color/dark_pink"
+                        android:gravity="center_vertical"
+                        android:textSize="@dimen/_14sdp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Male"/>
+                    <RadioButton
+                        android:id="@+id/rb_female"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/dark_pink"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/MidnightBlue"
+                        android:textSize="@dimen/_14sdp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Female"/>
+                </RadioGroup>
+                
+
+               
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Driver Preference"
+                    android:textColor="@color/MidnightBlue"
+                    android:textSize="15sp" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:weightSum="3">
+
+                    <RadioButton
+                        android:id="@+id/rb_male_female"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/MidnightBlue"
+                        android:checked="true"
+                        android:textSize="@dimen/_14sdp"
+                        android:buttonTint="@color/dark_pink"
+                        android:gravity="center_vertical"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Male &amp; Female"/>
+                    <RadioButton
+                        android:id="@+id/rb_female_only"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/_14sdp"
+                        android:buttonTint="@color/dark_pink"
+                        android:gravity="center_vertical"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textColor="@color/MidnightBlue"
+                        android:text="Female Only"/>
+                    <RadioButton
+                        android:id="@+id/rb_male_only"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:textSize="@dimen/_14sdp"
+                        android:visibility="gone"
+                        android:buttonTint="@color/dark_pink"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textColor="@color/MidnightBlue"
+                        android:text="Male Only"/>
+                </RadioGroup>
+
+
+
+
 
 
                 <RelativeLayout

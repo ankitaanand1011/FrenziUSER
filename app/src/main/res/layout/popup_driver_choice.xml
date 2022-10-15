@@ -23,27 +23,6 @@
             android:textColor="@color/White"
             android:textSize="17sp" />
 
-        <!--        <RadioGroup-->
-        <!--            android:id="@+id/radio_group"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_margin="10dp"-->
-        <!--            android:orientation="vertical"-->
-        <!--            android:weightSum="2">-->
-
-        <!--            <RadioButton-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_weight="1"-->
-        <!--                android:text="@string/pay_now" />-->
-
-        <!--            <RadioButton-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_weight="1"-->
-        <!--                android:text="@string/pay_later" />-->
-
-        <!--        </RadioGroup>-->
         <Button
             android:id="@+id/btn_preferr"
             android:layout_width="match_parent"

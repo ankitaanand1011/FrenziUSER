@@ -9,6 +9,7 @@ import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -52,6 +53,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.user.frenzi.Responce.ResponceFetchRidedetails;
 import com.user.frenzi.Responce.ResponseCancelRide;
+import com.user.frenzi.Responce.ResponseRideStatus;
 import com.user.frenzi.Responce.ServerGeneralResponse;
 
 import java.util.ArrayList;
@@ -94,7 +96,7 @@ public class DriverDetailsAfterBookingActivity extends FragmentActivity implemen
     String  pickup_address,drop_address, pickup_lat, pickup_long, drop_lat, drop_long,
             distance, total_time, amount, start_date, start_time, end_date, end_time,
             driver_name, ride_id, vehicle_no, driver_phn,driverId;
-    int user_id, driver_id;
+    String user_id, driver_id,Ridestatus;
     private static RequestQueue mRequestQueue;
 
     public  <T> void addToRequestQueue(Context mContext, Request<T> request, String tag) {
@@ -186,11 +188,12 @@ public class DriverDetailsAfterBookingActivity extends FragmentActivity implemen
         drop_lat = getIntent().getStringExtra("drop_lat");
         drop_long = getIntent().getStringExtra("drop_long");
         ride_id = getIntent().getStringExtra("ride_id");
-        driverId = getIntent().getStringExtra("driver_id");
+        amount = getIntent().getStringExtra("amount");
+      //  driverId = getIntent().getStringExtra("driver_id");
 
         Log.e(TAG, "functions: ride_id >>"+ride_id);
 
-        ll_hide_layout.setVisibility(View.GONE);
+       // ll_hide_layout.setVisibility(View.GONE);
 
 
         btn_share.setOnClickListener(new View.OnClickListener() {
@@ -228,13 +231,26 @@ public class DriverDetailsAfterBookingActivity extends FragmentActivity implemen
             public void onClick(View view) {
 
                 //   post_ride();
+/*
                 Intent cancel=new Intent(DriverDetailsAfterBookingActivity.this,EmergencyTwoActivity.class);
                 cancel.putExtra("ride_id", ride_id);
                 cancel.putExtra("amount", amount);
                 cancel.putExtra("user_id", user_id);
                 cancel.putExtra("driver_id", driver_id);
-                startActivity(cancel);
+                startActivity(cancel);*/
 
+                if(Ridestatus.equals("STARTED")){
+
+                final Handler handler = new Handler(Looper.getMainLooper());
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            //Do something after 100ms
+                            CheckRideStatus();
+
+                        }
+                    }, 2000);
+                }
             }
         });
 
@@ -256,13 +272,68 @@ public class DriverDetailsAfterBookingActivity extends FragmentActivity implemen
             }
         });
 
-
-        if(driverId.equals("0")){
+        FetchRideDetails();
+       /* if(driverId.equals("0")){
             FetchRideDetailsWithoutDriver();
         }else{
             FetchRideDetails();
-        }
+        }*/
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+
+
+    }
+
+    private void CheckRideStatus() {
+
+        RequestBody RideID = RequestBody.create(MediaType.parse("text/plain"), ride_id);
+
+
+        RestClient.getClient().checkRideStatus(RideID).enqueue
+                (new Callback<ResponseRideStatus>() {
+                    @Override
+                    public void onResponse(Call<ResponseRideStatus> call,
+                                           Response<ResponseRideStatus> response) {
+                        Log.e(TAG, "onResponse 2 : " + response.code());
+                        Log.e(TAG, "onResponse 2: " + response.isSuccessful());
+                        // ppDialog.dismiss();
+                        assert response.body() != null;
+                        if (response.body().getStatus().equals(200)) {
+                            //    ll_hide_layout.setVisibility(View.VISIBLE);
+
+                           if(response.body().getRide_status().equals("ACCEPTED")){
+
+                               Intent cancel=new Intent(DriverDetailsAfterBookingActivity.this,EmergencyTwoActivity.class);
+                               cancel.putExtra("ride_id", ride_id);
+                               cancel.putExtra("amount", amount);
+                               cancel.putExtra("user_id", user_id);
+                               cancel.putExtra("driver_id", driver_id);
+                               startActivity(cancel);
+
+
+                           }
+
+                        } else
+                        {
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseRideStatus> call, Throwable t)
+                    {
+                        Log.e(TAG, "onFailure 2: " + t.getMessage());
+                       // dialog.dismiss();
+                    }
+                });
+    }
+
+
 
     private void FetchRideDetails() {
         ACProgressFlower dialog = new ACProgressFlower.Builder(this)
@@ -278,16 +349,18 @@ public class DriverDetailsAfterBookingActivity extends FragmentActivity implemen
         RequestBody RideID = RequestBody.create(MediaType.parse("text/plain"), ride_id);
 
 
-        RestClient.getClient().fetchRideDetails(RideID).enqueue(new Callback<ResponceFetchRidedetails>() {
+        RestClient.getClient().fetchRideDetails(RideID).enqueue
+                (new Callback<ResponceFetchRidedetails>() {
             @Override
-            public void onResponse(Call<ResponceFetchRidedetails> call, Response<ResponceFetchRidedetails> response) {
+            public void onResponse(Call<ResponceFetchRidedetails> call,
+                                   Response<ResponceFetchRidedetails> response) {
                 Log.e(TAG, "onResponse 2 : " + response.code());
                 Log.e(TAG, "onResponse 2: " + response.isSuccessful());
                 // ppDialog.dismiss();
                 assert response.body() != null;
                 if (response.body().getStatus().equals(200)) {
                     dialog.dismiss();
-                    ll_hide_layout.setVisibility(View.VISIBLE);
+                //    ll_hide_layout.setVisibility(View.VISIBLE);
 
                     ResponceFetchRidedetails listResponse = response.body();
                     driver_name = String.valueOf(response.body().getResponse().getDriverDetails().getName());
@@ -300,8 +373,10 @@ public class DriverDetailsAfterBookingActivity extends FragmentActivity implemen
                     txt_d_address.setText(response.body().getResponse().getDropAddress());
                     txt_reached_time.setText(response.body().getResponse().getTotalTime());
 
-                    user_id = response.body().getResponse().getUserId();
-                    driver_id = response.body().getResponse().getDriverId();
+                    String userId = String.valueOf(response.body().getResponse().getUserId());
+                    user_id = userId ;
+                    String driverId= String.valueOf(response.body().getResponse().getDriverId());
+                    driver_id = driverId;
                     pickup_address = response.body().getResponse().getPickupAddress();
                     drop_address = response.body().getResponse().getDropAddress();
 
@@ -317,11 +392,13 @@ public class DriverDetailsAfterBookingActivity extends FragmentActivity implemen
 
                     distance = response.body().getResponse().getDistance();
                     total_time = response.body().getResponse().getTotalTime();
-                    amount = response.body().getResponse().getAmount();
+                    String Amount = response.body().getResponse().getAmount();
+                    amount = Amount;
                     start_date = response.body().getResponse().getStartDate();
                     start_time = response.body().getResponse().getStartTime();
                     end_date = response.body().getResponse().getEndDate();
                     end_time = response.body().getResponse().getEndTime();
+                    Ridestatus = response.body().getResponse().getStatus();
 
                     Log.d(TAG, "onResponse:user_id  - "+user_id );
                     Log.d(TAG, "onResponse:driver_id  - "+driver_id );
@@ -350,14 +427,16 @@ public class DriverDetailsAfterBookingActivity extends FragmentActivity implemen
                     Log.d(TAG, "onResponse: "+otp);
 
 
-                } else  {
+                } else
+                {
 
                     dialog.dismiss();
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponceFetchRidedetails> call, Throwable t) {
+            public void onFailure(Call<ResponceFetchRidedetails> call, Throwable t)
+            {
                 Log.e(TAG, "onFailure 2: " + t.getMessage());
                 dialog.dismiss();
             }
@@ -623,6 +702,12 @@ public class DriverDetailsAfterBookingActivity extends FragmentActivity implemen
                 if (response.body().getStatus().equals(200)) {
                     dialog.dismiss();
 
+                  /*  SharedPreferences sp = getSharedPreferences(Constant.USER_PREF, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sp.edit();
+                    // editor.putString(Constant.DRIVER_PREF, "1");
+                    editor.putString(Constant.BOOKING, "no");
+                    editor.apply();*/
+
                     Intent cancel=new Intent(DriverDetailsAfterBookingActivity.this,MapScreen.class);
                     startActivity(cancel);
                     Toast.makeText(DriverDetailsAfterBookingActivity.this,response.body().getMessage(),Toast.LENGTH_LONG).show();
@@ -689,29 +774,17 @@ public class DriverDetailsAfterBookingActivity extends FragmentActivity implemen
         super.onStop();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        final Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //Do something after 100ms
 
-                //  FetchRideDetails();
-                FetchRideDetailsWithoutDriver();
-            }
-        }, 2000);
-
-
-    }
 
     /*--------Map Implementation-----------*/
     //Getting current location
     private void getCurrentLocation() {
 //        mMap.clear();
         //Creating a location object
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED && ActivityCompat.
+                checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -759,11 +832,11 @@ public class DriverDetailsAfterBookingActivity extends FragmentActivity implemen
         mMap.addMarker(new MarkerOptions()
                 .position(latLng)
                 .icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
-        //Moving the camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
-        //Animating the camera
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(pickup_lat), Double.parseDouble(pickup_long)), 16));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(16), 2000, null);
+
 
         //Displaying current coordinates in toast
 //        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
@@ -793,16 +866,17 @@ public class DriverDetailsAfterBookingActivity extends FragmentActivity implemen
             return;
         }
 
-        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.map_j);
+      /*  BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.map_j);
         Bitmap b=bitmapdraw.getBitmap();
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, 84, 84, false);
         // adding a marker on map with image from  drawable
         mMap.addMarker(new MarkerOptions()
                 .position(latLng)
-                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
+                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));*/
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(pickup_lat), Double.parseDouble(pickup_long)), 16));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(16), 2000, null);
+
 
         BitmapDrawable bitmapdraw1=(BitmapDrawable)getResources().getDrawable(R.drawable.navigation);
         Bitmap b1=bitmapdraw1.getBitmap();
@@ -812,8 +886,12 @@ public class DriverDetailsAfterBookingActivity extends FragmentActivity implemen
                 .position(dlatLng)
                 .icon(BitmapDescriptorFactory.fromBitmap(smallMarker1)));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(dlatLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+     //   mMap.moveCamera(CameraUpdateFactory.newLatLng(dlatLng));
+     //   mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        googleMap.getUiSettings().setScrollGesturesEnabled(true);
+        googleMap.getUiSettings().setZoomGesturesEnabled(true);
         //   mMap.moveCamera(CameraUpdateFactory.newLatLng(dlatLng));
     }
 

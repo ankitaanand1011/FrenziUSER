@@ -66,6 +66,10 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:18.0.2'
     implementation platform('com.google.firebase:firebase-bom:28.4.2')
     implementation 'com.google.firebase:firebase-analytics'
+
+    implementation 'com.github.mckrpk:AnimatedProgressBar:0.1.0'
+
+
 // Dexter runtime permissions
     implementation 'com.karumi:dexter:6.2.3'
 }

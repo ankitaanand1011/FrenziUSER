@@ -25,6 +25,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,11 +64,14 @@ public class ProfileDetailActivity extends AppCompatActivity {
     String TAG = "ProfileDetailActivity";
     ImagePicker imagePicker;
     ImageView iv_back,iv_profile,iv_add_image;
-    EditText et_user_name,et_user_mobile,et_email,et_address;
+    EditText et_user_name,et_user_mobile,et_email,et_address1,et_address2,et_city,et_post_code;
     TextView tv_save;
     File profile_image;
     String user_Image,user_Name,userId;
     String profile_image_str, clicked_on_profile = "no";
+    RadioButton rb_male, rb_female, rb_male_female, rb_female_only,rb_male_only;
+    String gender = "male";
+    String driver_prefer = "any";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,8 +121,18 @@ public class ProfileDetailActivity extends AppCompatActivity {
         et_user_name = findViewById(R.id.et_user_name);
         et_user_mobile = findViewById(R.id.et_user_mobile);
         et_email = findViewById(R.id.et_email);
-        et_address = findViewById(R.id.et_address);
+        et_address1 = findViewById(R.id.et_address1);
+        et_address2 = findViewById(R.id.et_address2);
+        et_city = findViewById(R.id.et_city);
+        et_post_code = findViewById(R.id.et_post_code);
         tv_save = findViewById(R.id.tv_save);
+
+        rb_male=findViewById(R.id.rb_male);
+        rb_female=findViewById(R.id.rb_female);
+        rb_male_female=findViewById(R.id.rb_male_female);
+        rb_female_only=findViewById(R.id.rb_female_only);
+        rb_male_only=findViewById(R.id.rb_male_only);
+
 
         functions();
         FetchProfile();
@@ -144,6 +158,21 @@ public class ProfileDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.e(TAG, "onClick:clicked_on_profile >> "+clicked_on_profile );
+
+                if (rb_male.isChecked()) {
+                    gender = "male";
+                } else if (rb_female.isChecked()) {
+                    gender = "female";
+                }
+
+                if (rb_male_female.isChecked()) {
+                    driver_prefer = "any";
+                } else if (rb_female_only.isChecked()) {
+                    driver_prefer = "female";
+                } else if (rb_male_only.isChecked()) {
+                    driver_prefer = "male";
+                }
+
                 if (clicked_on_profile.equals("no")){
                     UpdateProfileWithoutImage();
                 }else {
@@ -397,10 +426,14 @@ public class ProfileDetailActivity extends AppCompatActivity {
                     SharedPreferences sp = getSharedPreferences(Constant.USER_PREF, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sp.edit();
                     assert response.body() != null;
+                    String full_address = response.body().getResponse().getAddress1()+", "+
+                            response.body().getResponse().getAddress2()+", "+
+                            response.body().getResponse().getCity()+", "+
+                            response.body().getResponse().getPostcode();
 
                     editor.putString(Constant.USER_NAME, response.body().getResponse().getUser_name());
                     editor.putString(Constant.USER_ID, String.valueOf(response.body().getResponse().getUser_id()));
-                    editor.putString(Constant.USER_ADDRESS, response.body().getResponse().getAddress());
+                    editor.putString(Constant.USER_ADDRESS, full_address);
                     editor.putString(Constant.USER_MAIL, response.body().getResponse().getUser_email());
                     editor.putString(Constant.USER_IMAGE, response.body().getResponse().getImage());
                     editor.apply();
@@ -408,7 +441,7 @@ public class ProfileDetailActivity extends AppCompatActivity {
                     et_user_name.setText(response.body().getResponse().getUser_name());
                     et_user_mobile.setText(response.body().getResponse().getUser_phone());
                     et_email.setText(response.body().getResponse().getUser_email());
-                    et_address.setText(response.body().getResponse().getAddress());
+                    //et_address.setText(response.body().getResponse().getAddress());
 
                     RequestOptions options = new RequestOptions()
                             .centerInside();
@@ -448,7 +481,12 @@ public class ProfileDetailActivity extends AppCompatActivity {
         RequestBody name = RequestBody.create(MediaType.parse("text/plain"),et_user_name.getText().toString().trim() );
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"),et_user_mobile.getText().toString().trim() );
         RequestBody email = RequestBody.create(MediaType.parse("text/plain"),et_email.getText().toString().trim() );
-        RequestBody address = RequestBody.create(MediaType.parse("text/plain"),et_address.getText().toString().trim() );
+        RequestBody Address1 = RequestBody.create(MediaType.parse("text/plain"),et_address1.getText().toString().trim() );
+        RequestBody Address2 = RequestBody.create(MediaType.parse("text/plain"),et_address2.getText().toString().trim() );
+        RequestBody City = RequestBody.create(MediaType.parse("text/plain"),et_city.getText().toString().trim() );
+        RequestBody Postcode = RequestBody.create(MediaType.parse("text/plain"),et_post_code.getText().toString().trim() );
+        RequestBody Gender = RequestBody.create(MediaType.parse("txt/plain"), gender);
+        RequestBody DriverPref = RequestBody.create(MediaType.parse("txt/plain"), driver_prefer);
 
         MultipartBody.Part pro_image = MultipartBody.Part.createFormData(
                 "image_icon",
@@ -461,10 +499,11 @@ public class ProfileDetailActivity extends AppCompatActivity {
 
 
         RestClient.getClient().UpdateUserProfile(user_id,name,phone,email,
-                address,pro_image
+                Address1, Address2, City, Postcode,Gender,DriverPref, pro_image
         ).enqueue(new Callback<ProfileResponse>() {
             @Override
-            public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
+            public void onResponse(Call<ProfileResponse> call,
+                                   Response<ProfileResponse> response) {
                 Log.e(TAG, "onResponse 2 : " + response.code());
                 Log.e(TAG, "onResponse 2: " + response.isSuccessful());
                 // ppDialog.dismiss();
@@ -477,10 +516,14 @@ public class ProfileDetailActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = sp.edit();
                     assert response.body() != null;
 
+                    String full_address = response.body().getResponse().getAddress1()+", "+
+                         response.body().getResponse().getAddress2()+", "+
+                         response.body().getResponse().getCity()+", "+
+                         response.body().getResponse().getPostcode();
 
                     editor.putString(Constant.USER_NAME, response.body().getResponse().getUser_name());
                     editor.putString(Constant.USER_ID, String.valueOf(response.body().getResponse().getUser_id()));
-                    editor.putString(Constant.USER_ADDRESS, response.body().getResponse().getAddress());
+                    editor.putString(Constant.USER_ADDRESS, full_address);
                     editor.putString(Constant.USER_MAIL, response.body().getResponse().getUser_email());
                     editor.putString(Constant.USER_IMAGE, response.body().getResponse().getImage());
                     editor.apply();
@@ -520,13 +563,18 @@ public class ProfileDetailActivity extends AppCompatActivity {
         RequestBody name = RequestBody.create(MediaType.parse("text/plain"),et_user_name.getText().toString().trim() );
         RequestBody phone = RequestBody.create(MediaType.parse("text/plain"),et_user_mobile.getText().toString().trim() );
         RequestBody email = RequestBody.create(MediaType.parse("text/plain"),et_email.getText().toString().trim() );
-        RequestBody address = RequestBody.create(MediaType.parse("text/plain"),et_address.getText().toString().trim() );
+        RequestBody Address1 = RequestBody.create(MediaType.parse("text/plain"),et_address1.getText().toString().trim() );
+        RequestBody Address2 = RequestBody.create(MediaType.parse("text/plain"),et_address2.getText().toString().trim() );
+        RequestBody City = RequestBody.create(MediaType.parse("text/plain"),et_city.getText().toString().trim() );
+        RequestBody Postcode = RequestBody.create(MediaType.parse("text/plain"),et_post_code.getText().toString().trim() );
+        RequestBody Gender = RequestBody.create(MediaType.parse("txt/plain"), gender);
+        RequestBody DriverPref = RequestBody.create(MediaType.parse("txt/plain"), driver_prefer);
 
         Log.e(TAG, "UpdateProfileWithoutImage:user_id> "+userId );
 
 
         RestClient.getClient().UpdateUserProfileWithoutImage(user_id,name,phone,email,
-                address
+                Address1, Address2, City, Postcode,Gender,DriverPref
         ).enqueue(new Callback<ProfileResponse>() {
             @Override
             public void onResponse(Call<ProfileResponse> call, Response<ProfileResponse> response) {
@@ -542,10 +590,14 @@ public class ProfileDetailActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = sp.edit();
                     assert response.body() != null;
 
+                    String full_address = response.body().getResponse().getAddress1()+", "+
+                            response.body().getResponse().getAddress2()+", "+
+                            response.body().getResponse().getCity()+", "+
+                            response.body().getResponse().getPostcode();
 
                     editor.putString(Constant.USER_NAME, response.body().getResponse().getUser_name());
                     editor.putString(Constant.USER_ID, String.valueOf(response.body().getResponse().getUser_id()));
-                    editor.putString(Constant.USER_ADDRESS, response.body().getResponse().getAddress());
+                    editor.putString(Constant.USER_ADDRESS, full_address);
                     editor.putString(Constant.USER_MAIL, response.body().getResponse().getUser_email());
                     editor.apply();
 

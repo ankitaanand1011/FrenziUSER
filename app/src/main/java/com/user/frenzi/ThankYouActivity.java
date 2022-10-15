@@ -66,6 +66,10 @@ public class ThankYouActivity extends FragmentActivity implements
         user_id = getIntent().getStringExtra("user_id");
         driver_id = getIntent().getStringExtra("driver_id");
 
+        Log.e(TAG, "onCreate: ride_id>"+ride_id );
+        Log.e(TAG, "onCreate: user_id>"+user_id );
+        Log.e(TAG, "onCreate: driver_id>"+driver_id );
+
         btn_back=findViewById(R.id.btn_back);
         tv_amount=findViewById(R.id.tv_amount);
 
@@ -78,7 +82,7 @@ public class ThankYouActivity extends FragmentActivity implements
         });
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+     /*   SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
@@ -90,7 +94,7 @@ public class ThankYouActivity extends FragmentActivity implements
                 .build();
         getCurrentLocation();
         moveMap();
-
+*/
 //        if (Build.VERSION.SDK_INT >= 21) {
 //            Window window = getWindow();
 //            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -102,11 +106,11 @@ public class ThankYouActivity extends FragmentActivity implements
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent ride=new Intent(ThankYouActivity.this, RatingEndActivity.class);
+              /*  Intent ride=new Intent(ThankYouActivity.this, RatingEndActivity.class);
                 ride.putExtra("user_id", user_id);
                 ride.putExtra("driver_id", driver_id);
                 ride.putExtra("ride_id", ride_id);
-                startActivity(ride);
+                startActivity(ride);*/
             }
         });
     }

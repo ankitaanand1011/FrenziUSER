@@ -2,6 +2,7 @@ package com.user.frenzi;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.MenuRes;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -27,6 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.frenzi.R;
@@ -38,8 +41,11 @@ import com.user.frenzi.adapter.AdapterRecentAddressList;
 
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import cc.cloudist.acplibrary.ACProgressConstant;
@@ -67,6 +73,7 @@ public class Wheretogo extends AppCompatActivity {
      double current_longitude;
      double current_latitude;
      int size;
+     AlertDialog alertDialog;
 
 
     public void onStart() {
@@ -74,7 +81,7 @@ public class Wheretogo extends AppCompatActivity {
             System.out.println("data ------>" + SearchAddressActivity.mGetAddress);
             edt_pickup.setText(SearchAddressActivity.mGetAddress);
         } else {
-            edt_pickup.setText("Stratton St, London W1J, UK");
+            //edt_pickup.setText("Stratton St, London W1J, UK");
             //  edt_pickup.setText("");
             edt_pickup.setHint("Enter Pickup Location");
         }
@@ -82,8 +89,8 @@ public class Wheretogo extends AppCompatActivity {
             System.out.println("data ------>" + SearchAddressActivity.mGetAddress2);
             edt_drop.setText(SearchAddressActivity.mGetAddress2);
         } else {
-           edt_drop.setText("Soho Square, London, UK");
-            //    edt_drop.setText("");
+          // edt_drop.setText("Soho Square, London, UK");
+             //   edt_drop.setText("");
            edt_drop.setHint("Enter Drop Location");
 
 
@@ -97,6 +104,7 @@ public class Wheretogo extends AppCompatActivity {
         super.onPause();
         overridePendingTransition(R.anim.trans_left_in, R.anim.trans_left_out);
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -216,19 +224,19 @@ public class Wheretogo extends AppCompatActivity {
                 Toast.makeText(Wheretogo.this,"Work in Progress",Toast.LENGTH_LONG).show();
             }
         });
-        btn_saved_address.setOnClickListener(new View.OnClickListener() {
+    /*    btn_saved_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
              //   if (RecentAddresses.size()>=0) {
                 BottomSheetSavedPlaces bottomSheetDialog = BottomSheetSavedPlaces.newInstance();
                 bottomSheetDialog.show(getSupportFragmentManager(), "Bottom Sheet Dialog Fragment");
 
-             /*   }else{
+             *//*   }else{
                     Toast.makeText(Wheretogo.this,"Please Add Address",Toast.LENGTH_LONG).show();
 
-                }*/
+                }*//*
             }
-        });
+        });*/
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -245,12 +253,14 @@ public class Wheretogo extends AppCompatActivity {
             }
         });
 
-        adapterRecentAddressList = new AdapterRecentAddressList(getApplicationContext(), RecentAddresses, new AdapterRecentAddressList.OnItemClickListener() {
+        adapterRecentAddressList = new AdapterRecentAddressList(Wheretogo.this, RecentAddresses, User_ID, new AdapterRecentAddressList.OnItemClickListener() {
             @Override
             public void onItemClick(ResponceFetchRecentAddressList.Response item) {
 
                 Log.e(TAG, "onItemClick: "+item.address );
-                edt_drop.setText(item.address);
+                String selected_address = item.address;
+
+                popUpSetAddress(selected_address);
             }
         });
         RecyclerView.LayoutManager mmLayoutManager = new LinearLayoutManager(this);
@@ -268,13 +278,59 @@ public class Wheretogo extends AppCompatActivity {
 
     }
 
+    private void popUpSetAddress(String selected_address) {
+
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptsView = li.inflate(R.layout.popup_set_address, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+
+        TextView txt_pick =promptsView.findViewById(R.id.txt_pick);
+        TextView txt_drop =promptsView.findViewById(R.id.txt_drop);
+        ImageView iv_close =promptsView.findViewById(R.id.iv_close);
+        // TextView tv_cancel_msg =promptsView.findViewById(R.id.tv_cancel_msg);
+
+
+        // tv_cancel_msg.setText("Cancel your ride with "+driver_name);
+        alertDialogBuilder.setView(promptsView);
+        txt_pick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+                edt_pickup.setText(selected_address);
+
+            }
+        });
+        txt_drop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+                edt_drop.setText(selected_address);
+            }
+        });
+
+        iv_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+
+        alertDialog = alertDialogBuilder.create();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+
+
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         FetchRecentAddress();
     }
 
-    private void FetchRecentAddress() {
+    public void FetchRecentAddress() {
 
         ACProgressFlower dialog = new ACProgressFlower.Builder(this)
                 .direction(ACProgressConstant.DIRECT_CLOCKWISE)
@@ -295,12 +351,12 @@ public class Wheretogo extends AppCompatActivity {
                 Log.e(TAG, "onResponse 2 : " + response.code());
                 Log.e(TAG, "onResponse 2: " + response.isSuccessful());
                 // ppDialog.dismiss();
+                RecentAddresses.clear();
                 assert response.body() != null;
                 if (response.body().getStatus().equals(200)) {
                     dialog.dismiss();
 
                     ResponceFetchRecentAddressList listResponse = response.body();
-
 
                     assert listResponse != null;
 

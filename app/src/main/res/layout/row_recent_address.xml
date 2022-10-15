@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/full_layout"
     android:background="@color/White"
+    android:orientation="vertical"
     android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
         android:orientation="vertical"
        >
 
@@ -17,66 +20,99 @@
             android:layout_width="50dp"
             android:layout_height="80dp"
             android:visibility="gone"
-            android:layout_marginLeft="-50dp"
             android:src="@drawable/shine" />
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_10sdp">
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            tools:ignore="RtlSymmetry">
 
 
             <ImageView
                 android:id="@+id/iv_address"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
                 android:layout_centerVertical="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
 
-                app:tint="@color/black" />
+                app:tint="@color/dark_pink" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/iv_address"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_toEndOf="@+id/iv_address"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/txt_address"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/txt_title"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:text="sdzvfdgd"
                     android:fontFamily="@font/poppins_semibold"
-                    android:text="Bedford Housing Link Ltd"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
+
+
+                <TextView
+                    android:id="@+id/txt_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="sdzvfdgd"
+                    android:fontFamily="@font/poppins_regular"
                     android:textColor="#818080"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/_11sdp" />
 
                 <TextView
                     android:id="@+id/txt_address_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
                     android:visibility="gone"
                     android:fontFamily="@font/poppins_medium"
                     android:text="34a, High st, Bedford, MK40 1SP"
                     android:textColor="#A19A9A"
                     android:textSize="10sp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:id="@+id/txt_edit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:fontFamily="@font/poppins_semibold"
+                        android:gravity="center_vertical"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:text="Edit"
+                        android:textAllCaps="true"
+                        android:textColor="@color/Blueeeee"
+                        android:textSize="@dimen/_12sdp" />
+
+
+                    <ImageView
+                        android:id="@+id/iv_delete"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/bin" />
+
+                </RelativeLayout>
+
             </LinearLayout>
+
+
+
 
         </RelativeLayout>
 
 
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="25dp"
-            android:layout_marginEnd="25dp"
 
-            android:background="#D5D2D2" />
 
         <ImageView
             android:id="@+id/selected_img"
@@ -87,8 +123,14 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp" />
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:background="#D5D2D2" />
 
-    </RelativeLayout>
+</LinearLayout>
 
 
 

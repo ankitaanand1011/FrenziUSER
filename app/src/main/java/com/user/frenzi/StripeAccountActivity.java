@@ -16,11 +16,17 @@ import com.example.frenzi.R;
 public class StripeAccountActivity extends AppCompatActivity {
     Button btn_continue;
     ImageView button_back;
+    String TAG = "Stripe";
+    String  ride_id,amount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stripe_account);
+
+        ride_id = getIntent().getStringExtra("ride_id");
+        amount = getIntent().getStringExtra("amount");
+
         btn_continue=findViewById(R.id.btn_continue);
         button_back=findViewById(R.id.button_back);
         button_back.setOnClickListener(new View.OnClickListener() {
@@ -41,9 +47,14 @@ public class StripeAccountActivity extends AppCompatActivity {
         btn_continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent cancel=new Intent(StripeAccountActivity.this,PaymenyMethodActivity.class);
+                Intent cancel=new Intent(StripeAccountActivity.this, PaymentMethodActivity.class);
+                cancel.putExtra("ride_id", ride_id);
+                cancel.putExtra("amount", amount);
+
                 startActivity(cancel);
             }
         });
     }
+
+
 }

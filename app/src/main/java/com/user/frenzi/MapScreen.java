@@ -642,10 +642,13 @@ public class MapScreen extends FragmentActivity implements
                 .position(latLng)
                 .icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
         //Moving the camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+     //   mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 16));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(16), 2000, null);
+
 
         //Animating the camera
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+       // mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
 
     }
 
@@ -653,7 +656,7 @@ public class MapScreen extends FragmentActivity implements
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         String msg = latitude + ", "+longitude;
-        Log.e(TAG, "moveMap: Location Point ::"+msg );
+        Log.e(TAG, "onMapReady: Location Point ::"+msg );
 
         //Creating a LatLng Object to store Coordinates
         latLng = new LatLng(latitude, longitude);
@@ -663,19 +666,24 @@ public class MapScreen extends FragmentActivity implements
             return;
         }
 
-        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.map_j);
+      /*  BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.navigation);
         Bitmap b=bitmapdraw.getBitmap();
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, 84, 84, false);
         // adding a marker on map with image from  drawable
         mMap.addMarker(new MarkerOptions()
                 .position(latLng)
-                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
+                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));*/
+
+
         //Moving the camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+       // mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
         //Animating the camera
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(20));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        googleMap.getUiSettings().setScrollGesturesEnabled(true);
+        googleMap.getUiSettings().setZoomGesturesEnabled(true);
         mMap.setOnMarkerDragListener(this);
         mMap.setOnMapLongClickListener(this);
 //        googleMap.addMarker(new MarkerOptions().position(latLng).title("Me").icon(BitmapDescriptorFactory.fromResource(R.drawable.map_j)));

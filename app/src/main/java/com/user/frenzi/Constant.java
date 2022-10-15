@@ -9,4 +9,6 @@ public class Constant {
     public static final String USER_ADDRESS = "USER_ADDRESS";
     public static final String USER_IMAGE = "USER_IMAGE";
     public static final String USER_PHONE = "USER_PHONE";
+  //  public static final String BOOKING = "BOOKING";
+    public static final String PREFERRED_BOOKING = "PREFERRED_BOOKING";
 }

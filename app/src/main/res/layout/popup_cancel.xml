@@ -29,7 +29,7 @@
             android:layout_gravity="left"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/poppins_bold"
-            android:text="Cancel your ride with William"
+            android:text="Cancel your ride"
             android:textColor="@color/White"
             android:textSize="18sp" />
 

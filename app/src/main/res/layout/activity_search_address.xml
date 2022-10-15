@@ -4,104 +4,124 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.user.frenzi.SearchAddressActivity">
-    <RelativeLayout
+    >
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:background="@color/White">
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:background="@color/DeepPink"
+            android:orientation="vertical"
+            android:padding="@dimen/_16sdp">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_35sdp"
-                android:background="@color/DeepPink"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
+                android:layout_height="wrap_content">
 
                 <LinearLayout
+                    android:id="@+id/ll_back"
                     android:layout_width="30dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center">
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true">
 
                     <ImageView
                         android:id="@+id/back_iv"
                         android:layout_width="@dimen/height_30"
                         android:layout_height="@dimen/height_30"
                         android:padding="@dimen/padding_6"
-                        android:src="@drawable/backwhiteimg" />
+                        android:src="@drawable/backwhiteimg"
+                         />
 
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/txt_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="search address"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_16sdp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/rectangle_boder">
 
                 <EditText
                     android:id="@+id/address_edt"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="@dimen/margin_10"
-                    android:layout_marginRight="@dimen/margin_5"
-                    android:layout_weight="1"
-                    android:background="@null"
+                    android:layout_toStartOf="@+id/right_Ll"
+                    android:background="@android:color/transparent"
                     android:cursorVisible="true"
-                    android:fontFamily="sans-serif"
-                    android:gravity="center_vertical"
-                    android:hint="Enter Address....."
+                    android:fontFamily="@font/poppins_medium"
+                    android:gravity="start"
+                    android:hint="Enter first line of the address."
                     android:imeOptions="actionDone"
-                    android:paddingLeft="30dp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
                     android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/White"
+                    android:textColor="@color/MidnightBlue"
+                    android:textColorHint="@color/DimGray"
                     android:textCursorDrawable="@drawable/custom_cursor_drawable"
-                    android:textSize="@dimen/txt_15" />
+                    android:textSize="@dimen/_14sdp" />
 
 
                 <LinearLayout
                     android:id="@+id/right_Ll"
                     android:layout_width="@dimen/height_30"
-                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/_10sdp"
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="@dimen/height_30"
-                        android:layout_height="@dimen/height_30"
-                        android:padding="@dimen/padding_5"
-                        android:src="@drawable/rightwhite"
-                        app:tint="@color/White" />
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:src="@drawable/correct" />
                 </LinearLayout>
 
 
-            </LinearLayout>
 
-            <TextView
-                android:id="@+id/txt_caption"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:fontFamily="sans-serif"
-                android:paddingBottom="15dp"
-                android:text="Start searching your address"
-                android:textColor="#A5A4A4"
-                android:textSize="@dimen/_13sdp" />
 
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_10sdp"
+            android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/places_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#EAE7E7"
                 android:orientation="vertical"
                 android:visibility="visible"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>

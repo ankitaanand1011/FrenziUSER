@@ -596,12 +596,28 @@
                 android:layout_above="@+id/btns"
                 android:layout_marginTop="8dp">
 
+                <TextView
+                    android:id="@+id/txt_msg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@+id/btn_call"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:padding="@dimen/_10sdp"
+                    android:text="Call Your Driver"
+                    android:textColor="@color/MidnightBlue"
+                    android:textSize="@dimen/_14sdp" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="80dp"
+                    android:visibility="gone"
                     android:background="@drawable/rectangle_curve_gray"
                     android:orientation="horizontal">
 
@@ -613,7 +629,7 @@
                         android:background="@drawable/mess" />
 
                     <TextView
-                        android:id="@+id/txt_msg"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"

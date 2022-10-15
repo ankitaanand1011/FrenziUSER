@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,12 +28,14 @@ import com.user.frenzi.Responce.ResponceFetchRidedetails;
 import com.user.frenzi.adapter.AdapterPrefferedDriverList;
 import com.user.frenzi.adapter.AdapterRideHistory;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import cc.cloudist.acplibrary.ACProgressConstant;
 import cc.cloudist.acplibrary.ACProgressFlower;
@@ -47,13 +51,13 @@ public class RideHistoryActivity extends AppCompatActivity {
     RecyclerView recycler_view_ride_history;
     private final List<ResponceFetchRideHistory.Response> RideHistory = new ArrayList<>();
     AdapterRideHistory adapterRideHistory;
-    private static final String TAG = "RideHitory";
-    LinearLayout ll_date_layout;
-    TextView tv_date;
-    private int mYear, mMonth, mDay, mHour, mMinute;
-    String date_to_send;
+    private static final String TAG = "RideHistory";
+    LinearLayout ll_date_layout,ll_date_layout2;
+    TextView tv_date, tv_date2;
+    //private int mYear, mMonth, mDay, mHour, mMinute;
+    String from_date, to_date,User_ID;
 
-
+    SimpleDateFormat df1;
     @Override
     protected void onPause() {
         super.onPause();
@@ -63,10 +67,17 @@ public class RideHistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ride_history);
+
+        SharedPreferences spp = Objects.requireNonNull(getSharedPreferences(Constant.USER_PREF, Context.MODE_PRIVATE));
+        User_ID = spp.getString(Constant.USER_ID, "");
+        Log.e(TAG, "onCreate: User_ID >> "+User_ID );
+
         img_close=findViewById(R.id.img_close);
         recycler_view_ride_history=findViewById(R.id.recycler_view_ride_history);
         ll_date_layout=findViewById(R.id.ll_date_layout);
+        ll_date_layout2=findViewById(R.id.ll_date_layout2);
         tv_date=findViewById(R.id.tv_date);
+        tv_date2=findViewById(R.id.tv_date2);
 
 
 
@@ -105,22 +116,40 @@ public class RideHistoryActivity extends AppCompatActivity {
                 datePicker();
             }
         });
+
+        ll_date_layout2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                datePicker2();
+            }
+        });
         Date c = Calendar.getInstance().getTime();
         System.out.println("Current time => " + c);
+
+        Log.d(TAG, "onCreate: c >> "+c);
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         String formattedDate = df.format(c);
         // String date_to_send = formattedDate;
 
 
-        FetchRideHistory(formattedDate);
+        from_date = formattedDate;
+        to_date = formattedDate;
+
+        df1 = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        String formattedDate1 = df1.format(c);
+
+        tv_date.setText(formattedDate1);
+        tv_date2.setText(formattedDate1);
+
+
     }
 
     public void datePicker() {
         final Calendar c = Calendar.getInstance();
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
+        int  mYear = c.get(Calendar.YEAR);
+        int mMonth = c.get(Calendar.MONTH);
+        int mDay = c.get(Calendar.DAY_OF_MONTH);
 
         // Launch Date Picker Dialog
         DatePickerDialog dpd = new DatePickerDialog(RideHistoryActivity.this,
@@ -132,16 +161,44 @@ public class RideHistoryActivity extends AppCompatActivity {
                         // Display Selected date in text-box
                         String date_val = dayOfMonth + "-"
                                 + (monthOfYear + 1) + "-" + year;
+                      //  String formattedDate = df1.format(date);
+
                         tv_date.setText(date_val);
-                        String date_to_send = year + "-" +(monthOfYear + 1) + "-" + dayOfMonth;
-                        FetchRideHistory(date_to_send);
+                        from_date = year + "-" +(monthOfYear + 1) + "-" + dayOfMonth;
+                        FetchRideHistory(from_date, to_date);
                     }
                 }, mYear, mMonth, mDay);
         dpd.show();
 
     }
 
-    private void FetchRideHistory(String date_to_send) {
+    public void datePicker2() {
+        final Calendar c = Calendar.getInstance();
+        int mYear = c.get(Calendar.YEAR);
+        int mMonth = c.get(Calendar.MONTH);
+        int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+        // Launch Date Picker Dialog
+        DatePickerDialog dpd = new DatePickerDialog(RideHistoryActivity.this,
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+                        // Display Selected date in text-box
+                        String date_val = dayOfMonth + "-"
+                                + (monthOfYear + 1) + "-" + year;
+                        tv_date2.setText(date_val);
+                        to_date = year + "-" +(monthOfYear + 1) + "-" + dayOfMonth;
+                        //FetchRideHistory(date_to_send);
+                        FetchRideHistory(from_date, to_date);
+                    }
+                }, mYear, mMonth, mDay);
+        dpd.show();
+
+    }
+
+    private void FetchRideHistory(String fromDate,String toDate) {
         ACProgressFlower dialog = new ACProgressFlower.Builder(this)
                 .direction(ACProgressConstant.DIRECT_CLOCKWISE)
                 .themeColor(R.color.ForestGreen)
@@ -151,11 +208,12 @@ public class RideHistoryActivity extends AppCompatActivity {
 
 
 
-        RequestBody UserId = RequestBody.create(MediaType.parse("text/plain"), Constant.USER_ID);
-        RequestBody rideDate = RequestBody.create(MediaType.parse("text/plain"), date_to_send);
+        RequestBody UserId = RequestBody.create(MediaType.parse("text/plain"), User_ID);
+        RequestBody from_date = RequestBody.create(MediaType.parse("text/plain"), fromDate);
+        RequestBody to_date = RequestBody.create(MediaType.parse("text/plain"), toDate);
 
 
-        RestClient.getClient().FetchRideHistory(UserId,rideDate).enqueue(new Callback<ResponceFetchRideHistory>() {
+        RestClient.getClient().FetchRideHistory(UserId,from_date,to_date).enqueue(new Callback<ResponceFetchRideHistory>() {
             @Override
             public void onResponse(Call<ResponceFetchRideHistory> call, Response<ResponceFetchRideHistory> response) {
                 Log.e(TAG, "onResponse 2 : " + response.code());

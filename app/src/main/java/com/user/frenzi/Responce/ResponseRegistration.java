@@ -70,12 +70,20 @@ public class ResponseRegistration {
         @SerializedName("user_id")
         @Expose
         public String user_id;
+        @SerializedName("gender")
+        @Expose
+        public String gender;
+
+        @SerializedName("driver_preference")
+        @Expose
+        public String driver_preference;
         @SerializedName("image")
         @Expose
         public String image;
 
         public Response(String name, String email, String phone, String password, String address,
-                        String reg_type, String user_id, String image) {
+                        String reg_type, String user_id, String gender, String driver_preference,
+                        String image) {
             this.name = name;
             this.email = email;
             this.phone = phone;
@@ -83,6 +91,8 @@ public class ResponseRegistration {
             this.address = address;
             this.reg_type = reg_type;
             this.user_id = user_id;
+            this.gender = gender;
+            this.driver_preference = driver_preference;
             this.image = image;
 
         }
@@ -149,6 +159,22 @@ public class ResponseRegistration {
 
         public void setImage(String image) {
             this.image = image;
+        }
+
+        public String getGender() {
+            return gender;
+        }
+
+        public void setGender(String gender) {
+            this.gender = gender;
+        }
+
+        public String getDriver_preference() {
+            return driver_preference;
+        }
+
+        public void setDriver_preference(String driver_preference) {
+            this.driver_preference = driver_preference;
         }
     }
 }

@@ -1,7 +1,6 @@
 package com.user.frenzi;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -28,7 +27,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -55,10 +56,7 @@ import com.google.firebase.firestore.GeoPoint;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.user.frenzi.Responce.ResponceFetchCarList;
-import com.user.frenzi.Responce.ResponceFetchRecentAddressList;
-import com.user.frenzi.Responce.ResponseNewRideDetails;
 import com.user.frenzi.adapter.AdapterCarList;
-import com.user.frenzi.adapter.AdapterRecentAddressList;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -102,6 +100,7 @@ private GoogleMap mMap;
     String drop_add,pickup_add;
     String pickup_lat, pickup_long, drop_lat, drop_long;
     FloatingActionButton btn_current_location;
+    String driver_prefer;
 
     private static RequestQueue mRequestQueue;
 
@@ -137,21 +136,6 @@ private GoogleMap mMap;
                     WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
 
-        SharedPreferences spp = Objects.requireNonNull(getSharedPreferences(Constant.USER_PREF, Context.MODE_PRIVATE));
-        User_ID = spp.getString(Constant.USER_ID, "");
-        drop_add = getIntent().getStringExtra("drop_add");
-        pickup_add = getIntent().getStringExtra("pickup_add");
-        pickup_lat = getIntent().getStringExtra("pickup_lat");
-        pickup_long = getIntent().getStringExtra("pickup_long");
-        drop_lat = getIntent().getStringExtra("drop_lat");
-        drop_long = getIntent().getStringExtra("drop_long");
-
-        btn_back = findViewById(R.id.btn_back);
-        btn_book_now = findViewById(R.id.btn_book_now);
-        recycler_view_car_list=findViewById(R.id.recycler_view_car_list);
-        btn_current_location=findViewById(R.id.btn_current_location);
-
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -162,8 +146,30 @@ private GoogleMap mMap;
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
-        getCurrentLocation();
-        moveMap();
+
+        SharedPreferences spp = Objects.requireNonNull(getSharedPreferences(Constant.USER_PREF, Context.MODE_PRIVATE));
+        User_ID = spp.getString(Constant.USER_ID, "");
+        drop_add = getIntent().getStringExtra("drop_add");
+        pickup_add = getIntent().getStringExtra("pickup_add");
+        pickup_lat = getIntent().getStringExtra("pickup_lat");
+        pickup_long = getIntent().getStringExtra("pickup_long");
+        drop_lat = getIntent().getStringExtra("drop_lat");
+        drop_long = getIntent().getStringExtra("drop_long");
+
+        Log.d(TAG, "onCreate: pickup_lat > "+pickup_lat);
+        Log.d(TAG, "onCreate: pickup_long > "+pickup_long);
+        Log.d(TAG, "onCreate: drop_lat > "+drop_lat);
+        Log.d(TAG, "onCreate: drop_long > "+drop_long);
+
+        btn_back = findViewById(R.id.btn_back);
+        btn_book_now = findViewById(R.id.btn_book_now);
+        recycler_view_car_list=findViewById(R.id.recycler_view_car_list);
+        btn_current_location=findViewById(R.id.btn_current_location);
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+
+        //getCurrentLocation();
+       // moveMap();
 
 
         adapterCarList = new AdapterCarList(getApplicationContext(), CarList, new AdapterCarList.OnItemClickListener() {
@@ -238,14 +244,14 @@ private GoogleMap mMap;
             public void onClick(View view) {
 //                Intent in=new Intent(ChooseRideActivity.this,DriverNearbyActivity.class);
 //                startActivity(in);
-//                finish();
-  //              Intent in = new Intent(ChooseRideActivity.this, StripeAccountActivity.class);
+//                finish()
+//                Intent in = new Intent(ChooseRideActivity.this, StripeAccountActivity.class);
 //                startActivity(in);
 //                finish();
 
                 if (Status.equalsIgnoreCase("preferred")) {
                     alertDialog.dismiss();
-                    Intent in = new Intent(ChooseRideActivity.this, PaymenyMethodActivity.class);
+                    Intent in = new Intent(ChooseRideActivity.this, PaymentMethodActivity.class);
                     startActivity(in);
                     finish();
 
@@ -373,7 +379,9 @@ private GoogleMap mMap;
 
               //Add data to local database
 
-                SharedPreferences sp = getSharedPreferences(Constant.USER_PREF, Context.MODE_PRIVATE);
+
+                popUpChoosePreference();
+             /*   SharedPreferences sp = getSharedPreferences(Constant.USER_PREF, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sp.edit();
                 editor.putString(Constant.DRIVER_PREF, "1");
                 editor.apply();
@@ -388,13 +396,98 @@ private GoogleMap mMap;
                 in.putExtra("drop_long",drop_long);
 
                 startActivity(in);
-                finish();
+                finish();*/
 
             }
         });
 
 
         btn_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                alertDialog1.dismiss();
+                Status = "next_available";
+            //    popUpPayment();
+                popUpChoosePreferenceNext();
+
+                //Add data to local database
+
+                SharedPreferences sp = getSharedPreferences(Constant.USER_PREF, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString(Constant.DRIVER_PREF, "0");
+                editor.apply();
+            }
+        });
+
+
+        // create alert dialog
+        alertDialog1 = alertDialogBuilder.create();
+        alertDialog1.setCancelable(false);
+        // show it
+        alertDialog1.show();
+    }
+
+    private void popUpChoosePreference() {
+
+        // get prompts.xml view
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptsView = li.inflate(R.layout.popup_choose_preference, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this
+        );
+
+        TextView tv_next = promptsView.findViewById(R.id.tv_next);
+        RadioButton rb_male_only = promptsView.findViewById(R.id.rb_male_only);
+        RadioButton rb_female_only = promptsView.findViewById(R.id.rb_female_only);
+        RadioButton rb_male_female = promptsView.findViewById(R.id.rb_male_female);
+
+
+        // set prompts.xml to alertdialog builder
+        alertDialogBuilder.setView(promptsView);
+
+
+
+        tv_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                alertDialog1.dismiss();
+                Status = "preferred";
+
+                if (rb_male_female.isChecked()) {
+                    driver_prefer = "any";
+                } else if (rb_female_only.isChecked()) {
+                    driver_prefer = "female";
+                } else if (rb_male_only.isChecked()) {
+                    driver_prefer = "male";
+                }
+
+                //Add data to local database
+
+                SharedPreferences sp = getSharedPreferences(Constant.USER_PREF, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString(Constant.DRIVER_PREF, "1");
+               // editor.putString(Constant.BOOKING, "yes");
+                editor.apply();
+
+                Intent in = new Intent(ChooseRideActivity.this, DriverChoiceActivity.class);
+                in.putExtra("vehicle_id",vehicle_id);
+                in.putExtra("drop_add",drop_add);
+                in.putExtra("pickup_add",pickup_add);
+                in.putExtra("pickup_lat",pickup_lat);
+                in.putExtra("pickup_long",pickup_long);
+                in.putExtra("drop_lat",drop_lat);
+                in.putExtra("drop_long",drop_long);
+                in.putExtra("driver_prefer",driver_prefer);
+                startActivity(in);
+                finish();
+
+            }
+        });
+
+
+      /*  btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -408,7 +501,91 @@ private GoogleMap mMap;
                 editor.putString(Constant.DRIVER_PREF, "0");
                 editor.apply();
             }
+        });*/
+
+
+        // create alert dialog
+        alertDialog1 = alertDialogBuilder.create();
+        alertDialog1.setCancelable(false);
+        // show it
+        alertDialog1.show();
+    }
+
+    private void popUpChoosePreferenceNext() {
+
+        // get prompts.xml view
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptsView = li.inflate(R.layout.popup_choose_preference, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this
+        );
+
+        TextView tv_next = promptsView.findViewById(R.id.tv_next);
+        RadioButton rb_male_only = promptsView.findViewById(R.id.rb_male_only);
+        RadioButton rb_female_only = promptsView.findViewById(R.id.rb_female_only);
+        RadioButton rb_male_female = promptsView.findViewById(R.id.rb_male_female);
+
+
+        // set prompts.xml to alertdialog builder
+        alertDialogBuilder.setView(promptsView);
+
+
+
+        tv_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                alertDialog1.dismiss();
+                Status = "preferred";
+
+                if (rb_male_female.isChecked()) {
+                    driver_prefer = "any";
+                } else if (rb_female_only.isChecked()) {
+                    driver_prefer = "female";
+                } else if (rb_male_only.isChecked()) {
+                    driver_prefer = "male";
+                }
+
+                //Add data to local database
+               // popUpPayment();
+                popUpConfirmBooking();
+               /* SharedPreferences sp = getSharedPreferences(Constant.USER_PREF, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString(Constant.DRIVER_PREF, "1");
+                // editor.putString(Constant.BOOKING, "yes");
+                editor.apply();
+
+                Intent in = new Intent(ChooseRideActivity.this, DriverChoiceActivity.class);
+                in.putExtra("vehicle_id",vehicle_id);
+                in.putExtra("drop_add",drop_add);
+                in.putExtra("pickup_add",pickup_add);
+                in.putExtra("pickup_lat",pickup_lat);
+                in.putExtra("pickup_long",pickup_long);
+                in.putExtra("drop_lat",drop_lat);
+                in.putExtra("drop_long",drop_long);
+                in.putExtra("driver_prefer",driver_prefer);
+                startActivity(in);
+                finish();*/
+
+            }
         });
+
+
+      /*  btn_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                alertDialog1.dismiss();
+                Status = "next_available";
+                popUpPayment();
+                //Add data to local database
+
+                SharedPreferences sp = getSharedPreferences(Constant.USER_PREF, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString(Constant.DRIVER_PREF, "0");
+                editor.apply();
+            }
+        });*/
 
 
         // create alert dialog
@@ -427,17 +604,23 @@ private GoogleMap mMap;
         dialog.setCancelable(false);
         dialog.show();
 
+        Log.d(TAG, "FetchCarList: pickup_lat > "+pickup_lat);
+        Log.d(TAG, "FetchCarList: pickup_long > "+pickup_long);
+        Log.d(TAG, "FetchCarList: drop_lat > "+drop_lat);
+        Log.d(TAG, "FetchCarList: drop_long > "+drop_long);
+
+        RequestBody pickupLat = RequestBody.create(MediaType.parse("text/plain"),pickup_lat );
+        RequestBody pickupLong = RequestBody.create(MediaType.parse("text/plain"), pickup_long);
+        RequestBody DropLat = RequestBody.create(MediaType.parse("text/plain"),drop_lat );
+        RequestBody DropLong = RequestBody.create(MediaType.parse("text/plain"),drop_long );
 
 
-        RequestBody pickupLat = RequestBody.create(MediaType.parse("text/plain"),"22.5016" );
-        RequestBody pickupLong = RequestBody.create(MediaType.parse("text/plain"), "88.3209");
-        RequestBody DropLat = RequestBody.create(MediaType.parse("text/plain"),"22.5839" );
-        RequestBody DropLong = RequestBody.create(MediaType.parse("text/plain"),"88.3434" );
-
-
-        RestClient.getClient().fetchCarlist(pickupLat,pickupLong,DropLat,DropLong).enqueue(new Callback<ResponceFetchCarList>() {
+        RestClient.getClient().fetchCarlist(pickupLat,pickupLong,DropLat,DropLong)
+                .enqueue(new Callback<ResponceFetchCarList>() {
             @Override
-            public void onResponse(Call<ResponceFetchCarList> call, Response<ResponceFetchCarList> response) {
+            public void onResponse(Call<ResponceFetchCarList> call,
+                                   Response<ResponceFetchCarList> response)
+            {
                 Log.e(TAG, "onResponse 2 : " + response.code());
                 Log.e(TAG, "onResponse 2: " + response.isSuccessful());
                 // ppDialog.dismiss();
@@ -507,7 +690,11 @@ private GoogleMap mMap;
 
 
                         if (status.equals("200")){
-
+                           /* SharedPreferences sp = getSharedPreferences(Constant.USER_PREF, Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sp.edit();
+                           // editor.putString(Constant.DRIVER_PREF, "1");
+                            editor.putString(Constant.BOOKING, "yes");
+                            editor.apply();*/
                             JsonObject response1 = jobj.getAsJsonObject("response");
                             String ride_id  = response1.get("ride_id ").getAsString().replaceAll("\"", "");
                             Log.e(TAG, "onResponse:ride_id "+ride_id);
@@ -617,15 +804,12 @@ private GoogleMap mMap;
         BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.map_j);
         Bitmap b=bitmapdraw.getBitmap();
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, 84, 84, false);
-        // adding a marker on map with image from  drawable
         mMap.addMarker(new MarkerOptions()
                 .position(latLng)
                 .icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
-        //Moving the camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
-        //Animating the camera
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(pickup_lat), Double.parseDouble(pickup_long)), 16));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(16), 2000, null);
 
         //Displaying current coordinates in toast
 //        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
@@ -655,16 +839,20 @@ private GoogleMap mMap;
             return;
         }
 
-        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.map_j);
+      /*  BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.map_j);
         Bitmap b=bitmapdraw.getBitmap();
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, 84, 84, false);
         // adding a marker on map with image from  drawable
         mMap.addMarker(new MarkerOptions()
                 .position(latLng)
-                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
+                .icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));*/
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+     //   mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+      //  mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(pickup_lat), Double.parseDouble(pickup_long)), 16));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(16), 2000, null);
+
 
         BitmapDrawable bitmapdraw1=(BitmapDrawable)getResources().getDrawable(R.drawable.navigation);
         Bitmap b1=bitmapdraw1.getBitmap();
@@ -674,9 +862,13 @@ private GoogleMap mMap;
                 .position(dlatLng)
                 .icon(BitmapDescriptorFactory.fromBitmap(smallMarker1)));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(dlatLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
-        //   mMap.moveCamera(CameraUpdateFactory.newLatLng(dlatLng));
+
+       /* mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble(drop_lat), Double.parseDouble(drop_long)), 16));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(16), 2000, null);
+*/
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        googleMap.getUiSettings().setScrollGesturesEnabled(true);
+        googleMap.getUiSettings().setZoomGesturesEnabled(true);
 
     }
 

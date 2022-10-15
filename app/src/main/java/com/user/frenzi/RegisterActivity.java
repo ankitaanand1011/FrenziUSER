@@ -21,6 +21,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +47,9 @@ public class RegisterActivity extends AppCompatActivity {
     EditText edt_name,edt_address,edt_email,edt_phone,edt_password;
     SwitchCompat switch_accept;
     AlertDialog alertDialog;
-
+    RadioButton rb_male, rb_female, rb_male_female, rb_female_only,rb_male_only;
+    String gender = "male";
+    String driver_prefer = "any";
     @Override
     protected void onPause() {
         super.onPause();
@@ -83,6 +86,11 @@ public class RegisterActivity extends AppCompatActivity {
         edt_password=findViewById(R.id.edt_password);
         switch_accept=findViewById(R.id.switch_accept);
         button_register=findViewById(R.id.button_register);
+        rb_male=findViewById(R.id.rb_male);
+        rb_female=findViewById(R.id.rb_female);
+        rb_male_female=findViewById(R.id.rb_male_female);
+        rb_female_only=findViewById(R.id.rb_female_only);
+        rb_male_only=findViewById(R.id.rb_male_only);
 
 
 
@@ -102,6 +110,20 @@ public class RegisterActivity extends AppCompatActivity {
         button_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if (rb_male.isChecked()) {
+                    gender = "male";
+                } else if (rb_female.isChecked()) {
+                    gender = "female";
+                }
+
+                if (rb_male_female.isChecked()) {
+                    driver_prefer = "any";
+                } else if (rb_female_only.isChecked()) {
+                    driver_prefer = "female";
+                } else if (rb_male_only.isChecked()) {
+                    driver_prefer = "male";
+                }
                 Registration();
             }
         });
@@ -139,9 +161,11 @@ public class RegisterActivity extends AppCompatActivity {
             RequestBody password = RequestBody.create(MediaType.parse("txt/plain"), edt_password.getText().toString().trim());
             RequestBody address = RequestBody.create(MediaType.parse("txt/plain"), edt_address.getText().toString().trim());
             RequestBody reg_type = RequestBody.create(MediaType.parse("txt/plain"), "1");
+            RequestBody Gender = RequestBody.create(MediaType.parse("txt/plain"), gender);
+            RequestBody DriverPref = RequestBody.create(MediaType.parse("txt/plain"), driver_prefer);
 
             Log.e(TAG, "Registration: name >>"+ edt_name.getText().toString() );
-            RestClient.getClient().UserRegistration(name, email, phone, password, address,reg_type).enqueue(new Callback<ResponseRegistration>() {
+            RestClient.getClient().UserRegistration(name, email, phone, password, address,reg_type,Gender,DriverPref).enqueue(new Callback<ResponseRegistration>() {
                 @Override
                 public void onResponse(Call<ResponseRegistration> call, Response<ResponseRegistration> response) {
                     Log.e(TAG, "onResponse: Code :" + response.body());

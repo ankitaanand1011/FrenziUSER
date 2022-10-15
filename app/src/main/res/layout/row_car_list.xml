@@ -8,11 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="@color/White">
-        <!--    <RelativeLayout-->
-        <!--        android:id="@+id/justgo"-->
-        <!--        android:layout_width="match_parent"-->
-        <!--        android:layout_height="70dp"-->
-        <!--        android:background="@color/transparent_Gray">-->
 
         <ImageView
             android:id="@+id/car"
@@ -36,14 +31,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
-                android:text="Just Go"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="11:00 - 11:32"
                 android:textColor="@color/black"
                 android:textSize="12sp" />
 
@@ -57,7 +51,6 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
             android:fontFamily="@font/poppins_semibold"
-            android:text="£ 9.00"
             android:textColor="@color/Red"
             android:textSize="15sp" />
 

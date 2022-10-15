@@ -102,7 +102,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="2dp"
                 android:fontFamily="@font/poppins_regular"
-                android:text="Select your preffared Driver"
+                android:text="Select your preferred Driver"
                 android:textColor="#A5A4A4"
                 android:textSize="12sp" />
 

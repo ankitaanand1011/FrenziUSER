@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.frenzi.R;
 import com.user.frenzi.Responce.ResponceFetchCarList;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,8 +68,18 @@ public class AdapterCarList extends RecyclerView.Adapter<AdapterCarList.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull final AdapterCarList.MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
 
+
+        String price = AssignmentList.get(position).getTotal_fare();
+
+
+        Float litersOfPetrol=Float.parseFloat(price);
+        DecimalFormat df = new DecimalFormat("0.00");
+        df.setMaximumFractionDigits(2);
+        price = df.format(litersOfPetrol);
+
         holder.txt_car_name.setText(AssignmentList.get(position).getVehicleType());
-        holder.txt_price.setText("£" +AssignmentList.get(position).getRideFare());
+        holder.txt_price.setText("£" + price);
+        holder.tv_time.setText(AssignmentList.get(position).getTotalTime() + " Mins");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,7 +127,7 @@ public class AdapterCarList extends RecyclerView.Adapter<AdapterCarList.MyViewHo
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
 
-        TextView txt_car_name,txt_price;
+        TextView txt_car_name,txt_price,tv_time;
         RelativeLayout full_layout;
 
         public MyViewHolder(View view) {
@@ -125,6 +136,7 @@ public class AdapterCarList extends RecyclerView.Adapter<AdapterCarList.MyViewHo
             txt_car_name = view.findViewById(R.id.txt_car_name);
             txt_price=view.findViewById(R.id.txt_price);
             full_layout=view.findViewById(R.id.full_layout);
+            tv_time=view.findViewById(R.id.tv_time);
 
 
 
