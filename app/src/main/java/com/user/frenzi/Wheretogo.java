@@ -81,7 +81,7 @@ public class Wheretogo extends AppCompatActivity {
             System.out.println("data ------>" + SearchAddressActivity.mGetAddress);
             edt_pickup.setText(SearchAddressActivity.mGetAddress);
         } else {
-            //edt_pickup.setText("Stratton St, London W1J, UK");
+           // edt_pickup.setText("Stratton St, London W1J, UK");
             //  edt_pickup.setText("");
             edt_pickup.setHint("Enter Pickup Location");
         }
@@ -89,7 +89,7 @@ public class Wheretogo extends AppCompatActivity {
             System.out.println("data ------>" + SearchAddressActivity.mGetAddress2);
             edt_drop.setText(SearchAddressActivity.mGetAddress2);
         } else {
-          // edt_drop.setText("Soho Square, London, UK");
+           //edt_drop.setText("Soho Square, London, UK");
              //   edt_drop.setText("");
            edt_drop.setHint("Enter Drop Location");
 

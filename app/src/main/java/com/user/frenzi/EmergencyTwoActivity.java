@@ -6,16 +6,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.frenzi.R;
 import com.google.android.gms.common.ConnectionResult;
@@ -27,8 +31,11 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.user.frenzi.Responce.ResponseExtraCharges;
 import com.user.frenzi.Responce.ResponseRideStatus;
 
+import cc.cloudist.acplibrary.ACProgressConstant;
+import cc.cloudist.acplibrary.ACProgressFlower;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -50,7 +57,7 @@ public class EmergencyTwoActivity extends AppCompatActivity implements OnMapRead
     boolean locationPermission = false;
     String ride_id,amount,driver_id,user_id;
     AlertDialog alertDialog;
-
+    ACProgressFlower dialog;
     @Override
     protected void onPause() {
         super.onPause();
@@ -87,7 +94,13 @@ public class EmergencyTwoActivity extends AppCompatActivity implements OnMapRead
         mapFragment.getMapAsync(this);
         a = new LatLng(53.801277, -1.548567);
 
+         dialog = new ACProgressFlower.Builder(EmergencyTwoActivity.this)
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .themeColor(Color.WHITE)
+                .fadeColor(Color.BLACK).build();
 
+
+      //  popUpAdditionalCharges();
 
     }
     @Override
@@ -140,6 +153,56 @@ public class EmergencyTwoActivity extends AppCompatActivity implements OnMapRead
 //                .position(a)
 //                .icon(BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(R.drawable.map_i))));
     }
+
+
+    private void popUpAdditionalCharges(String drop_charge, String toll_charge, String luggage_charge) {
+
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptsView = li.inflate(R.layout.extra_earning_popup, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this
+        );
+
+        // Button btn_cancel =promptsView.findViewById(R.id.btn_cancel);
+        Button btn_done =promptsView.findViewById(R.id.btn_done);
+        //Button btn_skip =promptsView.findViewById(R.id.btn_skip);
+        TextView edt_drop_charges =promptsView.findViewById(R.id.edt_drop_charges);
+        TextView edt_toll_charges =promptsView.findViewById(R.id.edt_toll_charges);
+        TextView edt_luggage_charges =promptsView.findViewById(R.id.edt_luggage_charges);
+        edt_drop_charges.setText("£"+drop_charge);
+        edt_toll_charges.setText("£"+toll_charge);
+        edt_luggage_charges.setText("£"+luggage_charge);
+
+
+//        TextView txt_cancel = (TextView) promptsView.findViewById(R.id.txt_cancel);
+
+
+        // set prompts.xml to alertdialog builder
+        alertDialogBuilder.setView(promptsView);
+
+        btn_done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                //ride_arrived();
+
+
+
+                popUpThankYou();
+
+            }
+        });
+
+
+
+        // create alert dialog
+        alertDialog = alertDialogBuilder.create();
+        alertDialog.setCancelable(false);
+        // show it
+        alertDialog.show();
+
+    }
+
 
     private void popUpThankYou() {
 
@@ -203,7 +266,7 @@ public class EmergencyTwoActivity extends AppCompatActivity implements OnMapRead
     }
 
     private void CheckRideStatus() {
-
+       // dialog.show();
         RequestBody RideID = RequestBody.create(MediaType.parse("text/plain"), ride_id);
 
 
@@ -212,8 +275,8 @@ public class EmergencyTwoActivity extends AppCompatActivity implements OnMapRead
                     @Override
                     public void onResponse(Call<ResponseRideStatus> call,
                                            Response<ResponseRideStatus> response) {
-                        Log.e(TAG, "onResponse 2 : " + response.code());
-                        Log.e(TAG, "onResponse 2: " + response.isSuccessful());
+                        Log.e(TAG, "onResponse CheckRideStatus 2 : " + response.code());
+                        Log.e(TAG, "onResponse CheckRideStatus  2: " + response.isSuccessful());
                         // ppDialog.dismiss();
                         assert response.body() != null;
                         if (response.body().getStatus().equals(200)) {
@@ -225,8 +288,10 @@ public class EmergencyTwoActivity extends AppCompatActivity implements OnMapRead
                                     @Override
                                     public void run() {
 
-                                        popUpThankYou();
+                                       // popUpThankYou();
 
+
+                                        extra_pay();
                                     }
                                 }, SPLASH_TIME_OUT);
 
@@ -247,6 +312,76 @@ public class EmergencyTwoActivity extends AppCompatActivity implements OnMapRead
                         // dialog.dismiss();
                     }
                 });
+    }
+
+
+    private void extra_pay() {
+
+        dialog.show();
+        RequestBody rideId = RequestBody.create(MediaType.parse("txt/plain"), ride_id);
+
+
+        RestClient.getClient().FetchExtraPay(rideId)
+                .enqueue(new Callback<ResponseExtraCharges>() {
+                    @Override
+                    public void onResponse(Call<ResponseExtraCharges> call, Response<ResponseExtraCharges> response) {
+                        if (response.body().getStatus().equals(200)) {
+                            Log.e(TAG, "onResponse extra_pay : "+  response.code());
+                           dialog.dismiss();
+
+
+                            if (!response.body().getResponse().getDrop_off_charges().equals("0") ||
+                                    !response.body().getResponse().getToll_charges().equals("0") ||
+                                    !response.body().getResponse().getLuggage_charges().equals("0"))
+                            {
+
+                                        String drop_charge = response.body().getResponse().getDrop_off_charges();
+                                        String toll_charge = response.body().getResponse().getToll_charges();
+                                        String luggage_charge = response.body().getResponse().getLuggage_charges();
+
+                                        popUpAdditionalCharges(drop_charge,toll_charge,luggage_charge);
+
+
+                            }else{
+
+                                popUpThankYou();
+                            }
+
+                            //  Toast.makeText(VerifyOtpActivity.this,response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+
+                            //  startRide(dialog);
+
+
+
+
+                           /* Toast.makeText(DropOffActivity.this,response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            Intent in=new Intent(DropOffActivity.this,RatingActivity.class);
+                            in.putExtra("ride_id",ride_id);
+                            in.putExtra("user_id",userID);
+                            in.putExtra("driver_id",driverID);
+
+                            startActivity(in);
+                            finish();*/
+
+                        }else{
+                            dialog.dismiss();
+
+                            Toast.makeText(EmergencyTwoActivity.this,response.body().getMessage(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseExtraCharges> call, Throwable t) {
+                        Toast.makeText(EmergencyTwoActivity.this,t.getMessage(), Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                });
+
+
+
+
     }
 
 }

@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.frenzi.R;
@@ -56,7 +57,7 @@ public class RideHistoryActivity extends AppCompatActivity {
     TextView tv_date, tv_date2;
     //private int mYear, mMonth, mDay, mHour, mMinute;
     String from_date, to_date,User_ID;
-
+    RelativeLayout rl_no_data;
     SimpleDateFormat df1;
     @Override
     protected void onPause() {
@@ -78,7 +79,10 @@ public class RideHistoryActivity extends AppCompatActivity {
         ll_date_layout2=findViewById(R.id.ll_date_layout2);
         tv_date=findViewById(R.id.tv_date);
         tv_date2=findViewById(R.id.tv_date2);
+        rl_no_data=findViewById(R.id.rl_no_data);
 
+        rl_no_data.setVisibility(View.VISIBLE);
+        //recycler_view_ride_history.setVisibility(View.GONE);
 
 
         img_close.setOnClickListener(new View.OnClickListener() {
@@ -222,6 +226,8 @@ public class RideHistoryActivity extends AppCompatActivity {
                 assert response.body() != null;
                 if (response.body().getStatus().equals(200)) {
                     dialog.dismiss();
+                    //recycler_view_ride_history.setVisibility(View.VISIBLE);
+                    rl_no_data.setVisibility(View.GONE);
 
                     ResponceFetchRideHistory listResponse = response.body();
 

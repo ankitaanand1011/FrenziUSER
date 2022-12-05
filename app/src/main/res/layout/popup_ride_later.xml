@@ -19,6 +19,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
         android:orientation="vertical">
 
         <TextView
@@ -26,12 +27,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_gravity="left"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/poppins_bold"
-            android:text="Book Your ride now or later ?"
+            android:text="Choose Date Time"
             android:textColor="@color/White"
-            android:textSize="18sp" />
+            android:textSize="@dimen/_18sdp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -44,43 +45,86 @@
 
 
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="left"
-            android:visibility="gone"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/_10sdp"
+
+
 
             >
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/location"
-                android:padding="4dp"
-
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="20dp"
-                android:text="wrong pickup location"
-                android:textColor="@color/white"
-                android:textSize="13sp" />
+                android:padding="@dimen/_5sdp"
+                android:background="@drawable/et_bg_white">
 
-            <TextView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_toStartOf="@+id/iv_cal"
+                    android:background="@color/transparent"
+                    android:hint="Select Date"
+                    android:textColor="@color/MidnightBlue"
+                    android:textColorHint="@color/Gray"
+                    android:textSize="@dimen/_14sdp" />
+
+                <ImageView
+                    android:id="@+id/iv_cal"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:src="@mipmap/calendar"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/_5sdp"
+                  />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:text="Edit Pickup"
-                android:textColor="@color/white"
-                android:textSize="13sp" />
+                android:padding="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/et_bg_white">
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_toStartOf="@+id/iv_date"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:background="@color/transparent"
+                    android:hint="Select Time"
+                    android:textColor="@color/MidnightBlue"
+                    android:textColorHint="@color/Gray"
+                    android:textSize="@dimen/_14sdp" />
+
+                <ImageView
+                    android:id="@+id/iv_date"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:src="@mipmap/time"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/_5sdp"
+                    />
 
 
-        </RelativeLayout>
+            </RelativeLayout>
+
+
+
+
+
+        </LinearLayout>
 
 
         <View
@@ -88,6 +132,7 @@
             android:layout_height="1dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
+            android:visibility="gone"
             android:layout_marginRight="20dp"
             android:backgroundTint="@color/LightGrey" />
 
@@ -95,7 +140,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
             android:orientation="horizontal"
             android:weightSum="2">
@@ -103,7 +148,7 @@
 
 
             <Button
-                android:id="@+id/yes"
+                android:id="@+id/btn_cancel"
                 android:layout_width="0dp"
                 android:layout_height="55dp"
                 android:layout_marginEnd="5dp"
@@ -113,12 +158,12 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:stateListAnimator="@null"
-                android:text="Now"
+                android:text="Cancel"
                 android:textColor="@color/White"
                 android:translationZ="5dp" />
 
             <Button
-                android:id="@+id/no"
+                android:id="@+id/btn_book"
                 android:layout_width="0dp"
                 android:layout_height="55dp"
                 android:layout_marginStart="5dp"
@@ -128,7 +173,7 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:stateListAnimator="@null"
-                android:text="Later"
+                android:text="Book"
                 android:textColor="@color/White"
                 android:translationZ="5dp" />
 

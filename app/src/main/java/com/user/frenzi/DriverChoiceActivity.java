@@ -84,7 +84,7 @@ public class DriverChoiceActivity extends FragmentActivity implements
     private static final String TAG = "DriverChoice";
     String User_ID, vehicle_id;
     String drop_add,pickup_add,driver_id;
-    String pickup_lat, pickup_long, drop_lat, drop_long,driver_prefer;
+    String pickup_lat, pickup_long, drop_lat, drop_long,driver_prefer,postcode_pick,postcode_drop;
     AlertDialog alertDialog;
     String RideID,amount;
     String postRide ="no";
@@ -145,6 +145,8 @@ public class DriverChoiceActivity extends FragmentActivity implements
         drop_lat = getIntent().getStringExtra("drop_lat");
         drop_long = getIntent().getStringExtra("drop_long");
         driver_prefer = getIntent().getStringExtra("driver_prefer");
+        postcode_pick = getIntent().getStringExtra("pickup_postcode");
+        postcode_drop = getIntent().getStringExtra("drop_postcode");
 
         btn_back=findViewById(R.id.btn_back);
         recycler_preferred_drivers=findViewById(R.id.recycler_preffered_drivers);
@@ -465,6 +467,8 @@ public class DriverChoiceActivity extends FragmentActivity implements
         RequestBody post_drop_long = RequestBody.create(MediaType.parse("txt/plain"), drop_long );
         RequestBody post_start_date = RequestBody.create(MediaType.parse("txt/plain"), currentDate );
         RequestBody post_start_time = RequestBody.create(MediaType.parse("txt/plain"), currentTime );
+        RequestBody post_code_pick = RequestBody.create(MediaType.parse("txt/plain"), postcode_pick );
+        RequestBody post_code_drop = RequestBody.create(MediaType.parse("txt/plain"), postcode_drop );
 
 
         Log.e(TAG, "post_ride:post_user_id> "+User_ID );
@@ -480,7 +484,7 @@ public class DriverChoiceActivity extends FragmentActivity implements
         Gson gson = new Gson();
         RestClient.getClient().SubmitRide(post_user_id,post_driver_id,post_pickup_address,
                 post_drop_address, post_pickup_lat,post_pickup_long,post_drop_lat,post_drop_long,
-                post_start_date,post_start_time)
+                post_start_date,post_start_time,post_code_pick, post_code_drop)
                 .enqueue(new Callback<ResponseNewRideDetails>() {
             @Override
             public void onResponse(Call<ResponseNewRideDetails> call, Response<ResponseNewRideDetails> response) {

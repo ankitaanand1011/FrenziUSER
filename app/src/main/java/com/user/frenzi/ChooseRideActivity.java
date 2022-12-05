@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,10 +28,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -61,12 +66,15 @@ import com.user.frenzi.adapter.AdapterCarList;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import cc.cloudist.acplibrary.ACProgressConstant;
 import cc.cloudist.acplibrary.ACProgressFlower;
@@ -86,7 +94,7 @@ private double latitude;
         LatLng latLng,dlatLng;
 private GoogleMap mMap;
     GoogleApiClient googleApiClient;
-
+    String date_to_send;
     String Status = null;
     ImageView btn_back;
     Button btn_book_now;
@@ -101,6 +109,9 @@ private GoogleMap mMap;
     String pickup_lat, pickup_long, drop_lat, drop_long;
     FloatingActionButton btn_current_location;
     String driver_prefer;
+    String postcode_drop, postcode_pick;
+    String pattern ="([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\\s?[0-9][A-Za-z]{2})";
+
 
     private static RequestQueue mRequestQueue;
 
@@ -160,6 +171,29 @@ private GoogleMap mMap;
         Log.d(TAG, "onCreate: pickup_long > "+pickup_long);
         Log.d(TAG, "onCreate: drop_lat > "+drop_lat);
         Log.d(TAG, "onCreate: drop_long > "+drop_long);
+        Log.e(TAG, "onCreate: pickup_add > "+pickup_add);
+        Log.e(TAG, "onCreate: drop_add > "+drop_add);
+      //  String add = place.getAddress();
+
+
+        Pattern p = Pattern.compile(pattern);
+        Matcher m = p.matcher(pickup_add);
+        if (m.find()) {
+            postcode_pick = m.group(0);
+            Log.e(TAG, "match: postcode_pick :"+postcode_pick );
+
+        }
+
+      //  String pattern ="([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\\s?[0-9][A-Za-z]{2})";
+
+       // Pattern p_d = Pattern.compile(pattern);
+        Matcher m_d = p.matcher(drop_add);
+        if (m_d.find()) {
+            postcode_drop = m_d.group(0);
+            Log.e(TAG, "match: postcode_drop :"+postcode_drop );
+
+        }
+
 
         btn_back = findViewById(R.id.btn_back);
         btn_book_now = findViewById(R.id.btn_book_now);
@@ -222,6 +256,54 @@ private GoogleMap mMap;
         FetchCarList();
 
 
+    }
+    public void datePicker(TextView textView) {
+        final Calendar c = Calendar.getInstance();
+        int  mYear = c.get(Calendar.YEAR);
+        int mMonth = c.get(Calendar.MONTH);
+        int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+        // Launch Date Picker Dialog
+        DatePickerDialog dpd = new DatePickerDialog(ChooseRideActivity.this,
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+                        // Display Selected date in text-box
+                        String date_val = dayOfMonth + "-"
+                                + (monthOfYear + 1) + "-" + year;
+                        //  String formattedDate = df1.format(date);
+
+                        textView.setText(date_val);
+                         date_to_send = year + "-" +(monthOfYear + 1) + "-" + dayOfMonth;
+                      //  FetchRideHistory(from_date, to_date);
+                    }
+                }, mYear, mMonth, mDay);
+        dpd.show();
+
+    }
+
+    public void showTime(final TextView textView) {
+
+        final Calendar myCalendar = Calendar.getInstance();
+        TimePickerDialog.OnTimeSetListener mTimeSetListener =
+                new TimePickerDialog.OnTimeSetListener() {
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                String am_pm = "";
+                myCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                myCalendar.set(Calendar.MINUTE, minute);
+                if (myCalendar.get(Calendar.AM_PM) == Calendar.AM)
+                    am_pm = "AM";
+                else if (myCalendar.get(Calendar.AM_PM) == Calendar.PM)
+                    am_pm = "PM";
+                String strHrsToShow = (myCalendar.get(Calendar.HOUR) == 0) ? "12"
+                        : myCalendar.get(Calendar.HOUR) + "";
+                //UIHelper.showLongToastInCenter(context, strHrsToShow + ":" + myCalendar.get(Calendar.MINUTE) + " " + am_pm);
+                textView.setText(strHrsToShow + ":" + myCalendar.get(Calendar.MINUTE) + " " + am_pm);
+            }
+        };
+        new TimePickerDialog(ChooseRideActivity.this, mTimeSetListener, myCalendar.get(Calendar.HOUR), myCalendar.get(Calendar.MINUTE), false).show();
     }
 
     private void popUpPayment() {
@@ -330,11 +412,88 @@ private GoogleMap mMap;
             @Override
             public void onClick(View view) {
                 alertDialog.dismiss();
-                Intent intent = new Intent(ChooseRideActivity.this, MapScreen.class);
+
+                popUpLater();
+
+           /*     Intent intent = new Intent(ChooseRideActivity.this, MapScreen.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+                startActivity(intent);*/
             }
         });
+
+
+
+
+        // create alert dialog
+        alertDialog = alertDialogBuilder.create();
+        alertDialog.setCancelable(false);
+        // show it
+        alertDialog.show();
+    }
+
+    private void popUpLater() {
+
+        // get prompts.xml view
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptsView = li.inflate(R.layout.popup_ride_later, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this
+        );
+
+        TextView tv_date =promptsView.findViewById(R.id.tv_date);
+        TextView tv_time =promptsView.findViewById(R.id.tv_time);
+        Button btn_book =promptsView.findViewById(R.id.btn_book);
+        Button btn_cancel =promptsView.findViewById(R.id.btn_cancel);
+
+
+        alertDialogBuilder.setView(promptsView);
+        tv_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //alertDialog.dismiss();
+                showTime(tv_time);
+
+            }
+        });
+
+        tv_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //alertDialog.dismiss();
+                datePicker(tv_date);
+
+            }
+        });
+        btn_book.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+
+                //String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                String currentTime = tv_time.getText().toString();
+                String currentDate = date_to_send;
+
+                Log.e(TAG, "onClick:currentDate "+currentDate );
+                Log.e(TAG, "onClick:currentTime "+currentTime );
+
+                ride_later(currentDate,currentTime);
+
+
+
+            }
+        });
+         btn_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alertDialog.dismiss();
+
+                      //  popUpLater();
+
+                        Intent intent = new Intent(ChooseRideActivity.this, MapScreen.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
+                });
 
 
 
@@ -480,6 +639,9 @@ private GoogleMap mMap;
                 in.putExtra("drop_lat",drop_lat);
                 in.putExtra("drop_long",drop_long);
                 in.putExtra("driver_prefer",driver_prefer);
+                in.putExtra("pickup_postcode",postcode_pick);
+                in.putExtra("drop_postcode",postcode_drop);
+
                 startActivity(in);
                 finish();
 
@@ -608,14 +770,17 @@ private GoogleMap mMap;
         Log.d(TAG, "FetchCarList: pickup_long > "+pickup_long);
         Log.d(TAG, "FetchCarList: drop_lat > "+drop_lat);
         Log.d(TAG, "FetchCarList: drop_long > "+drop_long);
+        Log.d(TAG, "FetchCarList: postcode_pick > "+postcode_pick);
 
         RequestBody pickupLat = RequestBody.create(MediaType.parse("text/plain"),pickup_lat );
         RequestBody pickupLong = RequestBody.create(MediaType.parse("text/plain"), pickup_long);
         RequestBody DropLat = RequestBody.create(MediaType.parse("text/plain"),drop_lat );
         RequestBody DropLong = RequestBody.create(MediaType.parse("text/plain"),drop_long );
+        RequestBody pickup_postcode = RequestBody.create(MediaType.parse("text/plain"),postcode_pick );
 
 
-        RestClient.getClient().fetchCarlist(pickupLat,pickupLong,DropLat,DropLong)
+        RestClient.getClient().fetchCarlist(pickupLat,pickupLong,
+                        DropLat,DropLong,pickup_postcode)
                 .enqueue(new Callback<ResponceFetchCarList>() {
             @Override
             public void onResponse(Call<ResponceFetchCarList> call,
@@ -707,6 +872,8 @@ private GoogleMap mMap;
                             in.putExtra("pickup_long",pickup_long);
                             in.putExtra("drop_lat",drop_lat);
                             in.putExtra("drop_long",drop_long);
+                            in.putExtra("pickup_postcode",postcode_pick);
+                            in.putExtra("drop_postcode",postcode_drop);
                             startActivity(in);
                             finish();
                         }else {
@@ -753,6 +920,117 @@ private GoogleMap mMap;
                     params.put("drop_long", drop_long);
                     params.put("start_date", currentDate);
                     params.put("start_time", currentTime);
+                    params.put("pickup_postcode", postcode_pick);
+                    params.put("drop_postcode", postcode_drop);
+
+
+
+
+                    return params;
+                }
+            };
+
+            this.addToRequestQueue(ChooseRideActivity.this, strReq, tag_string_req);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void ride_later(String currentDate, String currentTime) {
+        // Tag used to cancel the request
+        final String tag_string_req = "ride_later";
+        ACProgressFlower dialog = new ACProgressFlower.Builder(ChooseRideActivity.this)
+                .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                .themeColor(Color.WHITE)
+                .fadeColor(Color.BLACK).build();
+        dialog.show();
+
+        String url = "https://mobileappsgamesstudio.com/works/frenzi_new/api/ride_later";
+        Log.d(TAG, "url>>>  "+url);
+        try{
+            StringRequest strReq = new StringRequest(Request.Method.POST,
+                    url, new com.android.volley.Response.Listener<String>(){
+
+                @Override
+                public void onResponse(String response) {
+                    Log.e(TAG, "ride_later Response: " + response);
+                    dialog.dismiss();
+
+                    Gson gson = new Gson();
+
+                    try {
+
+                        JsonObject jobj = gson.fromJson(response, JsonObject.class);
+                        String status = jobj.get("status").getAsString().replaceAll("\"", "");
+                        String message = jobj.get("message").getAsString().replaceAll("\"", "");
+
+
+
+                        if (status.equals("200")){
+
+                            JsonObject response1 = jobj.getAsJsonObject("response");
+                            String ride_id  = response1.get("ride_id ").getAsString().replaceAll("\"", "");
+                            Log.e(TAG, "onResponse:ride_id "+ride_id);
+                            Intent in = new Intent(ChooseRideActivity.this, DriverNearbyActivity.class);
+                            in.putExtra("ride_id",ride_id);
+                            in.putExtra("vehicle_id",vehicle_id);
+                            in.putExtra("pickup_add",pickup_add);
+                            in.putExtra("drop_add",drop_add);
+                            in.putExtra("pickup_lat",pickup_lat);
+                            in.putExtra("pickup_long",pickup_long);
+                            in.putExtra("drop_lat",drop_lat);
+                            in.putExtra("drop_long",drop_long);
+                            in.putExtra("pickup_postcode",postcode_pick);
+                            in.putExtra("drop_postcode",postcode_drop);
+                            startActivity(in);
+                            finish();
+                        }else {
+
+                            Toast.makeText(ChooseRideActivity.this,message,Toast.LENGTH_LONG).show();
+
+                            dialog.dismiss();
+//
+
+                        }
+
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+
+                    }
+
+                }
+            }, new com.android.volley.Response.ErrorListener(){
+
+                @Override
+
+                public void onErrorResponse(VolleyError error) {
+                    Log.e(TAG, "change_password Error: " + error.getMessage());
+                    Toast.makeText(getApplicationContext(),
+                            "Connection Error", Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
+                    //  mView.hideDialog();
+                }
+            }) {
+
+                @Override
+                protected Map<String, String> getParams() {
+                    // Posting parameters to login url
+                    Map<String, String> params = new HashMap<>();
+                    params.put("user_id", User_ID);
+
+                    params.put("driver_id", "0");
+                    params.put("pickup_address", pickup_add);
+                    params.put("drop_address", drop_add);
+                    params.put("pickup_lat", pickup_lat);
+                    params.put("pickup_long", pickup_long);
+                    params.put("drop_lat", drop_lat);
+                    params.put("drop_long", drop_long);
+                    params.put("start_date", currentDate);
+                    params.put("start_time", currentTime);
+                    params.put("pickup_postcode", postcode_pick);
+                    params.put("drop_postcode", postcode_drop);
 
 
 

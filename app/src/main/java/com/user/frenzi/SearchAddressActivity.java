@@ -36,6 +36,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SearchAddressActivity extends AppCompatActivity implements PlacesAutoCompleteAdapter.ClickListener {
     private PlacesAutoCompleteAdapter mAutoCompleteAdapter;
@@ -44,7 +46,7 @@ public class SearchAddressActivity extends AppCompatActivity implements PlacesAu
     RecyclerView placesRecyclerView;
     ImageView back_iv;
     LinearLayout right_Ll;
-    EditText address_edt;
+    EditText address_edt,edt_building;
     TextView txtCaption;
     String ComingFrom;
 
@@ -73,6 +75,7 @@ public class SearchAddressActivity extends AppCompatActivity implements PlacesAu
         right_Ll=findViewById(R.id.right_Ll);
         address_edt=findViewById(R.id.address_edt);
         txtCaption=findViewById(R.id.txt_caption);
+        edt_building=findViewById(R.id.edt_building);
 
         Intent intent = getIntent();
         if (null != intent) { //Null Checking
@@ -87,6 +90,8 @@ public class SearchAddressActivity extends AppCompatActivity implements PlacesAu
     @SuppressLint("ClickableViewAccessibility")
     private void functions() {
 
+        address_edt.requestFocus();
+
        back_iv.setOnTouchListener(new View.OnTouchListener() {
            @Override
            public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -100,13 +105,22 @@ public class SearchAddressActivity extends AppCompatActivity implements PlacesAu
 
                 if(!address_edt.getText().toString().isEmpty()) {
                     if (ComingFrom.equalsIgnoreCase("address_1")) {
-                        mGetAddress = address_edt.getText().toString();
+                        if(edt_building.getText().toString().isEmpty()){
+                            mGetAddress =  address_edt.getText().toString();
+                        }else {
+                            mGetAddress = edt_building.getText().toString() + ", " + address_edt.getText().toString();
+                        }
+
                         hideSoftKeyboard(SearchAddressActivity.this);
                         System.out.println("get data------>" + mGetAddress);
                         Log.e(TAG, "onClick: Checked 1 ::" + mGetAddress);
                         finish();
                     } else {
-                        mGetAddress2 = address_edt.getText().toString();
+                        if(edt_building.getText().toString().isEmpty()){
+                            mGetAddress2 =  address_edt.getText().toString();
+                        }else {
+                            mGetAddress2 = edt_building.getText().toString() + ", " + address_edt.getText().toString();
+                        }
                         hideSoftKeyboard(SearchAddressActivity.this);
                         System.out.println("get data------>" + mGetAddress2);
                         Log.e(TAG, "onClick: Checked 2 ::" + mGetAddress2);
@@ -150,13 +164,27 @@ public class SearchAddressActivity extends AppCompatActivity implements PlacesAu
 
     @Override
     public void click(Place place) {
-        Toast.makeText(this, place.getAddress()+", "+place.getLatLng().latitude+place.getLatLng().longitude, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, place.getAddress()+", "+place.getLatLng().latitude+place.getLatLng().longitude+place.getAddress(), Toast.LENGTH_SHORT).show();
 
 
 
         Log.e(TAG, "click: place :"+ place.getAddress());
-        Log.e(TAG, "click: postCode :"+place.getPlusCode() );
+        Log.e(TAG, "click: postCode :"+place.getAddressComponents() );
         Log.e(TAG, "click: placeee :"+address_edt.getText().toString().length());
+        String add = place.getAddress();
+
+        String someJson ="([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\\s?[0-9][A-Za-z]{2})";
+
+        Pattern p = Pattern.compile(someJson);
+        assert add != null;
+        Matcher m = p.matcher(add);
+        if (m.find()) {
+            String post = m.group(0);
+            Log.e(TAG, "match: post :"+post );
+
+        }
+
+
         mLat = String.valueOf(Objects.requireNonNull(place.getLatLng()).latitude);
         mLng = String.valueOf(place.getLatLng().longitude);
         address_edt.setText( place.getAddress());

@@ -70,15 +70,19 @@ public class AdapterCarList extends RecyclerView.Adapter<AdapterCarList.MyViewHo
 
 
         String price = AssignmentList.get(position).getTotal_fare();
+        String t_price = AssignmentList.get(3).getTotal_fare();
+        Log.e(TAG, "onBindViewHolder price: "+price );
+        Log.e(TAG, "onBindViewHolder price@3: "+AssignmentList.get(3).getTotal_fare() );
+        Log.e(TAG, "onBindViewHolder t_price@3: "+t_price );
 
 
         Float litersOfPetrol=Float.parseFloat(price);
         DecimalFormat df = new DecimalFormat("0.00");
         df.setMaximumFractionDigits(2);
         price = df.format(litersOfPetrol);
+        holder.txt_price.setText("£" + price);
 
         holder.txt_car_name.setText(AssignmentList.get(position).getVehicleType());
-        holder.txt_price.setText("£" + price);
         holder.tv_time.setText(AssignmentList.get(position).getTotalTime() + " Mins");
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

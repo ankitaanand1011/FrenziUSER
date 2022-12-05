@@ -122,7 +122,7 @@ public class DriverNearbyActivity extends AppCompatActivity implements OnMapRead
         animatedProgressBar=findViewById(R.id.animatedProgressBar);
         animatedProgressBar1=findViewById(R.id.animatedProgressBar1);
 
-        tv_pickup_address.setText(pickup_add);
+
         txt_cancel_ride=findViewById(R.id.txt_cancel_ride);
         
         function();
@@ -141,7 +141,7 @@ public class DriverNearbyActivity extends AppCompatActivity implements OnMapRead
         ride_id = getIntent().getStringExtra("ride_id");
 
         Log.e(TAG, "onCreate:ride_id "+ride_id );
-
+        tv_pickup_address.setText(pickup_add);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);

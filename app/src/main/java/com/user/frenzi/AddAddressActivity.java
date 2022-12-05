@@ -184,7 +184,7 @@ public class AddAddressActivity extends AppCompatActivity {
 
 
                 if (TextUtils.isEmpty(edt_title.getText().toString().trim())) {
-                    edt_country.setError("Please Enter Title");
+                    edt_country.setError("Please Enter Building Number");
                     return;
 
                 } else if (TextUtils.isEmpty(edt_address.getText().toString().trim())) {
@@ -203,7 +203,8 @@ public class AddAddressActivity extends AppCompatActivity {
                     edt_country.setError("Please Enter Country");
                     return;
                 }else {
-                    String full_address = edt_address.getText().toString().trim() + ", " +
+                    String full_address =
+                            edt_address.getText().toString().trim() + ", " +
                             edt_address2.getText().toString().trim() + ", " +
                             edt_city.getText().toString().trim() + ", " +
                             edt_pincode.getText().toString().trim() + ", " +

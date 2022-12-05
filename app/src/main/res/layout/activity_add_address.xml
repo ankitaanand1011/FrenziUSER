@@ -94,24 +94,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/_12sdp"
-                android:text="Title"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Building Number"
                 android:textColor="@color/dark_pink"
-                android:fontFamily="@font/poppins_regular"/>
+                android:textSize="@dimen/_12sdp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_2sdp"
-                >
+                android:layout_marginTop="@dimen/_2sdp">
 
-                <Spinner
-                    android:id="@+id/spinner"
-                    style="@style/SpinnerTheme"
-                    android:visibility="gone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
 
                 <EditText
                     android:id="@+id/edt_title"
@@ -121,7 +114,7 @@
                     android:background="@drawable/et_bg_white_grey_stroke"
                     android:capitalize="words"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="Enter Title"
+                    android:hint="Enter building number"
                     android:padding="@dimen/_8sdp"
                     android:textColor="@color/MidnightBlue"
                     android:textColorHint="@color/Gray"
@@ -131,116 +124,122 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/_12sdp"
-                android:text="Address Line 1"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Address Line 1"
                 android:textAllCaps="true"
                 android:textColor="@color/dark_pink"
-                android:fontFamily="@font/poppins_regular"/>
+                android:textSize="@dimen/_12sdp" />
+
             <EditText
                 android:id="@+id/edt_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/_12sdp"
-                android:hint="Enter Address Line 1"
-                android:background="@drawable/et_bg_white_grey_stroke"
                 android:layout_marginTop="@dimen/_2sdp"
+                android:background="@drawable/et_bg_white_grey_stroke"
+                android:capitalize="words"
+                android:fontFamily="@font/poppins_regular"
+                android:hint="Enter address line 1"
+                android:padding="@dimen/_8sdp"
                 android:textColor="@color/MidnightBlue"
                 android:textColorHint="@color/Gray"
-                android:padding="@dimen/_8sdp"
-                android:capitalize="words"
-                android:fontFamily="@font/poppins_regular"/>
+                android:textSize="@dimen/_12sdp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_regular"
                 android:text="Address Line 2"
                 android:textAllCaps="true"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:textColor="@color/dark_pink"
-                android:fontFamily="@font/poppins_regular"/>
+                android:textSize="@dimen/_12sdp" />
+
             <EditText
                 android:id="@+id/edt_address2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/_12sdp"
-                android:hint="Enter Address Line 2"
-                android:background="@drawable/et_bg_white_grey_stroke"
                 android:layout_marginTop="@dimen/_2sdp"
+                android:background="@drawable/et_bg_white_grey_stroke"
+                android:capitalize="words"
+                android:fontFamily="@font/poppins_regular"
+                android:hint="Enter address line 2"
+                android:padding="@dimen/_8sdp"
                 android:textColor="@color/MidnightBlue"
                 android:textColorHint="@color/Gray"
-                android:padding="@dimen/_8sdp"
-                android:capitalize="words"
-                android:fontFamily="@font/poppins_regular"/>
+                android:textSize="@dimen/_12sdp" />
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_regular"
                 android:text="City"
                 android:textAllCaps="true"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:textColor="@color/dark_pink"
-                android:fontFamily="@font/poppins_regular"/>
+                android:textSize="@dimen/_12sdp" />
+
             <EditText
                 android:id="@+id/edt_city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/_12sdp"
-                android:hint="City"
-                android:background="@drawable/et_bg_white_grey_stroke"
                 android:layout_marginTop="@dimen/_2sdp"
+                android:background="@drawable/et_bg_white_grey_stroke"
+                android:capitalize="words"
+                android:fontFamily="@font/poppins_regular"
+                android:hint="City"
+                android:padding="@dimen/_8sdp"
                 android:textColor="@color/MidnightBlue"
                 android:textColorHint="@color/Gray"
-                android:padding="@dimen/_8sdp"
-                android:capitalize="words"
-                android:fontFamily="@font/poppins_regular"/>
+                android:textSize="@dimen/_12sdp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_regular"
                 android:text="PostCode"
                 android:textAllCaps="true"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:textColor="@color/dark_pink"
-                android:fontFamily="@font/poppins_regular"/>
+                android:textSize="@dimen/_12sdp" />
+
             <EditText
                 android:id="@+id/edt_pincode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/_12sdp"
-                android:hint="PostCode"
-                android:background="@drawable/et_bg_white_grey_stroke"
                 android:layout_marginTop="@dimen/_2sdp"
+                android:background="@drawable/et_bg_white_grey_stroke"
+                android:fontFamily="@font/poppins_regular"
+                android:hint="PostCode"
+                android:padding="@dimen/_8sdp"
                 android:textColor="@color/MidnightBlue"
                 android:textColorHint="@color/Gray"
-                android:padding="@dimen/_8sdp"
-                android:fontFamily="@font/poppins_regular"/>
+                android:textSize="@dimen/_12sdp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_regular"
                 android:text="Country"
                 android:textAllCaps="true"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:textColor="@color/dark_pink"
-                android:fontFamily="@font/poppins_regular"/>
+                android:textSize="@dimen/_12sdp" />
+
             <EditText
                 android:id="@+id/edt_country"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/_12sdp"
-                android:hint="Country"
-                android:background="@drawable/et_bg_white_grey_stroke"
                 android:layout_marginTop="@dimen/_2sdp"
+                android:background="@drawable/et_bg_white_grey_stroke"
+                android:capitalize="words"
+                android:fontFamily="@font/poppins_regular"
+                android:hint="Country"
+                android:padding="@dimen/_8sdp"
                 android:textColor="@color/MidnightBlue"
                 android:textColorHint="@color/Gray"
-                android:capitalize="words"
-                android:padding="@dimen/_8sdp"
-                android:fontFamily="@font/poppins_regular"/>
-
+                android:textSize="@dimen/_12sdp" />
 
 
             <RelativeLayout
@@ -251,17 +250,17 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
                     android:orientation="horizontal"
-                    android:weightSum="3"
-                    android:layout_centerInParent="true">
+                    android:weightSum="3">
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:layout_weight="1"
                         android:gravity="center"
 
-                        android:layout_weight="1">
+                        android:orientation="vertical">
 
                         <RelativeLayout
                             android:id="@+id/rl_home"
@@ -284,21 +283,21 @@
                             android:id="@+id/tv_home"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:fontFamily="@font/poppins_semibold"
                             android:text="Home"
                             android:textAllCaps="true"
-                            android:layout_marginTop="@dimen/_10sdp"
                             android:textColor="@color/dark_pink"
-                            android:fontFamily="@font/poppins_semibold"/>
+                            android:textSize="@dimen/_12sdp" />
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:layout_weight="1"
                         android:gravity="center"
-                        android:layout_weight="1">
+                        android:orientation="vertical">
 
                         <RelativeLayout
                             android:id="@+id/rl_work"
@@ -322,21 +321,21 @@
                             android:id="@+id/tv_work"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:fontFamily="@font/poppins_semibold"
                             android:text="Work"
                             android:textAllCaps="true"
-                            android:layout_marginTop="@dimen/_10sdp"
                             android:textColor="@color/black"
-                            android:fontFamily="@font/poppins_semibold"/>
+                            android:textSize="@dimen/_12sdp" />
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:layout_weight="1"
                         android:gravity="center"
-                        android:layout_weight="1">
+                        android:orientation="vertical">
 
                         <RelativeLayout
                             android:id="@+id/rl_other"
@@ -350,7 +349,7 @@
                                 android:layout_width="@dimen/_30sdp"
                                 android:layout_height="@dimen/_30sdp"
                                 android:layout_centerInParent="true"
-                                android:src="@drawable/other_address"/>
+                                android:src="@drawable/other_address" />
 
                         </RelativeLayout>
 
@@ -359,16 +358,14 @@
                             android:id="@+id/tv_other"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:fontFamily="@font/poppins_semibold"
                             android:text="Other"
                             android:textAllCaps="true"
-                            android:layout_marginTop="@dimen/_10sdp"
                             android:textColor="@color/black"
-                            android:fontFamily="@font/poppins_semibold"/>
+                            android:textSize="@dimen/_12sdp" />
 
                     </LinearLayout>
-
-
 
 
                 </LinearLayout>
@@ -377,37 +374,19 @@
             </RelativeLayout>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <TextView
                 android:id="@+id/tv_add_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:background="@color/MidnightBlue"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="center"
                 android:padding="@dimen/_10sdp"
                 android:text="Save Address"
                 android:textAllCaps="true"
-                android:layout_marginTop="@dimen/_20sdp"
                 android:textColor="@color/white"
-                android:fontFamily="@font/poppins_medium"
-                android:gravity="center"
-                android:textSize="@dimen/_14sdp"/>
+                android:textSize="@dimen/_14sdp" />
 
 
         </LinearLayout>

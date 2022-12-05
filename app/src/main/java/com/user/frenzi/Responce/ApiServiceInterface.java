@@ -51,7 +51,8 @@ public interface ApiServiceInterface {
             @Part("pickupLat") RequestBody log1,
             @Part("pickupLon") RequestBody lat1,
             @Part("dropLat") RequestBody log2,
-            @Part("dropLon") RequestBody lat2
+            @Part("dropLon") RequestBody lat2,
+            @Part("pickup_postcode") RequestBody pickup_postcode
 
 
     );
@@ -79,6 +80,14 @@ public interface ApiServiceInterface {
     @Multipart
     @POST("check_ride_status")
     Call<ResponseRideStatus> checkRideStatus(
+            @Part("ride_id") RequestBody ride_id
+
+
+    );
+
+    @Multipart
+    @POST("fetch_extra_pay")
+    Call<ResponseExtraCharges> FetchExtraPay(
             @Part("ride_id") RequestBody ride_id
 
 
@@ -221,7 +230,9 @@ public interface ApiServiceInterface {
             @Part("drop_lat") RequestBody         drop_lat,
             @Part("drop_long") RequestBody        drop_long,
             @Part("start_date") RequestBody       start_date,
-            @Part("start_time") RequestBody       start_time
+            @Part("start_time") RequestBody       start_time,
+            @Part("pickup_postcode") RequestBody  pickup_postcode,
+            @Part("drop_postcode") RequestBody    drop_postcode
 
 
 

@@ -72,11 +72,41 @@ public class AdapterRideHistory extends RecyclerView.Adapter<AdapterRideHistory.
     @Override
     public void onBindViewHolder(@NonNull final AdapterRideHistory.MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
 
+
+        String status = AssignmentList.get(position).getStatus();
         holder.txt_pickup_add.setText(AssignmentList.get(position).getPickupAddress());
         holder.txt_drop_add.setText(AssignmentList.get(position).getDropAddress());
         holder.txt_pickup_time.setText(String.valueOf(AssignmentList.get(position).getStartTime()));
         holder.txt_drop_time.setText(String.valueOf(AssignmentList.get(position).getEndTime()));
         holder.txt_amount.setText("£"+ String.valueOf(AssignmentList.get(position).getAmount()));
+        holder.txt_date.setText(String.valueOf(AssignmentList.get(position).getTime()));
+        holder.tv_status.setText(status);
+
+        switch (status) {
+            case "ACCEPTED":
+                holder.tv_status.setTextColor(mContext.getResources().getColor(R.color.MidnightBlue));
+
+                break;
+            case "CANCELED":
+                holder.tv_status.setTextColor(mContext.getResources().getColor(R.color.red));
+
+                break;
+            case "PENDING":
+                holder.tv_status.setTextColor(mContext.getResources().getColor(R.color.Coral));
+
+                break;
+            case "STARTED":
+            case "ARRIVED":
+            case "FINISHED":
+                holder.tv_status.setTextColor(mContext.getResources().getColor(R.color.DarkGreen));
+
+                break;
+
+            case "SCHEDULED":
+                holder.tv_status.setTextColor(mContext.getResources().getColor(R.color.dark_pink));
+
+                break;
+        }
 
 //
 //        holder.btn_select.setOnClickListener(new View.OnClickListener() {
@@ -123,7 +153,8 @@ public class AdapterRideHistory extends RecyclerView.Adapter<AdapterRideHistory.
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
 
-        TextView txt_pickup_add, txt_drop_add, txt_pickup_time, txt_drop_time,btn,txt_amount;
+        TextView txt_pickup_add, txt_drop_add, txt_pickup_time,
+                txt_drop_time,tv_status,txt_amount,txt_date;
 
         public MyViewHolder(View view) {
             super(view);
@@ -132,8 +163,9 @@ public class AdapterRideHistory extends RecyclerView.Adapter<AdapterRideHistory.
             txt_drop_add = view.findViewById(R.id.txt_drop_add);
             txt_pickup_time = view.findViewById(R.id.txt_pickup_time);
             txt_drop_time = view.findViewById(R.id.txt_drop_time);
-            btn=view.findViewById(R.id.btn);
+            tv_status=view.findViewById(R.id.tv_status);
             txt_amount=view.findViewById(R.id.txt_amount);
+            txt_date=view.findViewById(R.id.txt_date);
 
         }
 

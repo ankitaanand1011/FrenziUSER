@@ -54,9 +54,9 @@ public class ResponceFetchCarList {
         @SerializedName("vehicle_type")
         @Expose
         public String vehicleType;
-        @SerializedName("ride_fare")
+    /*    @SerializedName("ride_fare")
         @Expose
-        public Integer rideFare;
+        public Integer rideFare;*/
         @SerializedName("image")
         @Expose
         public String image;
@@ -70,11 +70,12 @@ public class ResponceFetchCarList {
         @Expose
         public String total_fare;
 
-        public Response(Integer vehicleId, String vehicleType, Integer rideFare,
-                        String image, String totalDistance, String totalTime, String total_fare) {
+        public Response(Integer vehicleId, String vehicleType, /*Integer rideFare,*/
+                        String image, String totalDistance, String totalTime,
+                        String total_fare) {
             this.vehicleId = vehicleId;
             this.vehicleType = vehicleType;
-            this.rideFare = rideFare;
+          //  this.rideFare = rideFare;
             this.image = image;
             this.totalDistance = totalDistance;
             this.totalTime = totalTime;
@@ -97,13 +98,13 @@ public class ResponceFetchCarList {
             this.vehicleType = vehicleType;
         }
 
-        public Integer getRideFare() {
+    /*    public Integer getRideFare() {
             return rideFare;
         }
 
         public void setRideFare(Integer rideFare) {
             this.rideFare = rideFare;
-        }
+        }*/
 
         public String getImage() {
             return image;

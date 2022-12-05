@@ -239,7 +239,7 @@ public class DriverDetailsAfterBookingActivity extends FragmentActivity implemen
                 cancel.putExtra("driver_id", driver_id);
                 startActivity(cancel);*/
 
-                if(Ridestatus.equals("STARTED")){
+              //  if(Ridestatus.equals("STARTED")){
 
                 final Handler handler = new Handler(Looper.getMainLooper());
                     handler.postDelayed(new Runnable() {
@@ -250,7 +250,7 @@ public class DriverDetailsAfterBookingActivity extends FragmentActivity implemen
 
                         }
                     }, 2000);
-                }
+                //}
             }
         });
 
@@ -283,9 +283,15 @@ public class DriverDetailsAfterBookingActivity extends FragmentActivity implemen
     @Override
     protected void onResume() {
         super.onResume();
+        final Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //Do something after 100ms
+                CheckRideStatus();
 
-
-
+            }
+        }, 2000);
 
     }
 
@@ -306,7 +312,7 @@ public class DriverDetailsAfterBookingActivity extends FragmentActivity implemen
                         if (response.body().getStatus().equals(200)) {
                             //    ll_hide_layout.setVisibility(View.VISIBLE);
 
-                           if(response.body().getRide_status().equals("ACCEPTED")){
+                           if(response.body().getRide_status().equals("STARTED")){
 
                                Intent cancel=new Intent(DriverDetailsAfterBookingActivity.this,EmergencyTwoActivity.class);
                                cancel.putExtra("ride_id", ride_id);

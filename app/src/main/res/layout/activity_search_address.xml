@@ -15,13 +15,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/DeepPink"
             android:orientation="vertical"
+            android:background="@color/DeepPink"
             android:padding="@dimen/_16sdp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                >
 
                 <LinearLayout
                     android:id="@+id/ll_back"
@@ -53,56 +54,88 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
+
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_12sdp"
+
+
+            >
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="@drawable/rectangle_boder">
+                android:orientation="vertical">
+
 
                 <EditText
                     android:id="@+id/address_edt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_gravity="center_horizontal"
-                    android:layout_toStartOf="@+id/right_Ll"
-                    android:background="@android:color/transparent"
+                    android:background="@drawable/rect_gray_edt_box"
                     android:cursorVisible="true"
-                    android:fontFamily="@font/poppins_medium"
+                    android:fontFamily="@font/poppins_regular"
                     android:gravity="start"
-                    android:hint="Enter first line of the address."
+                    android:hint="Enter Postcode."
                     android:imeOptions="actionDone"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:paddingEnd="@dimen/_10sdp"
+                    android:padding="@dimen/_8sdp"
                     android:singleLine="true"
                     android:textColor="@color/MidnightBlue"
-                    android:textColorHint="@color/DimGray"
+                    android:textColorHint="@color/Gray"
                     android:textCursorDrawable="@drawable/custom_cursor_drawable"
                     android:textSize="@dimen/_14sdp" />
-
+                <EditText
+                    android:id="@+id/edt_building"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:cursorVisible="true"
+                    android:background="@drawable/rect_gray_edt_box"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="start"
+                    android:hint="Enter House/Flat/Building number"
+                    android:imeOptions="actionDone"
+                    android:padding="@dimen/_8sdp"
+                    android:singleLine="true"
+                    android:textColor="@color/MidnightBlue"
+                    android:textColorHint="@color/Gray"
+                    android:textSize="@dimen/_14sdp" />
 
                 <LinearLayout
                     android:id="@+id/right_Ll"
-                    android:layout_width="@dimen/height_30"
-                    android:layout_alignParentEnd="true"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="@dimen/_10sdp"
+                    android:background="@color/MidnightBlue"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:gravity="center">
 
-                    <ImageView
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:src="@drawable/correct" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Done"
+                        android:layout_gravity="center"
+                        android:textColor="@color/white"
+                        android:textAllCaps="true"
+                        android:textSize="@dimen/_14sdp"
+                        android:padding="@dimen/_10sdp"/>
                 </LinearLayout>
+            </LinearLayout>
 
 
 
 
-            </RelativeLayout>
 
 
-        </LinearLayout>
+
+
+        </RelativeLayout>
 
 
 
